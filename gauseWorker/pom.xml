@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.mg</groupId>
-	<artifactId>eventConsumer</artifactId>
+	<artifactId>gaussWorker</artifactId>
 	<version>1.0</version>
-	<name>eventConsumer</name>
+	<name>gaussWorker</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>

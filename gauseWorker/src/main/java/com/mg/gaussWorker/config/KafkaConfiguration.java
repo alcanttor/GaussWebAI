@@ -1,6 +1,7 @@
-package com.mg.eventConsumer.config;
+package com.mg.gaussWorker.config;
 
 import java.util.HashMap;
+
 import java.util.Map;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -13,7 +14,7 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
-import com.mg.eventConsumer.model.Event;
+import com.mg.gaussWorker.model.Event;
 
 @EnableKafka
 @Configuration
