@@ -5,6 +5,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import com.mg.gateWay.model.Event;
+import com.mg.gateWay.model.RequestData;
 
 @Service
 public class ProducerService {
@@ -14,6 +15,9 @@ public class ProducerService {
 	
 	@Autowired
 	private KafkaTemplate<String, Event> kafkaEventDataTemplate;
+	
+	@Autowired
+	private KafkaTemplate<String, RequestData> kafkaRequestDataTemplate;
 	
 	
 	String kafkaTopic = "test";
@@ -27,4 +31,10 @@ public class ProducerService {
 	    
 	    kafkaEventDataTemplate.send(kafkaTopic, event);
 	}
+	
+	public void send(RequestData event) {
+	    
+	    kafkaRequestDataTemplate.send(kafkaTopic, event);
+	}
+
 }

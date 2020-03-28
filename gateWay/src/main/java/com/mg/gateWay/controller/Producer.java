@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mg.gateWay.model.Event;
+import com.mg.gateWay.model.RequestData;
 import com.mg.gateWay.service.ProducerService;
 
 @RestController
@@ -23,10 +24,20 @@ public class Producer {
 		return "Message sent to the Kafka Topic java_in_use_topic Successfully";
 	}
 	
-	@PostMapping(value = "/push")
+	@PostMapping(value = "/pushEvent")
 	public String pushEvent(@RequestBody Event event) {
 		producerService.send(event);
 
 		return "Message sent to the Kafka Topic java_in_use_topic Successfully";
+	}
+	@PostMapping(value = "/push")
+	public String push(@RequestBody RequestData info) {
+		try{
+		producerService.send(info);
+		}
+		catch (Exception e) {
+			return "Request not Accepted";
+		}
+		return "Request Accepted";
 	}
 }

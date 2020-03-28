@@ -11,6 +11,7 @@ import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import com.mg.gateWay.model.Event;
+import com.mg.gateWay.model.RequestData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +45,17 @@ public class KakfaConfiguration {
         return new DefaultKafkaProducerFactory<>(config);
     }
 
-    
+    @Bean
+    public ProducerFactory<String, RequestData> producerFactoryRequestData() {
+        Map<String, Object> config = new HashMap<>();
+
+        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaIpPort);
+        config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        config.put(JsonSerializer.ADD_TYPE_INFO_HEADERS,"false");
+
+        return new DefaultKafkaProducerFactory<>(config);
+    }    
     @Bean
     public KafkaTemplate<String, String> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
@@ -56,6 +67,10 @@ public class KakfaConfiguration {
     	return new KafkaTemplate<>(producerFactoryCustomized());
     }
     
-
+    @Bean
+    public KafkaTemplate<String, RequestData> kafkaRequestDataTemplate()
+    {
+    	return new KafkaTemplate<>(producerFactoryRequestData());
+    }
 
 }
