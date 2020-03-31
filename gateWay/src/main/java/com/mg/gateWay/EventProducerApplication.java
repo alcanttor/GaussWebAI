@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/**Class to initiate the Spring boot container for gateWay application*/
+/**Class to initiate the Spring-boot container for gateWay application*/
 
 @SpringBootApplication
 public class EventProducerApplication {
