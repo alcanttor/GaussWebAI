@@ -44,5 +44,9 @@ public class MyUserDetailsService implements UserDetailsService{
 		users.put(user.getUsername(), user);
 		return user;
 	}
+
+	public HashMap<String, User> getAll() {
+		return this.users;
+	}
 	
 }

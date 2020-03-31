@@ -51,6 +51,7 @@ public class ConsumerService {
         List<Actions> actions = requestData.getActions();
         for (Actions action:actions)
         {
+        	logger.info("event published [{}]",action);
         	BaseEvent event = eventFactory.generateEvent(action,requestData);
         	eventPublisherService.publishEvent(event);
         }
