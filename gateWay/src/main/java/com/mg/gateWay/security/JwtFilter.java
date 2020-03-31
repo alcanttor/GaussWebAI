@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +26,8 @@ public class JwtFilter extends OncePerRequestFilter{
     @Autowired
     private JwtService jwtService;
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
@@ -42,6 +46,7 @@ public class JwtFilter extends OncePerRequestFilter{
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             if (jwtService.validateToken(jwt, userDetails)) {
+            	logger.debug("Security token validated");
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken
@@ -50,6 +55,8 @@ public class JwtFilter extends OncePerRequestFilter{
             }
             else
             {
+            	logger.warn("User not valid in JWT");
+            	
             	System.out.println("user is not valid in jwt......................");
             }
         }

@@ -1,11 +1,14 @@
 package com.mg.gateWay.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import com.mg.gateWay.model.Event;
 import com.mg.gateWay.model.RequestData;
+
+/**Singleton scoped Kafka template initiator service class*/
 
 @Service
 public class ProducerService {
@@ -19,8 +22,8 @@ public class ProducerService {
 	@Autowired
 	private KafkaTemplate<String, RequestData> kafkaRequestDataTemplate;
 	
-	
-	String kafkaTopic = "test";
+	@Value("${kafka.kafkaTopic}")
+	private String kafkaTopic;
 	
 	public void send(String message) {
 	    

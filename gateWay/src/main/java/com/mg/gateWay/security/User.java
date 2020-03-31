@@ -7,6 +7,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+/**Bean model class for mapping of user authentication attributes*/
+
 @Component
 @Scope(value="prototype")
 public class User implements UserDetails{

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +13,14 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+/**Class to generate HS256 based digital signature token*/
+
 @Service
 public class JwtService {
 
-	private String SECRET_KEY = "secret";
+	@Value("${JWT.SECRET_KEY}")
+	private String SECRET_KEY;
+	
 	private long expiryTime = 1000 * 60 * 60 * 10;
 
     public String extractUsername(String token) {

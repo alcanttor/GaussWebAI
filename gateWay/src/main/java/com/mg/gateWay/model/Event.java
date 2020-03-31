@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
+/**Model class to map event data beans*/
+
 @Component
 public class Event {
 

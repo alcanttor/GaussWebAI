@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+/**Model class to map request data beans*/
+
 @Component
 public class RequestData {
 
