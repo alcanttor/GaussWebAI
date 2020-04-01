@@ -1,41 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
- 
-    <property name="LOG_LOCATION" value="./logs/" />
- 
-    <!-- <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n</pattern>
+            <pattern>[%-5level] %d{dd-MM-yyyy hh:mm:ss.SSS a} [%thread]  %logger{50} - %msg%n</pattern>
         </encoder>
     </appender> -->
- 
-    <appender name="FILE-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>{LOG_LOCATION}</file>
-        
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/DebugLogGateWay.log</file>
         <encoder>
-             <pattern>%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n</pattern>
+            <pattern>[%-5level] %d{dd-MM-yyyy hh:mm:ss.SSS a} [%thread]  %logger{50} - %msg%n</pattern>
         </encoder>
-        
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_LOCATION}/archived/GateWayInfoLog.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
-            <!-- each archived file, size max 10MB -->
-            <maxFileSize>10MB</maxFileSize>
-            <!-- total size of all archive files, if total size > 20GB, it will delete old archived file -->
-            <totalSizeCap>20GB</totalSizeCap>
-            <!-- 60 days to keep -->
-            <maxHistory>60</maxHistory>
+         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/archived/DebugLogGateWay-%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
-    </appender> 
- 
-    <root level="debug">
-        <!-- <appender-ref ref="CONSOLE"/> -->
-        <appender-ref ref="FILE-ROLLING"/>
+    </appender>
+
+    <root level="DEBUG">
+        <!-- <appender-ref ref="STDOUT" /> -->
+        <appender-ref ref="FILE"/>
     </root>
- 
-    <!-- Application logs at error level -->
-    <logger name="com.mg.gausswebai" level="error" additivity="false">
-        <appender-ref ref="FILE-ROLLING" />
-        <!-- <appender-ref ref="Console" /> -->
-    </logger>
- 
+
+   <!--  <logger name="com.logger.slf4j.controller" level="ALL" additivity="true">
+        <appender-ref ref="FILE"/> 
+    </logger>-->
 </configuration>
