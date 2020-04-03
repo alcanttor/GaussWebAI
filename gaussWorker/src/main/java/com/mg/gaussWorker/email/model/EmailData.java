@@ -1,7 +1,5 @@
 package com.mg.gaussWorker.email.model;
 
-import org.springframework.stereotype.Component;
-
 import com.mg.gaussWorker.model.BaseEvent;
 
 public class EmailData extends BaseEvent{
