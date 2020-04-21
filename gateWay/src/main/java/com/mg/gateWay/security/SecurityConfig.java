@@ -17,9 +17,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 
 /**Class to setup security configuration attributes*/
-@Configuration
-@EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+//@Configuration
+//@EnableWebSecurity
+public class SecurityConfig{ //extends WebSecurityConfigurerAdapter {
 
 	
 	@Autowired
@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return NoOpPasswordEncoder.getInstance();
 	}
 
-	@Override
+	/*@Override
 	@Bean
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
@@ -49,5 +49,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			anyRequest().authenticated().and().exceptionHandling().and().sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-	}
+	}*/
 }

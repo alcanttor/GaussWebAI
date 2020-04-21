@@ -12,6 +12,7 @@ public class RequestData {
 
 	private List<Actions> actions;
 	private Map<String,String> metaData;
+	private String siteName;
 	
 	public List<Actions> getActions() {
 		return actions;
@@ -24,6 +25,12 @@ public class RequestData {
 	}
 	public void setMetaData(Map<String, String> metaData) {
 		this.metaData = metaData;
+	}
+	public String getSiteName() {
+		return siteName;
+	}
+	public void setSiteName(String siteName) {
+		this.siteName = siteName;
 	}
 	
 	

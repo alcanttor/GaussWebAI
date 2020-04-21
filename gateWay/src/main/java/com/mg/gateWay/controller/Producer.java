@@ -3,13 +3,11 @@ package com.mg.gateWay.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mg.gateWay.model.Event;
+import com.mg.gateWay.model.HoaderResponse;
 import com.mg.gateWay.model.RequestData;
 import com.mg.gateWay.service.ProducerService;
 
@@ -21,34 +19,17 @@ public class Producer {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	@GetMapping(value = "/producer")
-	public String producer(@RequestParam("message") String message) {
-		
-		producerService.send(message);
-		logger.debug("Message sent to the Kafka Topic Successfully");
-
-		return "Message Sent to Kafka";
-	}
-	
-	@PostMapping(value = "/pushEvent")
-	public String pushEvent(@RequestBody Event event) {
-		
-		producerService.send(event);
-		logger.debug("Message sent to the Kafka Topic Successfully");
-
-		return "Message Sent to Kafka";
-	}
-	
 	@PostMapping(value = "/push")
-	public String push(@RequestBody RequestData info) {
-		try{
-		producerService.send(info);
+	public HoaderResponse push(@RequestBody RequestData info) {
+		try {
+			return producerService.send(info);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Request rejected - failure: " + e.getMessage());
+			HoaderResponse response = new HoaderResponse();
+			response.setResult(false);
+			response.setMessage("Request not in format");
+			return response;
 		}
-		catch (Exception e) {
-			logger.error("Request rejected - failure: "+e.getMessage());
-			return "Request not Accepted";
-		}
-		logger.debug("Request accepted - success");
-		return "Request Accepted";
 	}
 }
