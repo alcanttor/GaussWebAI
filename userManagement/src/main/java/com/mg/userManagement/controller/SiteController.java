@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mg.userManagement.model.Rule;
-import com.mg.userManagement.model.Site;
+import com.mg.userManagement.entity.Rule;
+import com.mg.userManagement.entity.Site;
 import com.mg.userManagement.service.SiteService;
 
 @RestController
@@ -36,4 +36,11 @@ public class SiteController {
 	{
 		return siteService.getAll();
 	}
+	
+	@PostMapping("/getSite")
+	public Site getSitebyName(@RequestBody Site site)
+	{
+		return siteService.getSiteByName(site.getName());
+	}
+	
 }

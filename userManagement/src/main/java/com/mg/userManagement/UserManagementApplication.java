@@ -11,12 +11,12 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 
 @SpringBootApplication(exclude={SecurityAutoConfiguration.class})
 //@EnableAutoConfiguration
-public class EventProducerApplication {
+public class UserManagementApplication {
 	
 	public static void main(String[] args) {
-		SpringApplication.run(EventProducerApplication.class, args);
-		final Logger logger = LoggerFactory.getLogger(EventProducerApplication.class);
-		logger.debug("GaussWebAI gateWay application initiated");
+		SpringApplication.run(UserManagementApplication.class, args);
+		final Logger logger = LoggerFactory.getLogger(UserManagementApplication.class);
+		logger.debug("usermanagement gateWay application initiated");
 	}
 
 }

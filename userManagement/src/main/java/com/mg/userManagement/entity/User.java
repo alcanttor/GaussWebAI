@@ -1,4 +1,4 @@
-package com.mg.userManagement.model;
+package com.mg.userManagement.entity;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class SysUser {
+public class User {
 
 	@Id
 	@GeneratedValue
@@ -21,7 +21,7 @@ public class SysUser {
 //	@OneToMany(mappedBy="user")
 //	private List<Site> sites;
 	
-	public SysUser(){}
+	public User(){}
 	
 	public Integer getId() {
 		return id;

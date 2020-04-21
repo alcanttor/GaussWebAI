@@ -9,9 +9,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mg.userManagement.model.Rule;
-import com.mg.userManagement.model.Site;
-import com.mg.userManagement.model.SysUser;
+import com.mg.userManagement.entity.Rule;
+import com.mg.userManagement.entity.Site;
+import com.mg.userManagement.entity.User;
 import com.mg.userManagement.repo.SiteRepository;
 import com.mg.userManagement.repo.UserRepository;
 
@@ -31,12 +31,12 @@ public class SiteService {
 
 	public Site registerSite(Site site, Integer userId) {
 
-		SysUser user = userService.getUserById(userId);
+		User user = userService.getUserById(userId);
 		site.setUser(user);
 		return siteRepository.save(site);
 	}
 
-	public Site getSite(Integer siteId) {
+	public Site getSiteById(Integer siteId) {
 		Optional<Site> site = siteRepository.findById(siteId);
 		if (site.isPresent())
 			return site.get();
@@ -44,6 +44,14 @@ public class SiteService {
 			return null;
 	}
 
+	public Site getSiteByName(String siteName) {
+		Optional<Site> site = siteRepository.getByName(siteName);
+		if (site.isPresent())
+			return site.get();
+		else
+			return null;
+	}
+	
 	@Transactional
 	public Site addRule(Integer siteId,Rule rule)
 	{

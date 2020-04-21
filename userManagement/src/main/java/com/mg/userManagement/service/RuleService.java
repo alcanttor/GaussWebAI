@@ -3,7 +3,7 @@ package com.mg.userManagement.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mg.userManagement.model.Rule;
+import com.mg.userManagement.entity.Rule;
 import com.mg.userManagement.repo.RuleRepository;
 
 @Service

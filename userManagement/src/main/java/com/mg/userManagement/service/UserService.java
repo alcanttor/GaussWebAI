@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mg.userManagement.model.SysUser;
+import com.mg.userManagement.entity.User;
 import com.mg.userManagement.repo.UserRepository;
 
 @Service
@@ -18,7 +18,7 @@ public class UserService {
 	private UserRepository userRepository;
 	
 	
-	public SysUser create(SysUser user)
+	public User create(User user)
 	{
 		logger.info("to save this user : "+user);
 		try{
@@ -30,12 +30,12 @@ public class UserService {
 		}
 	}
 	
-	public List<SysUser> getAll()
+	public List<User> getAll()
 	{
 		return userRepository.findAll();
 	}
 	
-	public SysUser getUserById(Integer id)
+	public User getUserById(Integer id)
 	{
 		return userRepository.findById(id).get();
 	}

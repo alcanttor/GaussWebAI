@@ -1,4 +1,4 @@
-package com.mg.userManagement.model;
+package com.mg.userManagement.entity;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class Site {
 	private String name;
 	private String connector;
 	@ManyToOne
-	private SysUser user;
+	private User user;
 	@OneToMany
 	private List<Rule> rules;
 	
@@ -41,10 +41,10 @@ public class Site {
 	public void setConnector(String connector) {
 		this.connector = connector;
 	}
-	public SysUser getUser() {
+	public User getUser() {
 		return user;
 	}
-	public void setUser(SysUser user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 	public List<Rule> getRules() {

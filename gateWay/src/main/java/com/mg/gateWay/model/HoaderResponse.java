@@ -8,6 +8,14 @@ public class HoaderResponse {
 	private Boolean result;
 	private String message;
 	
+	public HoaderResponse(){}
+	
+	public HoaderResponse(Boolean result,String message)
+	{
+		this.result = result;
+		this.message = message;
+	}
+	
 	public Boolean getResult() {
 		return result;
 	}

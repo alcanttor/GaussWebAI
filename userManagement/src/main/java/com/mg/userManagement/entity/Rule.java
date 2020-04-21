@@ -1,4 +1,4 @@
-package com.mg.userManagement.model;
+package com.mg.userManagement.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -13,7 +13,7 @@ public class Rule {
 	private Integer id;
 	
 	@Enumerated
-	private SystemTrigger sysTrigger;
+	private SystemEvent sysTrigger;
 	@Enumerated
 	private Action action;
 	private Boolean enabled;
@@ -26,10 +26,10 @@ public class Rule {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public SystemTrigger getSysTrigger() {
+	public SystemEvent getSysTrigger() {
 		return sysTrigger;
 	}
-	public void setSysTrigger(SystemTrigger sysTrigger) {
+	public void setSysTrigger(SystemEvent sysTrigger) {
 		this.sysTrigger = sysTrigger;
 	}
 	public Action getAction() {
