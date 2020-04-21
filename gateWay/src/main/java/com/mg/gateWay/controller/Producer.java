@@ -31,5 +31,18 @@ public class Producer {
 			response.setMessage("Request not in format");
 			return response;
 		}
+	@GetMapping(value = "/producer")
+	public void producer(@RequestParam("message") String message) {
+		
+		producerService.send(message);
+		logger.debug("Message sent to the Kafka Topic Successfully");
+
 	}
+	
+	@PostMapping(value = "/pushEvent")
+	public void pushEvent(@RequestBody Event event) {		
+		producerService.send(event);
+		logger.debug("Message sent to the Kafka Topic Successfully");
+	}
+	
 }

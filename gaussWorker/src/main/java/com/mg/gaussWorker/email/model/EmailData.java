@@ -1,14 +1,14 @@
 package com.mg.gaussWorker.email.model;
 
-import org.springframework.stereotype.Component;
-
 import com.mg.gaussWorker.model.BaseEvent;
+
+
+/**Bean class for email fields
+ * 
+ */
 
 public class EmailData extends BaseEvent{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	public EmailData(Object source) {

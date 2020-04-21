@@ -7,12 +7,12 @@
     </appender> -->
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/DebugLogGateWay.log</file>
+        <file>logs/DebugLogJWorker.log</file>
         <encoder>
             <pattern>[%-5level] %d{dd-MM-yyyy hh:mm:ss.SSS a} [%thread]  %logger{50} - %msg%n</pattern>
         </encoder>
          <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/archived/DebugLogGateWay-%d{yyyy-MM-dd}.%i.log
+            <fileNamePattern>logs/archived/DebugLogJWorker-%d{yyyy-MM-dd}.%i.log
             </fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
                 class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -21,7 +21,7 @@
         </rollingPolicy>
     </appender>
 
-    <root level="WARN">
+    <root level="ERROR">
         <!-- <appender-ref ref="STDOUT" /> -->
         <appender-ref ref="FILE"/>
     </root>

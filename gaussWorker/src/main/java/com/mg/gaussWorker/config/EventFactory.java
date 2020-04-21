@@ -11,6 +11,9 @@ import com.mg.gaussWorker.model.BaseEvent;
 import com.mg.gaussWorker.model.RequestData;
 import com.mg.gaussWorker.sms.model.SmsConstants;
 import com.mg.gaussWorker.sms.model.SmsData;
+
+/**Central service class to parse incoming action IDs
+ * Needs to be further decoupled to separate out the underlying business logic*/
 @Service
 public class EventFactory {
 
@@ -19,7 +22,7 @@ public class EventFactory {
 
 		switch (action) {
 		case EMAIL:
-			logger.info("email event generate");
+			logger.info("email event generated");
 			EmailData event = new EmailData(this);
 	        event.setSubject(requestData.getMetaData().get(EmailConstants.subject));
 	        event.setText(requestData.getMetaData().get(EmailConstants.text));
@@ -27,7 +30,7 @@ public class EventFactory {
 	        return event;
 			
 		case SMS:
-			logger.info("sms event genrate");
+			logger.info("sms event genrated");
 			SmsData smsEvent = new SmsData(this);
 			smsEvent.setFrom(requestData.getMetaData().get(SmsConstants.from));
 			smsEvent.setText(requestData.getMetaData().get(SmsConstants.text));
