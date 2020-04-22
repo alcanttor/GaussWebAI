@@ -19,13 +19,13 @@ import com.mg.gateWay.security.JwtService;
 @RestController
 public class JwtTokenController {
 
-	@Autowired
+	//@Autowired
 	private AuthenticationManager authenticationManager;
 
-	@Autowired
+	//@Autowired
 	private JwtService jwtService;
 
-	@Autowired
+	//@Autowired
 	private UserDetailsService userDetailsService;
 	
 	

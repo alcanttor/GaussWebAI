@@ -32,7 +32,9 @@ public class SiteService {
 	public Site registerSite(Site site, Integer userId) {
 
 		User user = userService.getUserById(userId);
+		List<Rule> rules = ruleService.saveList(site.getRules());
 		site.setUser(user);
+		site.setRules(rules);
 		return siteRepository.save(site);
 	}
 

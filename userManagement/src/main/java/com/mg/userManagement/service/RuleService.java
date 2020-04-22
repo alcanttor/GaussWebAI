@@ -1,5 +1,8 @@
 package com.mg.userManagement.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,4 +19,15 @@ public class RuleService {
 	{
 		return ruleRepository.save(rule);
 	}
+	
+	public List<Rule> saveList(List<Rule> rules)
+	{
+		List<Rule> savedRules = new ArrayList<>();
+		for(Rule rule: rules)
+		{
+			savedRules.add(this.save(rule));
+		}
+		return savedRules;
+	}
+	
 }

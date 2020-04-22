@@ -1,21 +1,13 @@
-package com.mg.userManagement.entity;
+package com.mg.gateWay.model.tp;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import org.springframework.stereotype.Component;
 
-@Entity
+@Component
 public class Rule {
 
-	@Id
-	@GeneratedValue
 	private Integer id;
 	
-	@Enumerated(EnumType.STRING)
 	private SystemEvent sysTrigger;
-	@Enumerated(EnumType.STRING)
 	private Action action;
 	private Boolean enabled;
 	

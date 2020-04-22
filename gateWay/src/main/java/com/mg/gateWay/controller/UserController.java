@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,18 +12,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mg.gateWay.security.MyUserDetailsService;
-import com.mg.gateWay.security.User;
+import com.mg.gateWay.security.SecurityUser;
 
 @RestController
 public class UserController {
 
-	@Autowired
+	//@Autowired
 	MyUserDetailsService userService;
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@PostMapping("/user")
-	public String save(@RequestBody User user)
+	public String save(@RequestBody SecurityUser user)
 	{
 		userService.save(user);
 		
@@ -33,10 +32,10 @@ public class UserController {
 	}
 	
 	@PutMapping("/user/{userName}")
-	public String update(@PathVariable String userName, @RequestBody User user)
+	public String update(@PathVariable String userName, @RequestBody SecurityUser user)
 	{
 		logger.debug("Checking for existing username");
-		User userOld = userService.get(userName);
+		SecurityUser userOld = userService.get(userName);
 		if(userOld == null)
 		{
 			logger.debug("No such user exists in system");
@@ -53,7 +52,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/user")
-	public HashMap<String,User> getAll()
+	public HashMap<String,SecurityUser> getAll()
 	{
 		return userService.getAll();
 	}

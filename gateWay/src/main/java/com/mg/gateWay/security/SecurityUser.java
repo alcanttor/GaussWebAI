@@ -11,15 +11,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Scope(value="prototype")
-public class User implements UserDetails{
+public class SecurityUser implements UserDetails{
 
 	private Integer id;
 	private String username;
 	private String password;
 	
-	public User(){}
+	public SecurityUser(){}
 	
-	public User(String username,String password)
+	public SecurityUser(String username,String password)
 	{
 		this.username = username;
 		this.password = password;
