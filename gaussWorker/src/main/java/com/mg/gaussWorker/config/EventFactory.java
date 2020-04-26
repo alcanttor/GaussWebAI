@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.mg.gaussWorker.email.model.EmailConstants;
 import com.mg.gaussWorker.email.model.EmailData;
-import com.mg.gaussWorker.model.Actions;
+import com.mg.gaussWorker.model.Action;
 import com.mg.gaussWorker.model.BaseEvent;
 import com.mg.gaussWorker.model.RequestData;
 import com.mg.gaussWorker.sms.model.SmsConstants;
@@ -18,7 +18,7 @@ import com.mg.gaussWorker.sms.model.SmsData;
 public class EventFactory {
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-	public BaseEvent generateEvent(Actions action, RequestData requestData) {
+	public BaseEvent generateEvent(Action action, RequestData requestData) {
 
 		switch (action) {
 		case EMAIL:

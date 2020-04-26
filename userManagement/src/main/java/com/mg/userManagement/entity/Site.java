@@ -2,11 +2,13 @@ package com.mg.userManagement.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Site {
@@ -18,7 +20,9 @@ public class Site {
 	private String connector;
 	@ManyToOne
 	private User user;
-	@OneToMany
+	@OneToOne
+	private SiteToken siteToken;
+	@OneToMany(cascade=CascadeType.ALL)
 	private List<Rule> rules;
 	
 	public Site(){}
@@ -52,6 +56,14 @@ public class Site {
 	}
 	public void setRules(List<Rule> rules) {
 		this.rules = rules;
+	}
+
+	public SiteToken getSiteToken() {
+		return siteToken;
+	}
+
+	public void setSiteToken(SiteToken siteToken) {
+		this.siteToken = siteToken;
 	}
 	
 	

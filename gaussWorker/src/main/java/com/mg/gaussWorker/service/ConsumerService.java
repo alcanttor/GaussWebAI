@@ -12,7 +12,7 @@ import com.mg.gaussWorker.model.Event;
 import com.mg.gaussWorker.model.RequestData;
 import com.mg.gaussWorker.config.EventFactory;
 import com.mg.gaussWorker.email.model.EmailData;
-import com.mg.gaussWorker.model.Actions;
+import com.mg.gaussWorker.model.Action;
 import com.mg.gaussWorker.model.BaseEvent;
 
 @Service
@@ -48,8 +48,8 @@ public class ConsumerService {
             containerFactory = "requestDataKafkaListenerFactory")
     public void consumeRequestData(RequestData requestData) {
         logger.info("Event at Consumer [{}]",requestData);
-        List<Actions> actions = requestData.getActions();
-        for (Actions action:actions)
+        List<Action> actions = requestData.getActions();
+        for (Action action:actions)
         {
         	logger.info("event published [{}]",action);
         	BaseEvent event = eventFactory.generateEvent(action,requestData);

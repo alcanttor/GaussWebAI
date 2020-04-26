@@ -1,4 +1,4 @@
-package com.mg.gateWay.model.tp;
+package com.mg.gateWay.model;
 
 import java.util.List;
 

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>Gauss AI Platform</title>
+<link href="../static/bootstrap.min.css" rel="stylesheet"
+	th:href="@{/css/bootstrap.min.css}" />
+<link href="../static/login.css" rel="stylesheet"
+	th:href="@{/css/login.css}" />
+
+</head>
+<body>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+				<form class="form-signin" th:action="@{/SiteToken}"
+					th:object="${siteToken}" method="POST">
+					<div class="card card-signin my-5">
+					<table border="2" >
+					<tr>
+					<td>UserName</td>
+					<td th:text="${session.USERNAME}"></td>
+					</tr><tr>
+					<td>Connector</td>
+					<td></td>
+					</tr><tr>
+					<td>SiteName</td>
+					<td></td>
+					</tr><tr>
+					<td>SystemEvent</td>
+					<td>
+						<select th:field="*{systemEventId}"
+							id="systemEventSelection">
+							<option value="0">select Event</option>
+							<option th:each="systemEvent : ${systemEvents}"
+								th:value="${systemEvent.id}" th:text="${systemEvent.name}">
+							</option>
+						</select>
+					</td>
+					</tr>
+					<tr>
+					<td colspan="2">
+					<button class="btn btn-lg btn-primary btn-block text-uppercase"
+								type="submit">Generate Token</button>
+					</td>
+					</tr>
+					</table>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- Bootstrap core JavaScript -->
+	<script src="../static/jquery/jquery.slim.min.js"
+		th:href="@{jquery/jquery.min.js}"></script>
+	<script src="../static/js/bootstrap.bundle.min.js"
+		th:href="@{js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>

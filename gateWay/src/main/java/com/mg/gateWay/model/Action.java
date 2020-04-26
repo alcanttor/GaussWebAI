@@ -1,6 +1,6 @@
 package com.mg.gateWay.model;
 
-public enum Actions {
+public enum Action {
 
 	SMS,EMAIL;
 }

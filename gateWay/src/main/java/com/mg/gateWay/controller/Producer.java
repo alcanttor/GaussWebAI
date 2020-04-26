@@ -25,6 +25,7 @@ public class Producer
 	{
 		try 
 		{
+			logger.info("request received at controller....");
 			return producerService.send(info);
 		} 
 		catch (Exception e) 

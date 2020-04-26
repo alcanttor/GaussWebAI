@@ -1,4 +1,4 @@
-package com.mg.gateWay.model.tp;
+package com.mg.gateWay.model;
 
 public enum SystemEvent {
 

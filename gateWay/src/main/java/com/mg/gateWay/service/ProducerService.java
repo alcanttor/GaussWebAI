@@ -10,98 +10,81 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import com.mg.gateWay.model.Actions;
+import com.mg.gateWay.model.SystemEvent;
+import com.mg.gateWay.model.Action;
 import com.mg.gateWay.model.HoaderResponse;
 import com.mg.gateWay.model.RequestData;
-import com.mg.gateWay.model.tp.Rule;
-import com.mg.gateWay.model.tp.Site;
+import com.mg.gateWay.model.Rule;
+import com.mg.gateWay.model.Site;
 
-/**Singleton scoped Kafka template initiator service class*/
+/** Singleton scoped Kafka template initiator service class */
 
 @Service
 public class ProducerService {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	
-	//@Autowired
+
+	@Autowired
 	private KafkaTemplate<String, RequestData> kafkaRequestDataTemplate;
-	
+
 	@Autowired
 	private UserManagementService userManagementService;
-	
+
 	@Value("${kafka.kafkaTopic}")
 	private String kafkaTopic;
 
 	public HoaderResponse send(RequestData request) {
 		Site site = userManagementService.getSitebyName(request.getSiteName());
-		HoaderResponse response = isSiteRegistered(request,site);
-		logger.info("Is site registered ["+request.getSiteName()+"] result ["+response.getResult()+"]");
-		if (response.getResult() == true)
+		HoaderResponse response = isSiteRegistered(request, site);
+		logger.info("Is site registered [" + request.getSiteName() + "] result [" + response.getResult() + "]");
+		if (response.getResult() == true) 
 		{
-			List<Actions> validAction = getValidActions(request,site);
-			if (validAction == null || validAction.size() ==0)
-			{
+			List<Action> validRules = getValidActions(request, site);
+			
+			if (validRules == null || validRules.size() == 0) {
 				response.setResult(false);
 				response.setMessage("no valid action");
 				return response;
-			}
-			else
-			{
-				request.setActions(validAction);
-				//kafkaRequestDataTemplate.send(kafkaTopic, request);
+			} else {
+				request.setActions(validRules);
+				kafkaRequestDataTemplate.send(kafkaTopic, request);
 				response.setMessage("request accepted");
 				response.setResult(true);
 				return response;
 			}
-		}
-		else
-		{
-			
+		} else {
+
 			return response;
 		}
-		
-	    
+
 	}
 
-	
-	private HoaderResponse isSiteRegistered (RequestData request,Site site)
-	{
-		HoaderResponse response = new HoaderResponse();	
+	private HoaderResponse isSiteRegistered(RequestData request, Site site) {
+		HoaderResponse response = new HoaderResponse();
 
-		if (site == null)
-		{
-			response.setMessage("site ["+request.getSiteName()+"] nor registered.");
+		if (site == null) {
+			response.setMessage("site [" + request.getSiteName() + "] nor registered.");
 			response.setResult(false);
-		}
-		else
-		{
+		} else {
 			response.setResult(true);
 		}
 		return response;
 	}
-	
-	private  List<Actions> getValidActions(RequestData request,Site site)
-	{
-		List<Actions> returnActions = new ArrayList<Actions>();
-	
-		List<Actions> actions = request.getActions();
+
+	private List<Action> getValidActions(RequestData request, Site site) {
+		List<Action> returnActions = new ArrayList<Action>();
+
 		List<Rule> rules = site.getRules();
-		for(Actions action: actions)
+
+		for (Rule rule : rules) 
 		{
-			for(Rule rule : rules)
+			logger.info("check this systemEvent [{}] Action [{}] isEnabled [{}]", rule.getSysTrigger(),rule.getAction(),rule.getEnabled());
+			if (rule.getEnabled() == true) 
 			{
-				logger.info("check this rule[{}] action[{}]",rule.getSysTrigger(),action);
-				if (rule.getSysTrigger().equals(action) && rule.getEnabled() == true)
-				{
-					returnActions.add(action);
-				}
+				returnActions.add(rule.getAction());
 			}
-		}
-		for(Actions vaction: returnActions)
-		{
-			logger.info("valid actions [{}]",vaction);
 		}
 		return returnActions;
 	}
-	
+
 }

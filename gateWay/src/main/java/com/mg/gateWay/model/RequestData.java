@@ -10,15 +10,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class RequestData {
 
-	private List<Actions> actions;
+	private SystemEvent systemEvent;
 	private Map<String,String> metaData;
 	private String siteName;
+	private List<Action> actions;
 	
-	public List<Actions> getActions() {
-		return actions;
+	
+	public SystemEvent getSystemEvent() {
+		return systemEvent;
 	}
-	public void setActions(List<Actions> actions) {
-		this.actions = actions;
+	public void setSystemEvent(SystemEvent systemEvent) {
+		this.systemEvent = systemEvent;
 	}
 	public Map<String, String> getMetaData() {
 		return metaData;
@@ -31,6 +33,12 @@ public class RequestData {
 	}
 	public void setSiteName(String siteName) {
 		this.siteName = siteName;
+	}
+	public List<Action> getActions() {
+		return actions;
+	}
+	public void setActions(List<Action> actions) {
+		this.actions = actions;
 	}
 	
 	

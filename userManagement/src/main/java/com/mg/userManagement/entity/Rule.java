@@ -5,6 +5,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Rule {
@@ -13,9 +14,10 @@ public class Rule {
 	@GeneratedValue
 	private Integer id;
 	
-	@Enumerated(EnumType.STRING)
+	@OneToOne
 	private SystemEvent sysTrigger;
-	@Enumerated(EnumType.STRING)
+
+	@OneToOne
 	private Action action;
 	private Boolean enabled;
 	
@@ -45,7 +47,6 @@ public class Rule {
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}
-	
-	
-	
+
+
 }

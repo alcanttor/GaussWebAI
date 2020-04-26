@@ -1,6 +1,6 @@
 package com.mg.gaussWorker.model;
 
-public enum Actions {
+public enum Action {
 
 	SMS,EMAIL;
 }

@@ -12,7 +12,6 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
-import com.mg.gateWay.model.Event;
 import com.mg.gateWay.model.RequestData;
 
 import java.util.HashMap;
@@ -22,70 +21,49 @@ import java.util.Map;
  * Construct Kafkatemplate object to initiate send request to Zookeeper 
  * */
 
-
 @Configuration
 public class KakfaConfiguration {
 
 	@Value("${kafka.kafkaIpPort}")
 	private String kafkaIpPort;
-	
+
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	
-    @Bean
-    public ProducerFactory<String, String> producerFactory() {
-        Map<String, Object> config = new HashMap<>();
 
-        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaIpPort);
-        config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        
-        logger.debug("Kafka factory object initiated");
+	@Bean
+	public ProducerFactory<String, String> producerFactory() {
+		Map<String, Object> config = new HashMap<>();
 
-        return new DefaultKafkaProducerFactory<>(config);
-    }
+		config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaIpPort);
+		config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+		config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 
-    @Bean
-    public ProducerFactory<String, Event> producerFactoryCustomized() {
-        Map<String, Object> config = new HashMap<>();
+		logger.debug("Kafka factory object initiated");
 
-        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaIpPort);
-        config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-        config.put(JsonSerializer.ADD_TYPE_INFO_HEADERS,"false");
-        
-        logger.debug("Kafka factory object initiated with event object");
+		return new DefaultKafkaProducerFactory<>(config);
+	}
 
-        return new DefaultKafkaProducerFactory<>(config);
-    }
+	@Bean
+	public ProducerFactory<String, RequestData> producerFactoryRequestData() {
+		Map<String, Object> config = new HashMap<>();
 
-    @Bean
-    public ProducerFactory<String, RequestData> producerFactoryRequestData() {
-        Map<String, Object> config = new HashMap<>();
+		config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaIpPort);
+		config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+		config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+		config.put(JsonSerializer.ADD_TYPE_INFO_HEADERS, "false");
 
-        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaIpPort);
-        config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-        config.put(JsonSerializer.ADD_TYPE_INFO_HEADERS,"false");
-        
-        logger.debug("Kafka factory object initiated");
+		logger.debug("Kafka factory object initiated");
 
-        return new DefaultKafkaProducerFactory<>(config);
-    }    
-    @Bean
-    public KafkaTemplate<String, String> kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
-    }
-    
-    @Bean
-    public KafkaTemplate<String, Event> kafkaEventDataTemplate()
-    {
-    	return new KafkaTemplate<>(producerFactoryCustomized());
-    }
-    
-    @Bean
-    public KafkaTemplate<String, RequestData> kafkaRequestDataTemplate()
-    {
-    	return new KafkaTemplate<>(producerFactoryRequestData());
-    }
+		return new DefaultKafkaProducerFactory<>(config);
+	}
+
+	@Bean
+	public KafkaTemplate<String, String> kafkaTemplate() {
+		return new KafkaTemplate<>(producerFactory());
+	}
+
+	@Bean
+	public KafkaTemplate<String, RequestData> kafkaRequestDataTemplate() {
+		return new KafkaTemplate<>(producerFactoryRequestData());
+	}
 
 }

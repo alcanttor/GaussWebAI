@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,13 +29,29 @@ public class SiteService {
 	@Autowired
 	private RuleService ruleService;
 
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	public Site registerSite(Site site, Integer userId) {
 
 		User user = userService.getUserById(userId);
-		List<Rule> rules = ruleService.saveList(site.getRules());
-		site.setUser(user);
-		site.setRules(rules);
-		return siteRepository.save(site);
+		Optional<Site> existingSiteOptional = siteRepository.getByName(site.getName());
+		if (existingSiteOptional.isPresent())
+		{
+			logger.info("Site [{}] already in DB, update it",site.getName());
+			Site existingSite = existingSiteOptional.get();
+			//existingSite.getRules().add(site.getRules().get(0));
+			//List<Rule> rules = ruleService.saveList(site.getRules());
+			//existingSite.setRules(rules);
+			return existingSite;
+		}
+		else
+		{
+			logger.info("Site [{}] not in DB, create it",site.getName());
+			List<Rule> rules = ruleService.saveList(site.getRules());
+			site.setUser(user);
+			site.setRules(rules);
+			return siteRepository.save(site);
+		}
 	}
 
 	public Site getSiteById(Integer siteId) {
@@ -54,24 +70,36 @@ public class SiteService {
 			return null;
 	}
 	
-	@Transactional
 	public Site addRule(Integer siteId,Rule rule)
 	{
-		Site site = siteRepository.findById(siteId).get();
-		System.out.println("Site is found......");
-		List<Rule> rules = site.getRules();
-		System.out.println("rules of site : "+rules);
-		if(rules == null)
+		Optional<Site> siteOptional = siteRepository.findById(siteId);
+		if (siteOptional.isPresent())
 		{
-			rules = new ArrayList<>();
+			Site site = siteOptional.get();
+			System.out.println("Site is found......");
+			List<Rule> rules = site.getRules();
+			System.out.println("rules of site : "+rules);
+			if(rules == null)
+			{
+				rules = new ArrayList<>();
+			}
+			rules.add(rule);
+			System.out.println("new rule added to list");
+			try
+			{
+				return siteRepository.save(site);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				return null;
+			}
 		}
-		rules.add(ruleService.save(rule));
-		System.out.println("new rule added to list");
-		try{
-		return siteRepository.save(site);
+		else
+		{
+			logger.info("Site is not present in DB");
+			return null;
 		}
-		catch(Exception e){e.printStackTrace();
-		return null;}
 	}
 	
 	public List<Site> getAll()

@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.common.base.Optional;
 import com.mg.userManagement.entity.User;
 import com.mg.userManagement.repo.UserRepository;
 
@@ -39,4 +40,14 @@ public class UserService {
 	{
 		return userRepository.findById(id).get();
 	}
+	
+	public boolean isUservalid(String name, String password)
+	{
+		Optional<User> userOptional = userRepository.findByNameAndPassword(name, password);
+		if (userOptional.isPresent())
+			return true;
+		else
+			return false;
+	}
+	
 }
