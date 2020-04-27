@@ -15,38 +15,35 @@ public class Rule {
 	private Integer id;
 	
 	@OneToOne
-	private SystemEvent sysTrigger;
+	SystemRule systemRule;
+	
+	Boolean enabled;
 
-	@OneToOne
-	private Action action;
-	private Boolean enabled;
-	
-	public Rule(){}
-	
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public SystemEvent getSysTrigger() {
-		return sysTrigger;
+
+	public SystemRule getSystemRule() {
+		return systemRule;
 	}
-	public void setSysTrigger(SystemEvent sysTrigger) {
-		this.sysTrigger = sysTrigger;
+
+	public void setSystemRule(SystemRule systemRule) {
+		this.systemRule = systemRule;
 	}
-	public Action getAction() {
-		return action;
-	}
-	public void setAction(Action action) {
-		this.action = action;
-	}
+
 	public Boolean getEnabled() {
 		return enabled;
 	}
+
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}
-
-
+	
+	
+	
+	
 }

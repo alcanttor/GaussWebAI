@@ -17,7 +17,8 @@ public class Site {
 	@GeneratedValue
 	private Integer id;
 	private String name;
-	private String connector;
+	@OneToOne
+	private Connector connector;
 	@ManyToOne
 	private User user;
 	@OneToOne
@@ -39,10 +40,10 @@ public class Site {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getConnector() {
+	public Connector getConnector() {
 		return connector;
 	}
-	public void setConnector(String connector) {
+	public void setConnector(Connector connector) {
 		this.connector = connector;
 	}
 	public User getUser() {
