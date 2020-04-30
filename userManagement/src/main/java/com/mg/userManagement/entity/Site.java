@@ -1,27 +1,42 @@
 package com.mg.userManagement.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.TableGenerator;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 public class Site {
-
+	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(generator="LICENSE_TABLE_SEQ",strategy=GenerationType.TABLE)
+	@TableGenerator(name="LICENSE_TABLE_SEQ",table="sequences", pkColumnName="SEQ_NAME", 
+	valueColumnName="SEQ_NUMBER", pkColumnValue="LICENSE_ID", allocationSize=1)
 	private Integer id;
+	
+	@CreationTimestamp
+	private Date createdDate;
+	@UpdateTimestamp
+	private Date updatedDate;
+	
 	private String name;
+	
 	@OneToOne
 	private Connector connector;
 	@ManyToOne
 	private User user;
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	private SiteToken siteToken;
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<Rule> rules;
@@ -65,6 +80,22 @@ public class Site {
 
 	public void setSiteToken(SiteToken siteToken) {
 		this.siteToken = siteToken;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
 	}
 	
 	

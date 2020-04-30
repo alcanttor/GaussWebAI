@@ -19,25 +19,48 @@ public class SiteController {
 	@Autowired
 	private SiteService siteService;
 	
-	@PostMapping(value="/AddSite/{userId}")
-	public Site addSite(@RequestBody Site site, @PathVariable Integer userId)
+	
+	/*invoke service to generate token and register site(s) for the user*/
+	@PostMapping(value="/addsite/{userId}")
+	public List<Site> addSite(@RequestBody List<Site> sites, @PathVariable Integer userId)
 	{
-		return siteService.registerSite(site, userId) ;
+		return siteService.registerSite(sites, userId) ;
 	}
 	
-	@PostMapping(value="/AddRule/{siteId}")
+	/*invoke service to retrieve all site(s) for the user*/
+	@GetMapping(value="/getsitebyuserid/{userId}")
+	public List<Site> getSitebyUserId(@PathVariable Integer userId)
+	{
+		return siteService.getSiteByUser(userId) ;
+	}
+	
+	/*invoke service to delete site by ID*/
+	@GetMapping(value="/deletesitebyid/{siteId}")
+	public boolean deleteSitebySiteId(@PathVariable Integer siteId)
+	{
+		return siteService.deleteSiteById(siteId) ;
+	}
+	
+	/*invoke service to update selected site*/
+	@PostMapping(value="/updatesite/{userId}")
+	public Site updateSite(@RequestBody Site site, @PathVariable Integer userId)
+	{
+		return siteService.updateSite(site, userId) ;
+	}
+	
+	@PostMapping(value="/addrule/{siteId}")
 	public Site addRule(@PathVariable Integer siteId, @RequestBody Rule rule)
 	{
 		return siteService.addRule(siteId, rule);
 	}
 	
-	@GetMapping(value="/getAll")
+	@GetMapping(value="/getall")
 	public List<Site> getAll()
 	{
 		return siteService.getAll();
 	}
 	
-	@PostMapping("/getSite")
+	@PostMapping("/getsite")
 	public Site getSitebyName(@RequestBody Site site)
 	{
 		return siteService.getSiteByName(site.getName());

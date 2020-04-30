@@ -1,17 +1,33 @@
 package com.mg.userManagement.entity;
 
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 public class SiteToken {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
+	
+	@Column(unique=true)
 	private String token;
 	private Boolean isValid;
+	
+	
+	@CreationTimestamp
+	private Date createdDate;
+	@UpdateTimestamp
+	private Date updatedDate;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -29,6 +45,18 @@ public class SiteToken {
 	}
 	public void setIsValid(Boolean isValid) {
 		this.isValid = isValid;
+	}
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
 	}
 	
 	

@@ -19,41 +19,95 @@ import com.mg.userManagement.repo.UserRepository;
 public class SiteService {
 
 	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
 	private UserService userService;
 	@Autowired
 	private SiteRepository siteRepository;
-	
 	@Autowired
-	private RuleService ruleService;
+	private UserRepository userRepository;
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	public Site registerSite(Site site, Integer userId) {
-
+	/*Method to check for existing sites, and invoke token assignment as well as registration of new sites*/
+	public List<Site> registerSite(List<Site> sites, Integer userId)
+	{
 		User user = userService.getUserById(userId);
-		Optional<Site> existingSiteOptional = siteRepository.getByName(site.getName());
-		if (existingSiteOptional.isPresent())
+		Optional<Site> existingSiteOptional;
+		Site existingSite;
+		List<Site> savedSite = new ArrayList<>();
+		
+		for(Site site: sites)
 		{
-			logger.info("Site [{}] already in DB, update it",site.getName());
-			Site existingSite = existingSiteOptional.get();
-			//existingSite.getRules().add(site.getRules().get(0));
-			//List<Rule> rules = ruleService.saveList(site.getRules());
-			//existingSite.setRules(rules);
-			return existingSite;
+			existingSiteOptional = siteRepository.getByName(site.getName());
+			if (existingSiteOptional.isPresent())
+			{
+				logger.info("Site [{}] already registered. No action required.",site.getName());
+				existingSite = existingSiteOptional.get();
+				savedSite.add(existingSite);
+			}
+			else
+			{
+				logger.info("Site [{}] registration process starts", site.getName());
+				
+				//Add implementation to get auto-generated token and set it for site entity
+				
+				site.setUser(user);
+				savedSite.add(siteRepository.save(site));
+				logger.info("Site [{}] registered successfully", site.getName());
+			}
 		}
-		else
-		{
-			logger.info("Site [{}] not in DB, create it",site.getName());
-			List<Rule> rules = ruleService.saveList(site.getRules());
-			site.setUser(user);
-			site.setRules(rules);
-			return siteRepository.save(site);
+		return savedSite;
+	}
+	
+	/*Method to retrieve existing sites for logged in user*/
+	public List<Site> getSiteByUser(Integer userId) {
+		logger.info("Retreiving user info for the listing the sites");
+		User user = userRepository.findById(userId).get();
+		
+		logger.info("Retreiving sites for user [{}]", user.getName());
+		Optional <List<Site>> site = siteRepository.getByUser(user);
+		
+		if (site.isPresent()) {
+			logger.info("Sites found for the user", user.getName());
+			return site.get();
+		}
+		else {
+			logger.info("No sites found for the user", user.getName());
+			return null;		
 		}
 	}
-
+	
+	
+	/*Method to retrieve existing sites for logged in user*/
+	public boolean deleteSiteById(Integer siteId) {
+		try {
+			logger.info("Attempting to delete site");
+			siteRepository.deleteById(siteId);
+			logger.info("Deletion success");
+			return true;
+		}
+		catch(IllegalArgumentException ex) {
+			logger.error("Deletion process failed: ",ex);
+			return false;
+		}
+	}
+	
+	/*Method to update existing sites for logged in user*/
+	public Site updateSite(Site site, Integer userID) {
+			logger.info("Attempting to update site [{}]", site.getName());
+			Site updatedSite = this.getSiteById(site.getId());
+			
+			if(updatedSite!=null) {
+				updatedSite.setName(site.getName());
+				return siteRepository.save(updatedSite);
+			}
+			else {
+				logger.error("Site [{}] not found. Aborting operation", site.getName());
+				return null;
+			}
+	}
+	
+	
+	/*Returns the site for given site id*/
 	public Site getSiteById(Integer siteId) {
 		Optional<Site> site = siteRepository.findById(siteId);
 		if (site.isPresent())
@@ -62,6 +116,7 @@ public class SiteService {
 			return null;
 	}
 
+	/*Returns the site for given site id*/
 	public Site getSiteByName(String siteName) {
 		Optional<Site> site = siteRepository.getByName(siteName);
 		if (site.isPresent())
@@ -106,4 +161,5 @@ public class SiteService {
 	{
 		return siteRepository.findAll();
 	}
+
 }
