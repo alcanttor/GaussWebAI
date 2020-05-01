@@ -28,7 +28,7 @@ public class SiteService {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	/*Method to check for existing sites, and invoke token assignment as well as registration of new sites*/
-	public List<Site> registerSite(List<Site> sites, Integer userId)
+	public List<Site> registerSitebyUserId(List<Site> sites, Integer userId)
 	{
 		User user = userService.getUserById(userId);
 		Optional<Site> existingSiteOptional;
@@ -59,7 +59,7 @@ public class SiteService {
 	}
 	
 	/*Method to retrieve existing sites for logged in user*/
-	public List<Site> getSiteByUser(Integer userId) {
+	public List<Site> getSiteByUserId(Integer userId) {
 		logger.info("Retreiving user info for the listing the sites");
 		User user = userRepository.findById(userId).get();
 		
@@ -92,13 +92,15 @@ public class SiteService {
 	}
 	
 	/*Method to update existing sites for logged in user*/
-	public Site updateSite(Site site, Integer userID) {
+	public Site updateSitebyId(Site site, Integer userID) {
 			logger.info("Attempting to update site [{}]", site.getName());
 			Site updatedSite = this.getSiteById(site.getId());
 			
 			if(updatedSite!=null) {
 				updatedSite.setName(site.getName());
-				return siteRepository.save(updatedSite);
+				updatedSite = siteRepository.save(updatedSite);
+				logger.info("Update site to site [{}] successfully", updatedSite.getName());
+				return updatedSite;
 			}
 			else {
 				logger.error("Site [{}] not found. Aborting operation", site.getName());
@@ -115,51 +117,44 @@ public class SiteService {
 		else
 			return null;
 	}
-
-	/*Returns the site for given site id*/
-	public Site getSiteByName(String siteName) {
-		Optional<Site> site = siteRepository.getByName(siteName);
-		if (site.isPresent())
-			return site.get();
-		else
-			return null;
-	}
 	
-	public Site addRule(Integer siteId,Rule rule)
+	
+	/*Add new rule for the given site*/
+	public Site addRulebySiteId(Integer siteId, Rule rule)
 	{
 		Optional<Site> siteOptional = siteRepository.findById(siteId);
+		Site site = siteOptional.get();
+		
 		if (siteOptional.isPresent())
 		{
-			Site site = siteOptional.get();
-			System.out.println("Site is found......");
+			logger.info("Site [{}] found; attempting to add new rule to it", site.getName());
+
 			List<Rule> rules = site.getRules();
-			System.out.println("rules of site : "+rules);
 			if(rules == null)
 			{
 				rules = new ArrayList<>();
 			}
+			
 			rules.add(rule);
-			System.out.println("new rule added to list");
+			site.setRules(rules);
+			logger.info("New rule added for the site: [{}]", site.getName());
+			
 			try
 			{
 				return siteRepository.save(site);
 			}
-			catch(Exception e)
+			
+			catch(Exception ex)
 			{
-				e.printStackTrace();
+				logger.error("Save failed while trying to add new rule for the site: ",ex);
 				return null;
 			}
 		}
 		else
 		{
-			logger.info("Site is not present in DB");
+			logger.error("Site [{}] not found", site.getName());
 			return null;
 		}
-	}
-	
-	public List<Site> getAll()
-	{
-		return siteRepository.findAll();
 	}
 
 }

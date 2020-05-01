@@ -1,11 +1,8 @@
 package com.mg.userManagement.entity;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -19,6 +16,7 @@ public class SystemRule {
 	private SystemEvent systemEvent;
 	@OneToOne
 	private Action action;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -43,5 +41,4 @@ public class SystemRule {
 	public void setAction(Action action) {
 		this.action = action;
 	}
-	
 }
