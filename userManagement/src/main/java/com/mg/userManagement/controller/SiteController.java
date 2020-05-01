@@ -36,7 +36,7 @@ public class SiteController {
 	
 	/*invoke service to delete site by ID*/
 	@GetMapping(value="/deletesitebyid/{siteId}")
-	public boolean deleteSitebySite(@PathVariable Integer siteId)
+	public boolean deleteSitebySiteId(@PathVariable Integer siteId)
 	{
 		return siteService.deleteSiteById(siteId) ;
 	}
@@ -55,4 +55,10 @@ public class SiteController {
 		return siteService.addRulebySiteId(siteId, rule);
 	}
 	
+	/*invoke service to get list of all rules for a given user*/
+	@PostMapping(value="/getallrules/{userId}")
+	public List<Rule> getAllRules(@PathVariable Integer userId)
+	{
+		return siteService.getAllRulesbyUserID(userId);
+	}
 }

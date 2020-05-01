@@ -64,11 +64,11 @@ public class SiteService {
 		User user = userRepository.findById(userId).get();
 		
 		logger.info("Retreiving sites for user [{}]", user.getName());
-		Optional <List<Site>> site = siteRepository.getByUser(user);
+		Optional <List<Site>> sites = siteRepository.getByUser(user);
 		
-		if (site.isPresent()) {
+		if (sites.isPresent()) {
 			logger.info("Sites found for the user", user.getName());
-			return site.get();
+			return sites.get();
 		}
 		else {
 			logger.info("No sites found for the user", user.getName());
@@ -156,5 +156,47 @@ public class SiteService {
 			return null;
 		}
 	}
+	
+	/*Retrieves list of rules for a given userId*/
+	public List<Rule> getAllRulesbyUserID(Integer userId)
+	{
+		logger.info("Retreiving user info for the listing the sites");
+		User user = userRepository.findById(userId).get();
+		
+		logger.info("Retreiving sites for user [{}]", user.getName());
+		Optional <List<Site>> sites = siteRepository.getByUser(user);
+		
+		List<Rule> globalUserRules = new ArrayList<Rule>(); 
+		
+		if (sites.isPresent()) {
+			logger.info("Sites found for user [{}]", user.getName());
+			List<Site> sitesList = sites.get();
+			
+			for(Site site: sitesList)
+			{			
+				logger.info("Retreiving rules for site [{}]", site.getName());
+				List<Rule> rules = site.getRules();
+				
+				if(rules == null) {
+					logger.info("No rules found for site [{}]", site.getName());
+					continue;
+				}
+				for (Rule rule: rules)
+					globalUserRules.add(rule);
+			}
+			
+			if(globalUserRules.isEmpty()) 
+				logger.info("No rules found for user [{}]", user.getName());
+			else
+				logger.info("Rules found for user [{}]", user.getName());
+			
+			return globalUserRules;
+		}
+		else {
+			logger.info("No sites and rules found for user [{}]", user.getName());
+			return null;
+		}
+	}
+
 
 }
