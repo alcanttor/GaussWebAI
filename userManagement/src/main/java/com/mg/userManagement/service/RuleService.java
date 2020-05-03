@@ -2,6 +2,7 @@ package com.mg.userManagement.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,14 @@ public class RuleService {
 			savedRules.add(this.save(rule));
 		}
 		return savedRules;
+	}
+
+	public Rule getById(Integer ruleId) throws Exception {
+		Optional<Rule> ruleOptional = ruleRepository.findById(ruleId);
+		if (ruleOptional.isPresent())
+			return ruleOptional.get();
+		else
+			throw new Exception("Rule not found");
 	}
 	
 }

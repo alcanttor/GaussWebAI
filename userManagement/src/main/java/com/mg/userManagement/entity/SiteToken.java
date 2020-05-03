@@ -15,7 +15,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class SiteToken {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="siteToken_seq")
 	private Integer id;
 	
 	@Column(unique=true)

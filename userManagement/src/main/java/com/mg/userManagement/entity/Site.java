@@ -20,9 +20,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class Site {
 	
 	@Id
-	@GeneratedValue(generator="LICENSE_TABLE_SEQ",strategy=GenerationType.TABLE)
-	@TableGenerator(name="LICENSE_TABLE_SEQ",table="sequences", pkColumnName="SEQ_NAME", 
-	valueColumnName="SEQ_NUMBER", pkColumnValue="LICENSE_ID", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="site_seq")
 	private Integer id;
 	
 	@CreationTimestamp

@@ -2,6 +2,7 @@ package com.mg.userManagement.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
@@ -9,9 +10,9 @@ import javax.persistence.OneToOne;
 public class SystemRule {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="systemRule_seq")
 	private Integer id;
-	private String name;
+	private String descripton;
 	@OneToOne
 	private SystemEvent systemEvent;
 	@OneToOne
@@ -23,11 +24,12 @@ public class SystemRule {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
+	
+	public String getDescripton() {
+		return descripton;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setDescripton(String descripton) {
+		this.descripton = descripton;
 	}
 	public SystemEvent getSystemEvent() {
 		return systemEvent;

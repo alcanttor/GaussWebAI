@@ -21,11 +21,29 @@ public class SiteController {
 	
 	
 	/*invoke service to generate token and register site(s) for the user*/
-	@PostMapping(value="/addsite/{userId}")
+	@PostMapping(value="/addsites/{userId}")
 	public List<Site> addSitesbyUser(@RequestBody List<Site> sites, @PathVariable Integer userId)
 	{
-		return siteService.registerSitebyUserId(sites, userId) ;
+		try {
+			return siteService.registerSitebyUserId(sites, userId) ;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
+	
+	@PostMapping(value="/addsite/{userId}")
+	public Site addSitebyUser(@RequestBody Site site, @PathVariable Integer userId)
+	{
+		try {
+			return siteService.registerSitebyUserId(site, userId);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	
 	/*invoke service to retrieve all site(s) for the user*/
 	@GetMapping(value="/getsitebyuserid/{userId}")
@@ -60,5 +78,16 @@ public class SiteController {
 	public List<Rule> getAllRules(@PathVariable Integer userId)
 	{
 		return siteService.getAllRulesbyUserID(userId);
+	}
+	
+	public Site asociateTemplate(Integer siteId,Integer ruleId, Integer emailTemplateId)
+	{
+		try {
+			return siteService.asociateTemplate(siteId, ruleId,  emailTemplateId);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

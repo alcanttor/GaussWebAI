@@ -2,13 +2,14 @@ package com.mg.userManagement.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Connector {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="connector_seq")
 	private Integer id;
 	private String name;
 	public Integer getId() {

@@ -9,9 +9,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mg.userManagement.entity.EmailTemplate;
 import com.mg.userManagement.entity.Rule;
 import com.mg.userManagement.entity.Site;
 import com.mg.userManagement.entity.User;
+import com.mg.userManagement.repo.EmailTemplateRepository;
+import com.mg.userManagement.repo.RuleRepository;
 import com.mg.userManagement.repo.SiteRepository;
 import com.mg.userManagement.repo.UserRepository;
 
@@ -25,31 +28,36 @@ public class SiteService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private RuleRepository ruleRepository;
+
+	@Autowired
+	private EmailTemplateService emailTemplateService;
+
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	
-	/*Method to check for existing sites, and invoke token assignment as well as registration of new sites*/
-	public List<Site> registerSitebyUserId(List<Site> sites, Integer userId)
-	{
+
+	/*
+	 * Method to check for existing sites, and invoke token assignment as well
+	 * as registration of new sites
+	 */
+	public List<Site> registerSitebyUserId(List<Site> sites, Integer userId) throws Exception {
 		User user = userService.getUserById(userId);
 		Optional<Site> existingSiteOptional;
 		Site existingSite;
 		List<Site> savedSite = new ArrayList<>();
-		
-		for(Site site: sites)
-		{
+
+		for (Site site : sites) {
 			existingSiteOptional = siteRepository.getByName(site.getName());
-			if (existingSiteOptional.isPresent())
-			{
-				logger.info("Site [{}] already registered. No action required.",site.getName());
+			if (existingSiteOptional.isPresent()) {
+				logger.info("Site [{}] already registered. No action required.", site.getName());
 				existingSite = existingSiteOptional.get();
 				savedSite.add(existingSite);
-			}
-			else
-			{
+			} else {
 				logger.info("Site [{}] registration process starts", site.getName());
-				
-				//Add implementation to get auto-generated token and set it for site entity
-				
+
+				// Add implementation to get auto-generated token and set it for
+				// site entity
+
 				site.setUser(user);
 				savedSite.add(siteRepository.save(site));
 				logger.info("Site [{}] registered successfully", site.getName());
@@ -57,59 +65,75 @@ public class SiteService {
 		}
 		return savedSite;
 	}
-	
-	/*Method to retrieve existing sites for logged in user*/
+
+	public Site registerSitebyUserId(Site site, Integer userId) throws Exception {
+		User user = userService.getUserById(userId);
+
+		Optional<Site> existingSiteOptional = siteRepository.getByName(site.getName());
+		;
+
+		if (existingSiteOptional.isPresent()) {
+			logger.info("Site [{}] already registered. No action required.", site.getName());
+			throw new Exception("Site already registered");
+		} else {
+			logger.info("Site [{}] registration process starts", site.getName());
+
+			// Add implementation to get auto-generated token and set it for
+			// site entity
+
+			site.setUser(user);
+			return siteRepository.save(site);
+			// logger.info("Site [{}] registered successfully", site.getName());
+		}
+	}
+
+	/* Method to retrieve existing sites for logged in user */
 	public List<Site> getSiteByUserId(Integer userId) {
 		logger.info("Retreiving user info for the listing the sites");
 		User user = userRepository.findById(userId).get();
-		
+
 		logger.info("Retreiving sites for user [{}]", user.getName());
-		Optional <List<Site>> sites = siteRepository.getByUser(user);
-		
+		Optional<List<Site>> sites = siteRepository.getByUser(user);
+
 		if (sites.isPresent()) {
 			logger.info("Sites found for the user", user.getName());
 			return sites.get();
-		}
-		else {
+		} else {
 			logger.info("No sites found for the user", user.getName());
-			return null;		
+			return null;
 		}
 	}
-	
-	
-	/*Method to retrieve existing sites for logged in user*/
+
+	/* Method to retrieve existing sites for logged in user */
 	public boolean deleteSiteById(Integer siteId) {
 		try {
 			logger.info("Attempting to delete site");
 			siteRepository.deleteById(siteId);
 			logger.info("Deletion success");
 			return true;
-		}
-		catch(IllegalArgumentException ex) {
-			logger.error("Deletion process failed: ",ex);
+		} catch (IllegalArgumentException ex) {
+			logger.error("Deletion process failed: ", ex);
 			return false;
 		}
 	}
-	
-	/*Method to update existing sites for logged in user*/
+
+	/* Method to update existing sites for logged in user */
 	public Site updateSitebyId(Site site, Integer userID) {
-			logger.info("Attempting to update site [{}]", site.getName());
-			Site updatedSite = this.getSiteById(site.getId());
-			
-			if(updatedSite!=null) {
-				updatedSite.setName(site.getName());
-				updatedSite = siteRepository.save(updatedSite);
-				logger.info("Update site to site [{}] successfully", updatedSite.getName());
-				return updatedSite;
-			}
-			else {
-				logger.error("Site [{}] not found. Aborting operation", site.getName());
-				return null;
-			}
+		logger.info("Attempting to update site [{}]", site.getName());
+		Site updatedSite = this.getSiteById(site.getId());
+
+		if (updatedSite != null) {
+			updatedSite.setName(site.getName());
+			updatedSite = siteRepository.save(updatedSite);
+			logger.info("Update site to site [{}] successfully", updatedSite.getName());
+			return updatedSite;
+		} else {
+			logger.error("Site [{}] not found. Aborting operation", site.getName());
+			return null;
+		}
 	}
-	
-	
-	/*Returns the site for given site id*/
+
+	/* Returns the site for given site id */
 	public Site getSiteById(Integer siteId) {
 		Optional<Site> site = siteRepository.findById(siteId);
 		if (site.isPresent())
@@ -117,86 +141,98 @@ public class SiteService {
 		else
 			return null;
 	}
-	
-	
-	/*Add new rule for the given site*/
-	public Site addRulebySiteId(Integer siteId, Rule rule)
-	{
+
+	/* Add new rule for the given site */
+	public Site addRulebySiteId(Integer siteId, Rule rule) {
 		Optional<Site> siteOptional = siteRepository.findById(siteId);
 		Site site = siteOptional.get();
-		
-		if (siteOptional.isPresent())
-		{
+
+		if (siteOptional.isPresent()) {
 			logger.info("Site [{}] found; attempting to add new rule to it", site.getName());
 
 			List<Rule> rules = site.getRules();
-			if(rules == null)
-			{
+			if (rules == null) {
 				rules = new ArrayList<>();
 			}
-			
+
 			rules.add(rule);
 			site.setRules(rules);
 			logger.info("New rule added for the site: [{}]", site.getName());
-			
-			try
-			{
+
+			try {
 				return siteRepository.save(site);
 			}
-			
-			catch(Exception ex)
-			{
-				logger.error("Save failed while trying to add new rule for the site: ",ex);
+
+			catch (Exception ex) {
+				logger.error("Save failed while trying to add new rule for the site: ", ex);
 				return null;
 			}
-		}
-		else
-		{
+		} else {
 			logger.error("Site [{}] not found", site.getName());
 			return null;
 		}
 	}
-	
-	/*Retrieves list of rules for a given userId*/
-	public List<Rule> getAllRulesbyUserID(Integer userId)
-	{
+
+	/* Retrieves list of rules for a given userId */
+	public List<Rule> getAllRulesbyUserID(Integer userId) {
 		logger.info("Retreiving user info for the listing the sites");
 		User user = userRepository.findById(userId).get();
-		
+
 		logger.info("Retreiving sites for user [{}]", user.getName());
-		Optional <List<Site>> sites = siteRepository.getByUser(user);
-		
-		List<Rule> globalUserRules = new ArrayList<Rule>(); 
-		
+		Optional<List<Site>> sites = siteRepository.getByUser(user);
+
+		List<Rule> globalUserRules = new ArrayList<Rule>();
+
 		if (sites.isPresent()) {
 			logger.info("Sites found for user [{}]", user.getName());
 			List<Site> sitesList = sites.get();
-			
-			for(Site site: sitesList)
-			{			
+
+			for (Site site : sitesList) {
 				logger.info("Retreiving rules for site [{}]", site.getName());
 				List<Rule> rules = site.getRules();
-				
-				if(rules == null) {
+
+				if (rules == null) {
 					logger.info("No rules found for site [{}]", site.getName());
 					continue;
 				}
-				for (Rule rule: rules)
+				for (Rule rule : rules)
 					globalUserRules.add(rule);
 			}
-			
-			if(globalUserRules.isEmpty()) 
+
+			if (globalUserRules.isEmpty())
 				logger.info("No rules found for user [{}]", user.getName());
 			else
 				logger.info("Rules found for user [{}]", user.getName());
-			
+
 			return globalUserRules;
-		}
-		else {
+		} else {
 			logger.info("No sites and rules found for user [{}]", user.getName());
 			return null;
 		}
 	}
 
+	public Site asociateTemplate(Integer siteId, Integer ruleId, Integer emailTemplateId) throws Exception {
+		Optional<Site> siteOptional = siteRepository.findById(siteId);
+		Rule rule = null;
+		Site site = getSiteById(siteId);
+		EmailTemplate emailTemplate = emailTemplateService.getById(emailTemplateId);
+		Optional<Rule> ruleOptional = ruleRepository.findById(ruleId);
+		if (ruleOptional.isPresent()) {
+			rule = ruleOptional.get();
+
+		} else {
+			throw new Exception("RUle not present");
+		}
+		
+		List<Rule> ruleAssociatedWithTemplate = emailTemplate.getRules();
+		if (ruleAssociatedWithTemplate == null)
+		{
+			ruleAssociatedWithTemplate = new ArrayList<>();
+		}
+		ruleAssociatedWithTemplate.add(rule);
+		emailTemplate.setRules(ruleAssociatedWithTemplate);
+		emailTemplateService.update(emailTemplateId,emailTemplate);
+		return site;
+	}
 
 }

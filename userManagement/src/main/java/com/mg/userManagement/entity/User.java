@@ -2,13 +2,14 @@ package com.mg.userManagement.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class User {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="user_seq")
 	private Integer id;
 	
 	private String name;

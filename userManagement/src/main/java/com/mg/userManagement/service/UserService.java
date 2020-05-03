@@ -1,7 +1,9 @@
 package com.mg.userManagement.service;
 
+import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
 
+import org.omg.CORBA.UserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +38,19 @@ public class UserService {
 		return userRepository.findAll();
 	}
 	
-	public User getUserById(Integer id)
+	public User getUserById(Integer id) throws Exception
 	{
-		return userRepository.findById(id).get();
+		java.util.Optional<User> userOptional = userRepository.findById(id);
+		if (userOptional.isPresent())
+		{
+			return userOptional.get();
+		}
+		else
+		{
+			throw new Exception("User ["+id+"] not valild");
+		}
+		
+		
 	}
 	
 	public boolean isUservalid(String name, String password)
