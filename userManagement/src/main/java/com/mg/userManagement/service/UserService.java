@@ -1,9 +1,6 @@
 package com.mg.userManagement.service;
 
-import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
-
-import org.omg.CORBA.UserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

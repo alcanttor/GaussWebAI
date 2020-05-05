@@ -13,7 +13,6 @@ import com.mg.userManagement.entity.EmailTemplate;
 import com.mg.userManagement.entity.Rule;
 import com.mg.userManagement.entity.Site;
 import com.mg.userManagement.entity.User;
-import com.mg.userManagement.repo.EmailTemplateRepository;
 import com.mg.userManagement.repo.RuleRepository;
 import com.mg.userManagement.repo.SiteRepository;
 import com.mg.userManagement.repo.UserRepository;
@@ -212,7 +211,7 @@ public class SiteService {
 	}
 
 	public Site asociateTemplate(Integer siteId, Integer ruleId, Integer emailTemplateId) throws Exception {
-		Optional<Site> siteOptional = siteRepository.findById(siteId);
+		//Optional<Site> siteOptional = siteRepository.findById(siteId);
 		Rule rule = null;
 		Site site = getSiteById(siteId);
 		EmailTemplate emailTemplate = emailTemplateService.getById(emailTemplateId);

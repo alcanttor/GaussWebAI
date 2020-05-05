@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mg.userManagement.entity.EmailTemplate;
-import com.mg.userManagement.entity.Rule;
-import com.mg.userManagement.entity.Site;
 import com.mg.userManagement.service.EmailTemplateService;
-import com.mg.userManagement.service.SiteService;
 
 @RestController
 public class EmailTemplateController {

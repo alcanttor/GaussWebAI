@@ -8,15 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.yaml.snakeyaml.emitter.Emitable;
-
 import com.mg.userManagement.entity.EmailTemplate;
 import com.mg.userManagement.entity.Rule;
-import com.mg.userManagement.entity.Site;
 import com.mg.userManagement.entity.User;
 import com.mg.userManagement.repo.EmailTemplateRepository;
-import com.mg.userManagement.repo.SiteRepository;
-import com.mg.userManagement.repo.UserRepository;
 
 @Service
 public class EmailTemplateService {

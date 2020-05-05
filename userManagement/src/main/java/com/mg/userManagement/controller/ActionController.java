@@ -6,9 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mg.userManagement.entity.Action;
-import com.mg.userManagement.entity.SystemEvent;
 import com.mg.userManagement.service.ActionService;
-import com.mg.userManagement.service.SystemEventService;
 
 @RestController
 public class ActionController {

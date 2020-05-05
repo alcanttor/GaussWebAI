@@ -1,14 +1,11 @@
 package com.mg.userManagement.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mg.userManagement.entity.Rule;
 import com.mg.userManagement.entity.SystemEvent;
-import com.mg.userManagement.repo.RuleRepository;
 import com.mg.userManagement.repo.SystemEventRepository;
 
 @Service
