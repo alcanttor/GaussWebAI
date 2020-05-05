@@ -8,25 +8,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mg.userManagement.dto.UserCreateDTO;
+import com.mg.userManagement.dtoservice.UserServiceDTO;
 import com.mg.userManagement.entity.User;
-import com.mg.userManagement.service.UserService;
 
 @RestController
 public class UserController {
-
+	
 	@Autowired
-	private UserService userService;
+	UserServiceDTO userServiceDTO;
 	
 	@GetMapping(value="/getAllUser")
 	public List<User> getAll()
 	{
-		return userService.getAll();
+		//return userService.getAll();
+		return null;
 	}
 	
 	@PostMapping(value="/saveUser")
-	public User save(@RequestBody User user)
+	public UserCreateDTO save(@RequestBody UserCreateDTO userCreateDTO)
 	{
-		System.out.println("user in controller : "+user);
-		return userService.create(user);
+		return userServiceDTO.createUser(userCreateDTO);
 	}
 }
