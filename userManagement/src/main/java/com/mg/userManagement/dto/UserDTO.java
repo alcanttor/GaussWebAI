@@ -2,7 +2,7 @@ package com.mg.userManagement.dto;
 
 import javax.persistence.Id;
 
-public class UserCreateDTO {
+public class UserDTO {
 	
 	@Id
 	private Integer id;

@@ -3,7 +3,7 @@ package com.mg.userManagement.dtoservice;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.mg.userManagement.dto.UserCreateDTO;
+import com.mg.userManagement.dto.UserDTO;
 import com.mg.userManagement.entity.User;
 import com.mg.userManagement.service.UserService;
 
@@ -18,8 +18,9 @@ public class UserServiceDTO {
 	@Autowired
 	private UserService userService;
 	
-	public UserCreateDTO createUser(UserCreateDTO userCreateDTO) {
-		User user = modelMapper.map(userCreateDTO, User.class);
-		return modelMapper.map(userService.create(user), UserCreateDTO.class);
+	public UserDTO createUser(UserDTO userDTO) {
+		User user = modelMapper.map(userDTO, User.class);
+		User savedUser = userService.create(user);
+		return modelMapper.map(savedUser, UserDTO.class);
 	}
 }
