@@ -1,9 +1,14 @@
 package com.mg.userManagement.entity;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 public class User {
@@ -16,8 +21,11 @@ public class User {
 	private String password;
 	private String emailId;
 	
-//	@OneToMany(mappedBy="user")
-//	private List<Site> sites;
+	@CreationTimestamp
+	private Date createdDateTime;
+	
+	@UpdateTimestamp
+	private Date updatedDateTime;
 	
 	public User(){}
 	
@@ -44,18 +52,26 @@ public class User {
 	}
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
-	}/*
-	public List<Site> getSites() {
-		return sites;
 	}
-	public void setSites(List<Site> sites) {
-		this.sites = sites;
-	}*/
+	
+	public Date getCreatedDateTime() {
+		return createdDateTime;
+	}
 
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
+	}
+
+	public Date getUpdatedDateTime() {
+		return updatedDateTime;
+	}
+
+	public void setUpdatedDateTime(Date updatedDateTime) {
+		this.updatedDateTime = updatedDateTime;
+	}
+	
 	@Override
 	public String toString() {
 		return "SysUser [id=" + id + ", name=" + name + ", password=" + password + ", emailId=" + emailId +  "]";
 	}
-	
-	
 }

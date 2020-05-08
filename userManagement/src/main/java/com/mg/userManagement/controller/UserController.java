@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mg.userManagement.dto.AllUsersDTO;
 import com.mg.userManagement.dto.UserDTO;
 import com.mg.userManagement.dtoservice.UserServiceDTO;
-import com.mg.userManagement.entity.User;
 
 @RestController
 public class UserController {
@@ -19,10 +19,9 @@ public class UserController {
 	UserServiceDTO userServiceDTO;
 	
 	@GetMapping(value="/getAllUser")
-	public List<User> getAll()
+	public List<AllUsersDTO> getAll()
 	{
-		//return userService.getAll();
-		return null;
+		return userServiceDTO.getAllUsers();
 	}
 	
 	@PostMapping(value="/saveUser")

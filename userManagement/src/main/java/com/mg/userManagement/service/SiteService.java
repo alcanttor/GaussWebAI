@@ -44,7 +44,7 @@ public class SiteService {
 		Optional<Site> existingSiteOptional;
 		Site existingSite;
 		List<Site> savedSite = new ArrayList<>();
-
+	
 		for (Site site : sites) {
 			existingSiteOptional = siteRepository.getByName(site.getName());
 			if (existingSiteOptional.isPresent()) {
@@ -54,9 +54,8 @@ public class SiteService {
 			} else {
 				logger.info("Site [{}] registration process starts", site.getName());
 
-				// Add implementation to get auto-generated token and set it for
-				// site entity
-
+				// Add implementation to get auto-generated token and set it for site entity				
+				
 				site.setUser(user);
 				savedSite.add(siteRepository.save(site));
 				logger.info("Site [{}] registered successfully", site.getName());

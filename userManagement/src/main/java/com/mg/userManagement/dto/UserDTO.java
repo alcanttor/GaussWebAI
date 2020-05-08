@@ -2,6 +2,8 @@ package com.mg.userManagement.dto;
 
 import javax.persistence.Id;
 
+
+/**DTO mapping class for user registration mapping fields*/
 public class UserDTO {
 	
 	@Id
@@ -24,5 +26,4 @@ public class UserDTO {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
 }

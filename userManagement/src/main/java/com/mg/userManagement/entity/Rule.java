@@ -20,7 +20,7 @@ public class Rule {
 
 	private String name;
 	private String description;
-	private String lable;
+	private String label;
 	
 	public Integer getId() {
 		return id;
@@ -62,12 +62,12 @@ public class Rule {
 		this.description = description;
 	}
 
-	public String getLable() {
-		return lable;
+	public String getLabel() {
+		return label;
 	}
 
-	public void setLable(String lable) {
-		this.lable = lable;
+	public void setLabel(String label) {
+		this.label = label;
 	}
 	
 }
