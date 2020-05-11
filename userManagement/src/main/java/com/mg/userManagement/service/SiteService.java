@@ -3,6 +3,7 @@ package com.mg.userManagement.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.mg.userManagement.entity.EmailTemplate;
 import com.mg.userManagement.entity.Rule;
 import com.mg.userManagement.entity.Site;
+import com.mg.userManagement.entity.SiteToken;
 import com.mg.userManagement.entity.User;
 import com.mg.userManagement.repo.RuleRepository;
 import com.mg.userManagement.repo.SiteRepository;
@@ -44,7 +46,7 @@ public class SiteService {
 		Optional<Site> existingSiteOptional;
 		Site existingSite;
 		List<Site> savedSite = new ArrayList<>();
-	
+		
 		for (Site site : sites) {
 			existingSiteOptional = siteRepository.getByName(site.getName());
 			if (existingSiteOptional.isPresent()) {
@@ -54,7 +56,18 @@ public class SiteService {
 			} else {
 				logger.info("Site [{}] registration process starts", site.getName());
 
-				// Add implementation to get auto-generated token and set it for site entity				
+				// Add implementation to get auto-generated token and set it for site entity
+				
+				//test code starts
+				/*Random r = new Random();
+				int low = 1;
+				int high = 3000;
+				int result = r.nextInt(high-low) + low;
+				SiteToken siteToken = new SiteToken();
+				siteToken.setToken("Token "+result);
+				site.setSiteToken(siteToken);*/
+				//test code ends
+				
 				
 				site.setUser(user);
 				savedSite.add(siteRepository.save(site));

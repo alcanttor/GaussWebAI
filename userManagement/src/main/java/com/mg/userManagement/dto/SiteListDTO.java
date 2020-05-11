@@ -3,9 +3,7 @@ package com.mg.userManagement.dto;
 import java.util.Date;
 import javax.persistence.Id;
 
-import com.mg.userManagement.entity.Connector;
-import com.mg.userManagement.entity.SiteToken;
-
+/**DTO mapping class for user site mapping fields*/
 public class SiteListDTO {
 	@Id
 	private Integer id;
@@ -15,9 +13,10 @@ public class SiteListDTO {
 	
 	private String name;
 	
-	private SiteToken siteToken;
+	private SiteTokenDTO siteToken;
 	
-	private Connector connector;
+	private ConnectorDTO connector;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -42,17 +41,17 @@ public class SiteListDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Connector getConnector() {
-		return connector;
-	}
-	public void setConnector(Connector connector) {
-		this.connector = connector;
-	}
-	public SiteToken getSiteToken() {
+	public SiteTokenDTO getSiteToken() {
 		return siteToken;
 	}
-	public void setSiteToken(SiteToken siteToken) {
+	public void setSiteToken(SiteTokenDTO siteToken) {
 		this.siteToken = siteToken;
+	}
+	public ConnectorDTO getConnector() {
+		return connector;
+	}
+	public void setConnector(ConnectorDTO connector) {
+		this.connector = connector;
 	}
 	
 }

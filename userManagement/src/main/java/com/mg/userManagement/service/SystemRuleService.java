@@ -6,9 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mg.userManagement.entity.Action;
 import com.mg.userManagement.entity.SystemRule;
-import com.mg.userManagement.repo.ActionRepository;
 import com.mg.userManagement.repo.SystemRuleRepository;
 
 @Service

@@ -9,31 +9,31 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mg.userManagement.entity.SystemRule;
-import com.mg.userManagement.service.SystemRuleService;
+import com.mg.userManagement.dto.SystemRuleDTO;
+import com.mg.userManagement.dtoservice.SystemRuleServiceDTO;
 
 @RestController
 public class SystemRuleController {
 
 	@Autowired
-	SystemRuleService systemRuleService; 
+	SystemRuleServiceDTO systemRuleServiceDTO; 
 	
 	@PostMapping(value = "/addSystemRule")
-	public SystemRule save(@RequestBody SystemRule systemRule)
+	public SystemRuleDTO save(@RequestBody SystemRuleDTO systemRule)
 	{
-		return systemRuleService.save(systemRule); 
+		return systemRuleServiceDTO.saveRule(systemRule); 
 	}
 	
 	@GetMapping(value = "/getSystemRule")
-	public List<SystemRule> getAll()
+	public List<SystemRuleDTO> getAll()
 	{
-		return systemRuleService.getAll(); 
+		return systemRuleServiceDTO.getAllRules(); 
 	}
 	
 	@GetMapping(value = "/getSystemRule/{siteId}")
-	public SystemRule get(@PathVariable Integer siteId)
+	public SystemRuleDTO get(@PathVariable Integer siteId)
 	{
-		return systemRuleService.get(siteId); 
+		return systemRuleServiceDTO.getRuleById(siteId); 
 	}
 	
 }

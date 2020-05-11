@@ -5,18 +5,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mg.userManagement.entity.SystemEvent;
-import com.mg.userManagement.service.SystemEventService;
+import com.mg.userManagement.dto.SystemEventDTO;
+import com.mg.userManagement.dtoservice.SystemEventServiceDTO;
 
 @RestController
 public class SystemEventController {
 
 	@Autowired
-	SystemEventService systemEventService; 
+	SystemEventServiceDTO systemEventServiceDTO; 
 	
 	@PostMapping(value = "/addEvent")
-	public SystemEvent save(@RequestBody SystemEvent systemEvent)
+	public SystemEventDTO save(@RequestBody SystemEventDTO systemEventDTO)
 	{
-		return systemEventService.save(systemEvent); 
+		return systemEventServiceDTO.saveEvent(systemEventDTO); 
 	}
 }

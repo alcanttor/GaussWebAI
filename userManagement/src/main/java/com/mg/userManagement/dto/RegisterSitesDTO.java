@@ -1,8 +1,6 @@
 package com.mg.userManagement.dto;
 
 import javax.persistence.Id;
-import com.mg.userManagement.entity.Connector;
-import com.mg.userManagement.entity.User;
 
 /**DTO mapping class for registering sites*/
 public class RegisterSitesDTO {
@@ -12,9 +10,9 @@ public class RegisterSitesDTO {
 	private Integer id;
 	
 	private String name;
-	private Connector connector;
+	private ConnectorDTO connector;
 
-	private User user;
+	private UserDTO user;
 
 	public Integer getId() {
 		return id;
@@ -32,21 +30,20 @@ public class RegisterSitesDTO {
 		this.name = name;
 	}
 
-	public Connector getConnector() {
+	public ConnectorDTO getConnector() {
 		return connector;
 	}
 
-	public void setConnector(Connector connector) {
+	public void setConnector(ConnectorDTO connector) {
 		this.connector = connector;
 	}
 
-	public User getUser() {
+	public UserDTO getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(UserDTO user) {
 		this.user = user;
 	}
-	
-	
+
 }

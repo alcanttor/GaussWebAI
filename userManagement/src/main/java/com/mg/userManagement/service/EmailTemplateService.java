@@ -27,9 +27,9 @@ public class EmailTemplateService {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	public EmailTemplate create(Integer UserId, EmailTemplate emailTemplate) throws Exception
+	public EmailTemplate create(Integer userId, EmailTemplate emailTemplate) throws Exception
 	{
-		User user = userService.getUserById(UserId);
+		User user = userService.getUserById(userId);
 		emailTemplate.setUser(user);
 		return emailTemplateRepository.save(emailTemplate);
 	}
@@ -79,7 +79,7 @@ public class EmailTemplateService {
 		}
 	}
 
-	public EmailTemplate associateTemplateToRule(Integer templateId, Integer ruleId) throws Exception 
+	public EmailTemplate associateTemplate(Integer templateId, Integer ruleId) throws Exception 
 	{
 		EmailTemplate emailTemplate = getById(templateId);
 		Rule rule = ruleService.getById(ruleId);

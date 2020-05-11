@@ -9,20 +9,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mg.userManagement.entity.EmailTemplate;
-import com.mg.userManagement.service.EmailTemplateService;
+import com.mg.userManagement.dto.EmailTemplateDTO;
+import com.mg.userManagement.dtoservice.EmailTemplateServiceDTO;
 
 @RestController
 public class EmailTemplateController {
 
 	@Autowired
-	private EmailTemplateService emailTemplateService;
+	private EmailTemplateServiceDTO emailTemplateServiceDTO;
 	
 	@PostMapping(value="/addEmailTemplate/{userId}")
-	public EmailTemplate add(@RequestBody EmailTemplate emailTemplate, @PathVariable Integer userId)
+	public EmailTemplateDTO add(@RequestBody EmailTemplateDTO emailTemplateDTO, @PathVariable Integer userId)
 	{
 		try {
-			return emailTemplateService.create(userId, emailTemplate);
+			return emailTemplateServiceDTO.createEmailTemplate(userId, emailTemplateDTO);
 			} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -30,16 +30,16 @@ public class EmailTemplateController {
 	}
 	
 	@GetMapping(value="/getEmailTemplatesbyuserid/{userId}")
-	public List<EmailTemplate> getSitebyUser(@PathVariable Integer userId) throws Exception
+	public List<EmailTemplateDTO> getSitebyUser(@PathVariable Integer userId) throws Exception
 	{
-		return emailTemplateService.getByUserId(userId);
+		return emailTemplateServiceDTO.getEmailTemplatesByUserId(userId);
 	}
 	
 	@PostMapping(value="/updateEmailTemplate/{userId}")
-	public EmailTemplate updateTemplate(@RequestBody EmailTemplate emailTemplate, @PathVariable Integer templateId)
+	public EmailTemplateDTO updateTemplate(@RequestBody EmailTemplateDTO emailTemplateDTO, @PathVariable Integer templateId)
 	{
 		try {
-			return emailTemplateService.update(templateId, emailTemplate) ;
+			return emailTemplateServiceDTO.updateEmailTemplate(templateId, emailTemplateDTO) ;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -48,10 +48,10 @@ public class EmailTemplateController {
 	}
 	
 	@GetMapping(value="/getById/{emailTemplateId}")
-	public EmailTemplate getById(@PathVariable Integer emailTemplateId)
+	public EmailTemplateDTO getById(@PathVariable Integer emailTemplateId)
 	{
 		try {
-			return emailTemplateService.getById(emailTemplateId);
+			return emailTemplateServiceDTO.getEmailTemplateById(emailTemplateId);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -60,10 +60,10 @@ public class EmailTemplateController {
 	}
 	
 	@GetMapping(value="/associate/{templateId}/{ruleId}")
-	public EmailTemplate associate(@PathVariable Integer templateId, @PathVariable Integer ruleId)
+	public EmailTemplateDTO associate(@PathVariable Integer templateId, @PathVariable Integer ruleId)
 	{
 		try {
-			return emailTemplateService.associateTemplateToRule(templateId,ruleId);
+			return emailTemplateServiceDTO.associateTemplateToRule(templateId,ruleId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
