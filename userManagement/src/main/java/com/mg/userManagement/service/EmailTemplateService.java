@@ -31,7 +31,20 @@ public class EmailTemplateService {
 	{
 		User user = userService.getUserById(userId);
 		emailTemplate.setUser(user);
-		return emailTemplateRepository.save(emailTemplate);
+		try {
+			logger.info("Attempting to save new email template: "+emailTemplate.getName());
+			return emailTemplateRepository.save(emailTemplate);
+		}
+		catch(IllegalArgumentException ex) {
+			logger.error("Invalid arguements passed while trying to email template: "+emailTemplate.getName());
+			logger.error("", ex);
+		}
+		catch(Exception ex)
+		{
+			logger.error("Exception while trying to save email template: "+emailTemplate.getName());
+			logger.error("", ex);
+		}
+		return null;
 	}
 	
 	public EmailTemplate update(Integer emailTemplateId, EmailTemplate emailTemplate) throws Exception
@@ -40,16 +53,30 @@ public class EmailTemplateService {
 		if (existingtemplateOptional.isPresent())
 		{
 			emailTemplate.setId(emailTemplateId);
-			return emailTemplateRepository.save(emailTemplate);
+			try {
+				logger.info("Attempting to update email template: "+emailTemplate.getName());
+				return emailTemplateRepository.save(emailTemplate);
+			}
+			catch(IllegalArgumentException ex) {
+				logger.error("Invalid arguements passed while trying to update email template: "+emailTemplate.getName());
+				logger.error("", ex);
+			}
+			catch(Exception ex)
+			{
+				logger.error("Exception while trying to update email template: "+emailTemplate.getName());
+				logger.error("", ex);
+			}
+			return null;
 		}
 		else
 		{
-			throw new Exception("Template not exist for id ["+emailTemplateId+"]");
+			throw new Exception("No template exists for id ["+emailTemplateId+"]");
 		}
 	}
 	
 	public List<EmailTemplate> getAll()
 	{
+		logger.info("Listing all email templates");
 		return emailTemplateRepository.findAll();
 	}
 
@@ -62,7 +89,7 @@ public class EmailTemplateService {
 		}
 		else
 		{
-			throw new Exception("No Template for userId ["+userId+"]");
+			throw new Exception("No Template exists for userId ["+userId+"]");
 		}
 		
 	}

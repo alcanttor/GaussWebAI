@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,8 @@ public class RuleService {
 	@Autowired
 	private RuleRepository ruleRepository;
 	
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	public Rule save(Rule rule)
 	{
 		return ruleRepository.save(rule);
@@ -26,7 +30,17 @@ public class RuleService {
 		List<Rule> savedRules = new ArrayList<>();
 		for(Rule rule: rules)
 		{
-			savedRules.add(this.save(rule));
+			try {
+				savedRules.add(this.save(rule));
+			}
+			catch(IllegalArgumentException ex) {
+				logger.error("Invalid Arguement. Process for rule [{}] creation failed", rule.getName());
+				logger.error("", ex);
+			}
+			catch(Exception ex) {
+				logger.error("Process for rule [{}] creation failed", rule.getName());
+				logger.error("", ex);
+			}
 		}
 		return savedRules;
 	}
@@ -35,8 +49,10 @@ public class RuleService {
 		Optional<Rule> ruleOptional = ruleRepository.findById(ruleId);
 		if (ruleOptional.isPresent())
 			return ruleOptional.get();
-		else
-			throw new Exception("Rule not found");
+		else {
+				logger.error("Rule not found");
+				throw new Exception("Rule not found");
+		}
 	}
 	
 }

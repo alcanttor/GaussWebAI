@@ -3,7 +3,7 @@ package com.mg.userManagement.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
+//import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.mg.userManagement.entity.EmailTemplate;
 import com.mg.userManagement.entity.Rule;
 import com.mg.userManagement.entity.Site;
-import com.mg.userManagement.entity.SiteToken;
 import com.mg.userManagement.entity.User;
 import com.mg.userManagement.repo.RuleRepository;
 import com.mg.userManagement.repo.SiteRepository;
@@ -50,7 +49,7 @@ public class SiteService {
 		for (Site site : sites) {
 			existingSiteOptional = siteRepository.getByName(site.getName());
 			if (existingSiteOptional.isPresent()) {
-				logger.info("Site [{}] already registered. No action required.", site.getName());
+				logger.info("Site [{}] already registered. No action required", site.getName());
 				existingSite = existingSiteOptional.get();
 				savedSite.add(existingSite);
 			} else {
@@ -70,7 +69,17 @@ public class SiteService {
 				
 				
 				site.setUser(user);
-				savedSite.add(siteRepository.save(site));
+				try {
+					savedSite.add(siteRepository.save(site));
+				}
+				catch(IllegalArgumentException ex) {
+					logger.error("site registration failed for: "+site.getName());
+					logger.error("Invalid arguements in the site entity ", ex);
+				}
+				catch(Exception ex) {
+					logger.error("site registration failed for: "+site.getName());
+					logger.error("Exception stack: ", ex);
+				}
 				logger.info("Site [{}] registered successfully", site.getName());
 			}
 		}
@@ -93,8 +102,18 @@ public class SiteService {
 			// site entity
 
 			site.setUser(user);
-			return siteRepository.save(site);
-			// logger.info("Site [{}] registered successfully", site.getName());
+			try {
+				return siteRepository.save(site);
+			}catch(IllegalArgumentException ex) {
+				logger.error("site registration failed for: "+site.getName());
+				logger.error("Invalid arguements in the site entity ", ex);
+				return null;
+			}
+			catch(Exception ex) {
+				logger.error("site registration failed for: "+site.getName());
+				logger.error("Exception stack: ", ex);
+				return null;
+			}
 		}
 	}
 
@@ -123,7 +142,11 @@ public class SiteService {
 			logger.info("Deletion success");
 			return true;
 		} catch (IllegalArgumentException ex) {
-			logger.error("Deletion process failed: ", ex);
+			logger.error("Invalid Arguement. Deletion process failed: ", ex);
+			return false;
+		}
+		catch(Exception ex) {
+			logger.error("Invalid Arguement. Deletion process failed: ", ex);
 			return false;
 		}
 	}
@@ -135,7 +158,17 @@ public class SiteService {
 
 		if (updatedSite != null) {
 			updatedSite.setName(site.getName());
-			updatedSite = siteRepository.save(updatedSite);
+			try {
+				updatedSite = siteRepository.save(updatedSite);
+			}catch(IllegalArgumentException ex) {
+				logger.error("site updation failed for: "+site.getName());
+				logger.error("Invalid arguements in the site entity ", ex);
+			}
+			catch(Exception ex) {
+				logger.error("site updation failed for: "+site.getName());
+				logger.error("Exception stack: ", ex);
+			}
+			
 			logger.info("Update site to site [{}] successfully", updatedSite.getName());
 			return updatedSite;
 		} else {
@@ -232,7 +265,8 @@ public class SiteService {
 			rule = ruleOptional.get();
 
 		} else {
-			throw new Exception("RUle not present");
+			logger.error("No such rule found");
+			throw new Exception("Couldn't find the the rule");
 		}
 		
 		List<Rule> ruleAssociatedWithTemplate = emailTemplate.getRules();
@@ -242,7 +276,12 @@ public class SiteService {
 		}
 		ruleAssociatedWithTemplate.add(rule);
 		emailTemplate.setRules(ruleAssociatedWithTemplate);
-		emailTemplateService.update(emailTemplateId,emailTemplate);
+		try {
+			emailTemplateService.update(emailTemplateId,emailTemplate);
+		}
+		catch(Exception ex) {
+			logger.error("Association process for email template failed ", ex);
+		}
 		return site;
 	}
 
