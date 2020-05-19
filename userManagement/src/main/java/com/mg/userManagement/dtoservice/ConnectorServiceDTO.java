@@ -30,7 +30,7 @@ public class ConnectorServiceDTO {
 	public List<ConnectorDTO> getAllConnectors()
 	{
 		@SuppressWarnings("serial")
-		Type listAllConnectors = new TypeToken<ConnectorDTO>(){}.getType();
+		Type listAllConnectors = new TypeToken<List<ConnectorDTO>>(){}.getType();
 		return modelMapper.map(connectorService.getAll(), listAllConnectors);
 	}
 }

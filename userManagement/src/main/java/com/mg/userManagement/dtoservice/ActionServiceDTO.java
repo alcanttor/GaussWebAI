@@ -30,7 +30,7 @@ public class ActionServiceDTO {
 	public List<ActionDTO> getAllActions()
 	{
 		@SuppressWarnings("serial")
-		Type listActions = new TypeToken<ActionDTO>() {}.getType();
+		Type listActions = new TypeToken<List<ActionDTO>>() {}.getType();
 		return modelMapper.map(actionService.getAll(), listActions);
 	}
 }

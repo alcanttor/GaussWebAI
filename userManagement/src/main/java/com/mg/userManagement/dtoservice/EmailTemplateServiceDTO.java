@@ -38,13 +38,13 @@ public class EmailTemplateServiceDTO {
 	public List<EmailTemplateDTO> getAll()
 	{
 		@SuppressWarnings("serial")
-		Type listEmailTemplates = new TypeToken<EmailTemplateDTO>() {}.getType(); 
+		Type listEmailTemplates = new TypeToken<List<EmailTemplateDTO>>() {}.getType(); 
 		return modelMapper.map(emailTemplateService.getAll(), listEmailTemplates);
 	}
 
 	public List<EmailTemplateDTO> getEmailTemplatesByUserId(Integer userId) throws Exception{
 		@SuppressWarnings("serial")
-		Type listEmailTemplates = new TypeToken<EmailTemplateDTO>() {}.getType(); 
+		Type listEmailTemplates = new TypeToken<List<EmailTemplateDTO>>() {}.getType(); 
 		return modelMapper.map(emailTemplateService.getByUserId(userId), listEmailTemplates);
 	}
 
