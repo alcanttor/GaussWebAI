@@ -5,6 +5,7 @@ import {
   NgForm,
   Validators,
 } from '@angular/forms';
+import { AuthService } from '../auth.service';
 import { ErrorStateMatcher } from '@angular/material/core';
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -26,6 +27,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.sass'],
+  providers: [AuthService],
 })
 export class LoginComponent implements OnInit {
   emailFormControl = new FormControl('', [
@@ -37,7 +39,13 @@ export class LoginComponent implements OnInit {
   passwordFormControl = new FormControl('', [Validators.required]);
   passwordMatcher = new MyErrorStateMatcher();
 
-  constructor() {}
+  constructor(private auth: AuthService) {}
 
   ngOnInit(): void {}
+
+  submit() {
+    this.auth.login('sample', 'sample', () => {
+      console.log('Sample');
+    });
+  }
 }
