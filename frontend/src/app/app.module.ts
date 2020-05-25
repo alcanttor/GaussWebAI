@@ -12,9 +12,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { AuthService } from './auth.service';
+import { SitesComponent } from './sites/sites.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, DashboardComponent],
+  declarations: [AppComponent, LoginComponent, DashboardComponent, SitesComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
