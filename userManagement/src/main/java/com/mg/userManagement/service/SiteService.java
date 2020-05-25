@@ -262,7 +262,7 @@ public class SiteService {
 			return null;
 		}
 	}
-
+/*
 	public Site asociateTemplate(Integer siteId, Integer ruleId, Integer emailTemplateId) throws Exception {
 		//Optional<Site> siteOptional = siteRepository.findById(siteId);
 		Rule rule = null;
@@ -291,6 +291,6 @@ public class SiteService {
 			logger.error("Association process for email template failed ", ex);
 		}
 		return site;
-	}
+	}*/
 
 }

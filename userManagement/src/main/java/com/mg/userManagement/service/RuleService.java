@@ -24,7 +24,7 @@ public class RuleService {
 	{
 		return ruleRepository.save(rule);
 	}
-	
+	 
 	public List<Rule> saveList(List<Rule> rules)
 	{
 		List<Rule> savedRules = new ArrayList<>();
@@ -50,6 +50,27 @@ public class RuleService {
 		if (ruleOptional.isPresent())
 			return ruleOptional.get();
 		else {
+				logger.error("Rule not found");
+				throw new Exception("Rule not found");
+		}
+	}
+
+	public Rule updateRule(Rule rule, Integer ruleId) throws Exception 
+	{
+		Optional<Rule> ruleOptional = ruleRepository.findById(ruleId);
+		if (ruleOptional.isPresent())
+		{
+			Rule ruleinDb = ruleOptional.get();
+			ruleinDb.setEmailTemplate(rule.getEmailTemplate());
+			ruleinDb.setDescription(rule.getDescription());
+			ruleinDb.setEnabled(rule.getEnabled());
+			ruleinDb.setLabel(rule.getLabel());
+			ruleinDb.setName(rule.getName());
+			ruleinDb.setSystemRule(rule.getSystemRule());
+			return ruleRepository.save(ruleinDb);
+		}
+		else 
+		{
 				logger.error("Rule not found");
 				throw new Exception("Rule not found");
 		}

@@ -16,11 +16,14 @@ public class Rule {
 	@OneToOne
 	SystemRule systemRule;
 	
-	Boolean enabled;
+	private Boolean enabled;
 
 	private String name;
 	private String description;
 	private String label;
+	
+	@OneToOne
+	private EmailTemplate emailTemplate;
 	
 	public Integer getId() {
 		return id;
@@ -68,6 +71,14 @@ public class Rule {
 
 	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	public EmailTemplate getEmailTemplate() {
+		return emailTemplate;
+	}
+
+	public void setEmailTemplate(EmailTemplate emailTemplate) {
+		this.emailTemplate = emailTemplate;
 	}
 	
 }

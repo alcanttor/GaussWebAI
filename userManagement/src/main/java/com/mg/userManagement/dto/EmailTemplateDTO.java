@@ -17,7 +17,6 @@ public class EmailTemplateDTO {
 	private Date updatedDate;
 	
 	private UserDTO user;
-	private List<RuleDTO> rules;
 	
 	public Integer getId() {
 		return id;
@@ -55,12 +54,7 @@ public class EmailTemplateDTO {
 	public void setUser(UserDTO user) {
 		this.user = user;
 	}
-	public List<RuleDTO> getRules() {
-		return rules;
-	}
-	public void setRules(List<RuleDTO> rules) {
-		this.rules = rules;
-	}
+	
 	public List<EmailLableDTO> getLables() {
 		return lables;
 	}

@@ -86,7 +86,7 @@ public class SiteServiceDTO {
 		Type listRulesbyUser = new TypeToken<List<RuleDTO>>() {}.getType();
 		return modelMapper.map(allRules, listRulesbyUser);
 	}
-	
+	/*
 	public SiteDTO assignTemplate(Integer siteId,Integer ruleId, Integer emailTemplateId) {
 		try {
 			Site site = siteService.asociateTemplate(siteId, ruleId,  emailTemplateId);
@@ -95,5 +95,5 @@ public class SiteServiceDTO {
 			e.printStackTrace();
 			return null;
 		}
-	}
+	}*/
 }

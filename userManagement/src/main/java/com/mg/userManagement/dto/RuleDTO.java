@@ -15,6 +15,9 @@ public class RuleDTO {
 	private String name;
 	private String description;
 	private String label;
+	
+	private EmailTemplateDTO emailTemplate;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -50,6 +53,12 @@ public class RuleDTO {
 	}
 	public void setLabel(String label) {
 		this.label = label;
+	}
+	public EmailTemplateDTO getEmailTemplate() {
+		return emailTemplate;
+	}
+	public void setEmailTemplate(EmailTemplateDTO emailTemplate) {
+		this.emailTemplate = emailTemplate;
 	}
 	
 	

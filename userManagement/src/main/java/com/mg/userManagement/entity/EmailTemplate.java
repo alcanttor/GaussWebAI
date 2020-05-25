@@ -31,8 +31,6 @@ public class EmailTemplate {
 	
 	@ManyToOne
 	private User user;
-	@OneToMany
-	private List<Rule> rules;
 	
 	public Integer getId() {
 		return id;
@@ -58,12 +56,7 @@ public class EmailTemplate {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public List<Rule> getRules() {
-		return rules;
-	}
-	public void setRules(List<Rule> rules) {
-		this.rules = rules;
-	}
+	
 	public Date getCreatedDate() {
 		return createdDate;
 	}

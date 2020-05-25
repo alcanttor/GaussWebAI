@@ -52,8 +52,5 @@ public class EmailTemplateServiceDTO {
 		return modelMapper.map(emailTemplateService.getById(emailTemplateId), EmailTemplateDTO.class);
 	}
 
-	public EmailTemplateDTO associateTemplateToRule(Integer templateId, Integer ruleId) throws Exception 
-	{
-		return modelMapper.map(emailTemplateService.associateTemplate(templateId, ruleId), EmailTemplateDTO.class);
-	}
+	
 }

@@ -70,8 +70,8 @@ public class SiteController {
 		return siteServiceDTO.getAllRulesbyUser(userId);
 	}
 	
-	public SiteDTO asociateTemplate(Integer siteId,Integer ruleId, Integer emailTemplateId)
+	/*public SiteDTO asociateTemplate(Integer siteId,Integer ruleId, Integer emailTemplateId)
 	{
 		return siteServiceDTO.assignTemplate(siteId, ruleId, emailTemplateId);
-	}
+	}*/
 }

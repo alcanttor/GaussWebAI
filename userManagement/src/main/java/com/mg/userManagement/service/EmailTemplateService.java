@@ -106,18 +106,6 @@ public class EmailTemplateService {
 		}
 	}
 
-	public EmailTemplate associateTemplate(Integer templateId, Integer ruleId) throws Exception 
-	{
-		EmailTemplate emailTemplate = getById(templateId);
-		Rule rule = ruleService.getById(ruleId);
-		List<Rule> rules = emailTemplate.getRules();
-		if (rules == null)
-		{
-			rules = new ArrayList<>();
-		}
-		rules.add(rule);
-		emailTemplate.setRules(rules);
-		return update(templateId, emailTemplate);
-	}
+	
 
 }

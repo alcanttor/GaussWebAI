@@ -59,15 +59,5 @@ public class EmailTemplateController {
 		}
 	}
 	
-	@GetMapping(value="/associate/{templateId}/{ruleId}")
-	public EmailTemplateDTO associate(@PathVariable Integer templateId, @PathVariable Integer ruleId)
-	{
-		try {
-			return emailTemplateServiceDTO.associateTemplateToRule(templateId,ruleId);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
 	
 }
