@@ -8,6 +8,6 @@ import com.mg.userManagement.entity.SystemRule;
 @Repository
 public interface SystemRuleRepository extends JpaRepository<SystemRule, Integer>{
 	
-	//public Optional<Rule>
+	//public Optional<SystemRule> findBy
 
 }

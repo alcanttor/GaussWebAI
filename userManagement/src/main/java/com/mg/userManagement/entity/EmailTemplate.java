@@ -21,7 +21,8 @@ public class EmailTemplate {
 	private Integer id;
 	private String name;
 	private String template;
-	private String label;
+	@OneToMany
+	private List<EmailLable> lables;
 	
 	@CreationTimestamp
 	private Date createdDate;
@@ -51,12 +52,6 @@ public class EmailTemplate {
 	public void setTemplate(String template) {
 		this.template = template;
 	}
-	public String getLabel() {
-		return label;
-	}
-	public void setLabel(String label) {
-		this.label = label;
-	}
 	public User getUser() {
 		return user;
 	}
@@ -80,6 +75,12 @@ public class EmailTemplate {
 	}
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
+	}
+	public List<EmailLable> getLables() {
+		return lables;
+	}
+	public void setLables(List<EmailLable> lables) {
+		this.lables = lables;
 	}
 	
 }

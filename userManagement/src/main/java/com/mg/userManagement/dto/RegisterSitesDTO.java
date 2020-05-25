@@ -5,8 +5,6 @@ import javax.persistence.Id;
 /**DTO mapping class for registering sites*/
 public class RegisterSitesDTO {
 	
-	
-	@Id
 	private Integer id;
 	
 	private String name;

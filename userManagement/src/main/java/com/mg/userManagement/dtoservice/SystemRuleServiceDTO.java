@@ -35,5 +35,13 @@ public class SystemRuleServiceDTO {
 	public SystemRuleDTO getRuleById(Integer id) {
 		return modelMapper.map(systemRuleService.get(id), SystemRuleDTO.class);
 	}
+
+	public SystemRuleDTO getRuleBySiteId(Integer siteId) {
+		return modelMapper.map(systemRuleService.getBySiteId(siteId), SystemRuleDTO.class);
+	}
+
+	public SystemRuleDTO getRuleByConnectorId(Integer connectorId) {
+		return modelMapper.map(systemRuleService.getByConnectorId(connectorId), SystemRuleDTO.class);
+	}
 	
 }

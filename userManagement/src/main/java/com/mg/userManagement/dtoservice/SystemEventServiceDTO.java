@@ -19,6 +19,7 @@ public class SystemEventServiceDTO {
 	
 	public SystemEventDTO saveEvent(SystemEventDTO systemEventDTO) {
 		SystemEvent systemEvent = modelMapper.map(systemEventDTO, SystemEvent.class);
+		System.out.println("save this event : "+systemEvent);
 		return modelMapper.map(systemEventService.save(systemEvent), SystemEventDTO.class);
 	}
 }

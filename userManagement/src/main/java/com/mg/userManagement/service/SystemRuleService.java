@@ -53,4 +53,14 @@ public class SystemRuleService {
 			return null;
 		}
 	}
+
+	public Object getBySiteId(Integer siteId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object getByConnectorId(Integer connectorId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

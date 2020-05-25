@@ -21,7 +21,7 @@ public class SystemEventService {
 	public SystemEvent save(SystemEvent systemEvent)
 	{
 		try {
-			logger.info("Attempting to save system event: "+systemEvent.getName());
+			logger.info("Attempting to save system event: "+systemEvent.getDescription());
 			return systemEventRepository.save(systemEvent);
 		}
 		catch(IllegalArgumentException ex) {

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.mg.userManagement.entity.EmailTemplate;
 import com.mg.userManagement.entity.Rule;
 import com.mg.userManagement.entity.Site;
+import com.mg.userManagement.entity.SiteToken;
 import com.mg.userManagement.entity.User;
 import com.mg.userManagement.repo.RuleRepository;
 import com.mg.userManagement.repo.SiteRepository;
@@ -100,7 +101,7 @@ public class SiteService {
 
 			// Add implementation to get auto-generated token and set it for
 			// site entity
-
+			site.setSiteToken(generateToken());
 			site.setUser(user);
 			try {
 				return siteRepository.save(site);
@@ -115,6 +116,13 @@ public class SiteService {
 				return null;
 			}
 		}
+	}
+
+	private SiteToken generateToken() {
+		SiteToken token = new SiteToken();
+		token.setIsValid(true);
+		token.setToken(""+System.currentTimeMillis());
+		return token;
 	}
 
 	/* Method to retrieve existing sites for logged in user */

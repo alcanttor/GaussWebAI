@@ -17,7 +17,8 @@ public class SystemRule {
 	private SystemEvent systemEvent;
 	@OneToOne
 	private Action action;
-	
+	@OneToOne
+	private Connector connector;
 	public Integer getId() {
 		return id;
 	}
@@ -43,4 +44,11 @@ public class SystemRule {
 	public void setAction(Action action) {
 		this.action = action;
 	}
+	public Connector getConnector() {
+		return connector;
+	}
+	public void setConnector(Connector connector) {
+		this.connector = connector;
+	}
+	
 }

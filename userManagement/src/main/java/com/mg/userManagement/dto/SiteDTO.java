@@ -4,7 +4,7 @@ import java.util.Date;
 import javax.persistence.Id;
 
 /**DTO mapping class for user site mapping fields*/
-public class SiteListDTO {
+public class SiteDTO {
 	@Id
 	private Integer id;
 	

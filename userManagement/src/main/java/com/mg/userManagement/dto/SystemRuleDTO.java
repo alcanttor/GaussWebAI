@@ -3,11 +3,12 @@ package com.mg.userManagement.dto;
 import javax.persistence.Id;
 
 public class SystemRuleDTO {
-	@Id
+	
 	private Integer id;
 	private String descripton;
 	private SystemEventDTO systemEvent;
 	private ActionDTO action;
+	private ConnectorDTO connector;
 	public Integer getId() {
 		return id;
 	}
@@ -32,4 +33,11 @@ public class SystemRuleDTO {
 	public void setAction(ActionDTO action) {
 		this.action = action;
 	}
+	public ConnectorDTO getConnector() {
+		return connector;
+	}
+	public void setConnector(ConnectorDTO connector) {
+		this.connector = connector;
+	}
+	
 }

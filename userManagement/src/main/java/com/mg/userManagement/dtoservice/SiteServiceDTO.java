@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.google.common.reflect.TypeToken;
 import com.mg.userManagement.dto.RegisterSitesDTO;
 import com.mg.userManagement.dto.RuleDTO;
-import com.mg.userManagement.dto.SiteListDTO;
+import com.mg.userManagement.dto.SiteDTO;
 import com.mg.userManagement.entity.Rule;
 import com.mg.userManagement.entity.Site;
 import com.mg.userManagement.service.SiteService;
@@ -24,7 +24,7 @@ public class SiteServiceDTO {
 	@Autowired
 	ModelMapper modelMapper;
 		
-	public List<SiteListDTO> createSites(List<RegisterSitesDTO> registerSitesDTO, Integer userId){
+	public List<SiteDTO> createSites(List<RegisterSitesDTO> registerSitesDTO, Integer userId){
 		@SuppressWarnings("serial")
 		Type listTypeSite = new TypeToken<List<Site>>() {}.getType();
 		List<Site> allSites = modelMapper.map(registerSitesDTO, listTypeSite);
@@ -37,31 +37,47 @@ public class SiteServiceDTO {
 		}
 		return this.getSitesbyUser(userId);
 	}
-	
-	public List<SiteListDTO> getSitesbyUser(Integer userId){
+
+	public SiteDTO createSite(RegisterSitesDTO registerSitesDTO, Integer userId){
+		Site site = new Site();
+		SiteDTO siteDto = new SiteDTO();
+		modelMapper.map(registerSitesDTO, site);
+		Site siteSaved = null;
+		try {
+			siteSaved = siteService.registerSitebyUserId(site,userId);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		modelMapper.map(siteSaved, siteDto);
+		return siteDto;
+	}
+
+	public List<SiteDTO> getSitesbyUser(Integer userId){
 		List<Site> allSites = siteService.getSiteByUserId(userId);
 		@SuppressWarnings("serial")
-		Type listSitesbyUser = new TypeToken<List<SiteListDTO>>() {}.getType();
+		Type listSitesbyUser = new TypeToken<List<SiteDTO>>() {}.getType();
 		return modelMapper.map(allSites, listSitesbyUser);
 	}
 	
 	
-	public List<SiteListDTO> deleteSitebyUser(Integer siteId){
+	public List<SiteDTO> deleteSitebyUser(Integer siteId){
 		Integer userId = ((siteService.getSiteById(siteId)).getUser()).getId();
 		siteService.deleteSiteById(siteId) ;
 		return this.getSitesbyUser(userId);
 	}
 	
-	public SiteListDTO updateSitebyUser(SiteListDTO siteListDTO, Integer userID) {
+	public SiteDTO updateSitebyUser(SiteDTO siteListDTO, Integer userID) {
 		Site site = modelMapper.map(siteListDTO, Site.class);
 		Site updatedSite = siteService.updateSitebyId(site, userID);
-		return modelMapper.map(updatedSite, SiteListDTO.class);
+		return modelMapper.map(updatedSite, SiteDTO.class);
 	}
 	
-	public SiteListDTO addRulebySite(Integer siteId, RuleDTO ruleDTO) {
+	public SiteDTO addRulebySite(Integer siteId, RuleDTO ruleDTO) {
 		Rule rule = modelMapper.map(ruleDTO, Rule.class);
 		Site site = siteService.addRulebySiteId(siteId, rule);
-		return modelMapper.map(site, SiteListDTO.class);
+		return modelMapper.map(site, SiteDTO.class);
 	}
 	
 	public List<RuleDTO> getAllRulesbyUser(Integer userId){
@@ -71,10 +87,10 @@ public class SiteServiceDTO {
 		return modelMapper.map(allRules, listRulesbyUser);
 	}
 	
-	public SiteListDTO assignTemplate(Integer siteId,Integer ruleId, Integer emailTemplateId) {
+	public SiteDTO assignTemplate(Integer siteId,Integer ruleId, Integer emailTemplateId) {
 		try {
 			Site site = siteService.asociateTemplate(siteId, ruleId,  emailTemplateId);
-			return modelMapper.map(site, SiteListDTO.class);
+			return modelMapper.map(site, SiteDTO.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

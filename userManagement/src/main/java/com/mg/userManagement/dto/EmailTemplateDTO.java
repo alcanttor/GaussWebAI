@@ -11,7 +11,7 @@ public class EmailTemplateDTO {
 	private Integer id;
 	private String name;
 	private String template;
-	private String label;
+	private List<EmailLableDTO> lables;
 	
 	private Date createdDate;
 	private Date updatedDate;
@@ -37,12 +37,6 @@ public class EmailTemplateDTO {
 	public void setTemplate(String template) {
 		this.template = template;
 	}
-	public String getLabel() {
-		return label;
-	}
-	public void setLabel(String label) {
-		this.label = label;
-	}
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -67,4 +61,11 @@ public class EmailTemplateDTO {
 	public void setRules(List<RuleDTO> rules) {
 		this.rules = rules;
 	}
+	public List<EmailLableDTO> getLables() {
+		return lables;
+	}
+	public void setLables(List<EmailLableDTO> lables) {
+		this.lables = lables;
+	}
+	
 }

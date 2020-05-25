@@ -17,6 +17,7 @@ public class SystemEventController {
 	@PostMapping(value = "/addEvent")
 	public SystemEventDTO save(@RequestBody SystemEventDTO systemEventDTO)
 	{
+		System.out.println("in controller ..."+systemEventDTO);
 		return systemEventServiceDTO.saveEvent(systemEventDTO); 
 	}
 }

@@ -18,11 +18,16 @@ public class SystemEvent {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getName() {
+	
+	public String getDescription() {
 		return description;
 	}
-	public void setName(String name) {
-		this.description = name;
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	@Override
+	public String toString() {
+		return "SystemEvent [id=" + id + ", description=" + description + "]";
 	}
 	
 	

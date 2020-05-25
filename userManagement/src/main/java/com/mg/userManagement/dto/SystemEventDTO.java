@@ -1,9 +1,6 @@
 package com.mg.userManagement.dto;
 
-import javax.persistence.Id;
-
 public class SystemEventDTO {
-	@Id
 	private Integer id;
 	private String description;
 	public Integer getId() {
@@ -18,4 +15,9 @@ public class SystemEventDTO {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	@Override
+	public String toString() {
+		return "SystemEventDTO [id=" + id + ", description=" + description + "]";
+	}
+	
 }

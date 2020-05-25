@@ -31,9 +31,14 @@ public class SystemRuleController {
 	}
 	
 	@GetMapping(value = "/getSystemRule/{siteId}")
-	public SystemRuleDTO get(@PathVariable Integer siteId)
+	public SystemRuleDTO getBySiteId(@PathVariable Integer siteId)
 	{
-		return systemRuleServiceDTO.getRuleById(siteId); 
+		return systemRuleServiceDTO.getRuleBySiteId(siteId); 
 	}
 	
+	@GetMapping(value = "/getSystemRule/{connectorId}")
+	public SystemRuleDTO getbyConnectorId(@PathVariable Integer siteId)
+	{
+		return systemRuleServiceDTO.getRuleByConnectorId(siteId); 
+	}
 }
