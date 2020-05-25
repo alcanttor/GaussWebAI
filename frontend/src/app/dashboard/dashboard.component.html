@@ -1,47 +1,44 @@
-<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
-  <mat-toolbar
-    color="primary"
-    class="example-toolbar"
-    fxLayout="row"
-    fxLayoutAlign="space-between center"
-  >
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-      <button mat-icon-button (click)="snav.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <h1 class="example-app-name">GaussWebAI</h1>
-    </div>
-    <button mat-button class="pull-right">Logout</button>
-  </mat-toolbar>
+<nav class="navbar navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">GaussWebAI</a>
+  <button class="btn btn-link pull-right btn-white">Logout</button>
+</nav>
 
-  <mat-sidenav-container
-    class="example-sidenav-container"
-    [style.marginTop.px]="mobileQuery.matches ? 56 : 0"
-  >
-    <mat-sidenav
-      #snav
-      [mode]="mobileQuery.matches ? 'over' : 'side'"
-      [fixedInViewport]="mobileQuery.matches"
-      fixedTopGap="56"
-    >
-      <mat-nav-list>
+<nav
+  id="sidebarMenu"
+  class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse"
+>
+  <div class="position-sticky pt-3">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="/dashboard/sites">
+          Sites
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/dashboard/rules">
+          Rules
+        </a>
+      </li>
+      <li class="nav-item dropdown">
         <a
-          mat-list-item
-          routerLink="{{ nav.link }}"
-          *ngFor="let nav of sideNavItems"
-          >{{ nav.title }}</a
+          class="nav-link collapsed text-truncate"
+          data-toggle="collapse"
+          data-target="#submenu1"
         >
-      </mat-nav-list>
-    </mat-sidenav>
-
-    <mat-sidenav-content>
-      <mat-drawer-container class="example-container">
-        <div class="container global-gutter" fxLayout="column">
-          <mat-grid-list cols="1" rowHeight="50px" class="global-gutter">
-            <router-outlet></router-outlet>
-          </mat-grid-list>
+          Emails
+        </a>
+        <div aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
         </div>
-      </mat-drawer-container>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+  <div
+    class="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+  >
+    <router-outlet></router-outlet>
+  </div>
+</main>
