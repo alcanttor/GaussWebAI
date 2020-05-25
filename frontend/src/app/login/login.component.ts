@@ -27,7 +27,6 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.sass'],
-  providers: [AuthService],
 })
 export class LoginComponent implements OnInit {
   emailFormControl = new FormControl('', [
