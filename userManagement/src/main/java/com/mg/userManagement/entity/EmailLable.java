@@ -16,6 +16,7 @@ public class EmailLable {
 	private String name;
 	@OneToOne
 	private User user;
+	
 	public Integer getId() {
 		return id;
 	}

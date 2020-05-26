@@ -1,6 +1,5 @@
 package com.mg.userManagement.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.mg.userManagement.entity.EmailTemplate;
-import com.mg.userManagement.entity.Rule;
 import com.mg.userManagement.entity.User;
 import com.mg.userManagement.repo.EmailTemplateRepository;
 
@@ -21,9 +19,6 @@ public class EmailTemplateService {
 
 	@Autowired
 	private EmailTemplateRepository emailTemplateRepository;
-	
-	@Autowired
-	private RuleService ruleService;
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
