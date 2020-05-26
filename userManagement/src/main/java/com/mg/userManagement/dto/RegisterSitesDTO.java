@@ -1,7 +1,5 @@
 package com.mg.userManagement.dto;
 
-import javax.persistence.Id;
-
 /**DTO mapping class for registering sites*/
 public class RegisterSitesDTO {
 	
