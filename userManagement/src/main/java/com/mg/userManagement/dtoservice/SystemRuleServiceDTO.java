@@ -1,14 +1,20 @@
 package com.mg.userManagement.dtoservice;
 
 import java.lang.reflect.Type;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.common.reflect.TypeToken;
+import com.mg.userManagement.dto.ActionDTO;
+import com.mg.userManagement.dto.SystemEventDTO;
 import com.mg.userManagement.dto.SystemRuleDTO;
+import com.mg.userManagement.entity.Action;
+import com.mg.userManagement.entity.SystemEvent;
 import com.mg.userManagement.entity.SystemRule;
 import com.mg.userManagement.service.SystemRuleService;
 
@@ -43,5 +49,30 @@ public class SystemRuleServiceDTO {
 	public SystemRuleDTO getRuleByConnectorId(Integer connectorId) {
 		return modelMapper.map(systemRuleService.getByConnectorId(connectorId), SystemRuleDTO.class);
 	}
+
+	public Set<SystemEventDTO> getEventsByConnectorId(Integer connectorId) {
+		List<SystemRule> rules = systemRuleService.getByConnectorId(connectorId);
+		HashSet<SystemEventDTO> result = new HashSet<>();
+		for (SystemRule rule : rules)
+		{
+			SystemEvent event = rule.getSystemEvent();
+			result.add(modelMapper.map(event, SystemEventDTO.class));
+		}
+		return result;
+	}
+
+	public Set<ActionDTO> getEventsByConnectorIdandAction(Integer connectorId, Integer systemEventId) {
+
+		List<SystemRule> rules = systemRuleService.getByConnectorId(connectorId);
+		HashSet<ActionDTO> result = new HashSet<>();
+		for (SystemRule rule : rules)
+		{
+			Action action = rule.getAction();
+			result.add(modelMapper.map(action, ActionDTO.class));
+		}
+		return result;
+
+	}
+	
 	
 }

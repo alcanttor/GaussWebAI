@@ -166,6 +166,8 @@ public class SiteService {
 
 		if (updatedSite != null) {
 			updatedSite.setName(site.getName());
+			updatedSite.setConnector(site.getConnector());
+			updatedSite.setRules(site.getRules());
 			try {
 				updatedSite = siteRepository.save(updatedSite);
 			}catch(IllegalArgumentException ex) {

@@ -59,8 +59,8 @@ public class SystemRuleService {
 		return null;
 	}
 
-	public Object getByConnectorId(Integer connectorId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<SystemRule> getByConnectorId(Integer connectorId) {
+		return systemRuleRepository.findByConnectorId(connectorId);
+		//return null;
 	}
 }
