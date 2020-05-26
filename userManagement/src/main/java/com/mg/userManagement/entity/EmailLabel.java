@@ -7,10 +7,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
-public class EmailLable {
+public class EmailLabel {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="lable_seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="label_seq")
 
 	private Integer id;
 	private String name;

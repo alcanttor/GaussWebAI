@@ -1,6 +1,6 @@
 package com.mg.userManagement.dto;
 
-public class EmailLableDTO {
+public class EmailLabelDTO {
 
 	private Integer id;
 	private String name;

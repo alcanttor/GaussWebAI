@@ -22,7 +22,7 @@ public class EmailTemplate {
 	private String name;
 	private String template;
 	@ManyToMany
-	private List<EmailLable> lables;
+	private List<EmailLabel> labels;
 	
 	@CreationTimestamp
 	private Date createdDate;
@@ -69,11 +69,11 @@ public class EmailTemplate {
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-	public List<EmailLable> getLables() {
-		return lables;
+	public List<EmailLabel> getLabels() {
+		return labels;
 	}
-	public void setLables(List<EmailLable> lables) {
-		this.lables = lables;
+	public void setLabels(List<EmailLabel> labels) {
+		this.labels = labels;
 	}
 	
 }
