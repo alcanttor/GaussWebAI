@@ -11,6 +11,18 @@ export class SitesService {
 
   getSites() {
     console.log(config.BASE_URL);
-    return this.httpClient.get(`${config.BASE_URL}/getsitebyuser/1`);
+    return this.httpClient.get(`${config.BASE_URL}/getsitebyuserid/1`);
+  }
+
+  deleteSite(id) {
+    return this.httpClient.get(`${config.BASE_URL}/deletesitebyid/${id}`);
+  }
+
+  addSite(site) {
+    return this.httpClient.post(`${config.BASE_URL}/addsite/1`, site);
+  }
+
+  updateSite(site) {
+    return this.httpClient.post(`${config.BASE_URL}/updatesite/1`, site);
   }
 }
