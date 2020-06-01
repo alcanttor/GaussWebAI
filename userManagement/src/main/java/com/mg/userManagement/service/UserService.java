@@ -1,12 +1,13 @@
 package com.mg.userManagement.service;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.common.base.Optional;
 import com.mg.userManagement.entity.User;
 import com.mg.userManagement.repo.UserRepository;
 
@@ -57,11 +58,25 @@ public class UserService {
 	
 	public boolean isUservalid(String name, String password)
 	{
-		Optional<User> userOptional = userRepository.findByNameAndPassword(name, password);
+		Optional<User> userOptional = userRepository.findByUsernameAndPassword(name, password);
 		if (userOptional.isPresent())
 			return true;
 		else
 			return false;
+	}
+
+	public User getUserByName(String userName)  {
+		Optional<User> userOptional = userRepository.findByUsername(userName);
+		if (userOptional.isPresent())
+		{
+			logger.info("User exists for GaussWebAI");
+			return userOptional.get();
+		}
+		else
+		{
+			logger.info("No existing record found for the user");
+			return null;
+		}
 	}
 	
 }

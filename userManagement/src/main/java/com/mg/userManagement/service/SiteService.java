@@ -130,14 +130,14 @@ public class SiteService {
 		logger.info("Retreiving user info for the listing the sites");
 		User user = userRepository.findById(userId).get();
 
-		logger.info("Retreiving sites for user [{}]", user.getName());
+		logger.info("Retreiving sites for user [{}]", user.getUsername());
 		Optional<List<Site>> sites = siteRepository.getByUser(user);
 
 		if (sites.isPresent()) {
-			logger.info("Sites found for the user", user.getName());
+			logger.info("Sites found for the user", user.getUsername());
 			return sites.get();
 		} else {
-			logger.info("No sites found for the user", user.getName());
+			logger.info("No sites found for the user", user.getUsername());
 			return null;
 		}
 	}
@@ -232,13 +232,13 @@ public class SiteService {
 		logger.info("Retreiving user info for the listing the sites");
 		User user = userRepository.findById(userId).get();
 
-		logger.info("Retreiving sites for user [{}]", user.getName());
+		logger.info("Retreiving sites for user [{}]", user.getUsername());
 		Optional<List<Site>> sites = siteRepository.getByUser(user);
 
 		List<Rule> globalUserRules = new ArrayList<Rule>();
 
 		if (sites.isPresent()) {
-			logger.info("Sites found for user [{}]", user.getName());
+			logger.info("Sites found for user [{}]", user.getUsername());
 			List<Site> sitesList = sites.get();
 
 			for (Site site : sitesList) {
@@ -254,13 +254,13 @@ public class SiteService {
 			}
 
 			if (globalUserRules.isEmpty())
-				logger.info("No rules found for user [{}]", user.getName());
+				logger.info("No rules found for user [{}]", user.getUsername());
 			else
-				logger.info("Rules found for user [{}]", user.getName());
+				logger.info("Rules found for user [{}]", user.getUsername());
 
 			return globalUserRules;
 		} else {
-			logger.info("No sites and rules found for user [{}]", user.getName());
+			logger.info("No sites and rules found for user [{}]", user.getUsername());
 			return null;
 		}
 	}

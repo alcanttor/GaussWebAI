@@ -1,5 +1,6 @@
 package com.mg.userManagement.entity;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -9,15 +10,17 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class User {
+public class User implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="user_seq")
 	private Integer id;
 	
-	private String name;
+	private String username;
 	private String password;
 	private String emailId;
 	
@@ -35,12 +38,7 @@ public class User {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+	
 	public String getPassword() {
 		return password;
 	}
@@ -70,8 +68,45 @@ public class User {
 		this.updatedDateTime = updatedDateTime;
 	}
 	
+	
+
 	@Override
-	public String toString() {
-		return "SysUser [id=" + id + ", name=" + name + ", password=" + password + ", emailId=" + emailId +  "]";
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getUsername() {
+		return username;
+	}
+
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 }
