@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
-public class SystemRule {
+public class SystemRule extends BaseEntity{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="systemRule_seq")

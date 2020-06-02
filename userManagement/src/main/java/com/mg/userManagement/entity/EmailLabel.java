@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
-public class EmailLabel {
+public class EmailLabel extends BaseEntity{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="label_seq")

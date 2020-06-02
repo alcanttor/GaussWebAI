@@ -1,7 +1,6 @@
 package com.mg.userManagement.entity;
 
 import java.util.Collection;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,13 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class User implements UserDetails {
+public class User extends BaseEntity implements UserDetails  {
+
+	private static final long serialVersionUID = -8915813184447120905L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="user_seq")
@@ -28,11 +27,7 @@ public class User implements UserDetails {
 	@Column(unique = true)
 	private String emailId;
 	
-	@CreationTimestamp
-	private Date createdDateTime;
-	
-	@UpdateTimestamp
-	private Date updatedDateTime;
+
 	
 	private String firstName;
 	private String lastName;
@@ -109,24 +104,6 @@ public class User implements UserDetails {
 		this.emailId = emailId;
 	}
 	
-	public Date getCreatedDateTime() {
-		return createdDateTime;
-	}
-
-	public void setCreatedDateTime(Date createdDateTime) {
-		this.createdDateTime = createdDateTime;
-	}
-
-	public Date getUpdatedDateTime() {
-		return updatedDateTime;
-	}
-
-	public void setUpdatedDateTime(Date updatedDateTime) {
-		this.updatedDateTime = updatedDateTime;
-	}
-	
-	
-
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub

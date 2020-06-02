@@ -1,6 +1,5 @@
 package com.mg.userManagement.entity;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -10,11 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 @Entity
-public class EmailTemplate {
+public class EmailTemplate extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="emailTemplate_seq")
@@ -25,11 +21,6 @@ public class EmailTemplate {
 	private String template;
 	@ManyToMany
 	private List<EmailLabel> labels;
-	
-	@CreationTimestamp
-	private Date createdDate;
-	@UpdateTimestamp
-	private Date updatedDate;
 	
 	@ManyToOne
 	private User user;
@@ -59,18 +50,6 @@ public class EmailTemplate {
 		this.user = user;
 	}
 	
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-	public Date getUpdatedDate() {
-		return updatedDate;
-	}
-	public void setUpdatedDate(Date updatedDate) {
-		this.updatedDate = updatedDate;
-	}
 	public List<EmailLabel> getLabels() {
 		return labels;
 	}

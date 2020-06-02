@@ -1,6 +1,5 @@
 package com.mg.userManagement.entity;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,20 +12,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 @Entity
-public class Site {
+public class Site extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="site_seq")
 	private Integer id;
-	
-	@CreationTimestamp
-	private Date createdDate;
-	@UpdateTimestamp
-	private Date updatedDate;
 	
 	@Column(unique = true)
 	private String name;
@@ -80,22 +71,5 @@ public class Site {
 	public void setSiteToken(SiteToken siteToken) {
 		this.siteToken = siteToken;
 	}
-
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public Date getUpdatedDate() {
-		return updatedDate;
-	}
-
-	public void setUpdatedDate(Date updatedDate) {
-		this.updatedDate = updatedDate;
-	}
-	
 	
 }
