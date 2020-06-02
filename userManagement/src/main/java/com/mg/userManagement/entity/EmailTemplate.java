@@ -19,7 +19,9 @@ public class EmailTemplate {
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="emailTemplate_seq")
 	private Integer id;
+	
 	private String name;
+	
 	private String template;
 	@ManyToMany
 	private List<EmailLabel> labels;

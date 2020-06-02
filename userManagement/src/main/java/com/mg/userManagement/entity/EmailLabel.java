@@ -11,9 +11,10 @@ public class EmailLabel {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="label_seq")
-
 	private Integer id;
+	
 	private String name;
+	
 	@OneToOne
 	private User user;
 	

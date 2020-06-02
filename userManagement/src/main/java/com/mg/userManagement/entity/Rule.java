@@ -19,7 +19,9 @@ public class Rule {
 	private Boolean enabled;
 
 	private String name;
+	
 	private String description;
+	
 	private String label;
 	
 	@OneToOne

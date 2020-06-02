@@ -1,5 +1,6 @@
 package com.mg.userManagement.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +12,10 @@ public class Connector {
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="connector_seq")
 	private Integer id;
+	
+	@Column(unique = true)
 	private String name;
+	
 	public Integer getId() {
 		return id;
 	}
