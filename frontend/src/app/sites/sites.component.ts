@@ -9,12 +9,20 @@ import { SitesService } from './sites.service';
   providers: [SitesService],
 })
 export class SitesComponent implements OnInit {
-  private sites;
-  private site = {
+  public sites;
+  public site = {
     id: '',
     name: '',
     connectorId: '',
   };
+  public inputSites = [
+    {
+      id: '',
+      name: '',
+      connectorId: '',
+    },
+  ];
+
   constructor(
     private sitesService: SitesService,
     private modalService: NgbModal
@@ -27,6 +35,14 @@ export class SitesComponent implements OnInit {
   getSites() {
     this.sitesService.getSites().subscribe((data: any[]) => {
       this.sites = data;
+    });
+  }
+
+  addSite() {
+    this.inputSites.push({
+      id: '',
+      name: '',
+      connectorId: '',
     });
   }
 
@@ -45,12 +61,20 @@ export class SitesComponent implements OnInit {
     return transformedSite;
   }
 
-  openCreateSiteModal(createSite) {
+  openCreateSitesModal(createSites) {
     this.modalService
-      .open(createSite, { ariaLabelledBy: 'modal-basic-title' })
+      .open(createSites, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(() => {
-        const site = this.transformInputToRequestParams();
-        this.sitesService.addSite(site).subscribe((data: any[]) => {
+        const sites = this.inputSites.map((site) => ({
+          id: site.id,
+          name: site.name,
+          connector: {
+            id: site.connectorId,
+          },
+        }));
+
+        this.sitesService.addSites(sites).subscribe((data: any[]) => {
+          this.sites = [];
           this.site = {
             id: '',
             name: '',
@@ -66,11 +90,12 @@ export class SitesComponent implements OnInit {
       .open(deleteSite, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(() => {
         this.sitesService.deleteSite(siteId).subscribe((data: any) => {
-          this.site = {
-            id: data.id,
-            name: data.name,
-            connectorId: data.connector.id,
-          };
+          // this.site = {
+          //   id: data.id,
+          //   name: data.name,
+          //   connectorId: data.connector.id,
+          // };
+          this.getSites();
         });
       });
   }

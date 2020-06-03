@@ -5,14 +5,14 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SitesComponent } from './sites/sites.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'dashboard/sites', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   {
-    path: 'dashboard',
+    path: 'home',
     component: DashboardComponent,
     children: [
       {
-        path: 'sites',
+        path: '',
         component: SitesComponent,
       },
     ],

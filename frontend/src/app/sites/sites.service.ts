@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import config from '../common/config';
+import config from '../shared/config';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -18,8 +18,8 @@ export class SitesService {
     return this.httpClient.get(`${config.BASE_URL}/deletesitebyid/${id}`);
   }
 
-  addSite(site) {
-    return this.httpClient.post(`${config.BASE_URL}/addsite/1`, site);
+  addSites(sites) {
+    return this.httpClient.post(`${config.BASE_URL}/addsites/1`, sites);
   }
 
   updateSite(site) {
