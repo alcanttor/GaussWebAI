@@ -2,12 +2,9 @@ package com.mg.userManagement.entity;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-@Entity
 public class BaseEntity {
 	
 	@CreationTimestamp
