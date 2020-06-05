@@ -17,6 +17,7 @@ import { AuthService } from './auth.service';
 import { SitesComponent } from './sites/sites.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListActionsComponent } from './shared/components/list-actions/list-actions.component';
+import { RulesComponent } from './rules/rules.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ListActionsComponent } from './shared/components/list-actions/list-acti
     DashboardComponent,
     SitesComponent,
     ListActionsComponent,
+    RulesComponent,
   ],
   imports: [
     BrowserModule,

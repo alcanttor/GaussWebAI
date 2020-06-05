@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SitesComponent } from './sites/sites.component';
+import { RulesComponent } from './rules/rules.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -14,6 +15,10 @@ const routes: Routes = [
       {
         path: '',
         component: SitesComponent,
+      },
+      {
+        path: 'rules',
+        component: RulesComponent,
       },
     ],
   },
