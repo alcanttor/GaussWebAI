@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SitesService } from './sites.service';
+import { Site } from '../shared/models/site';
 
 @Component({
   selector: 'app-sites',
@@ -9,19 +10,11 @@ import { SitesService } from './sites.service';
   providers: [SitesService],
 })
 export class SitesComponent implements OnInit {
-  public sites;
-  public site = {
-    id: '',
-    name: '',
-    connectorId: '',
-  };
-  public inputSites = [
-    {
-      id: '',
-      name: '',
-      connectorId: '',
-    },
-  ];
+  @ViewChild('createSites') createSites: ElementRef;
+  @ViewChild('deleteModal') deleteSite: ElementRef;
+  public sites: Site[] = [];
+  public site: Site;
+  public inputSites: Site[] = [];
 
   constructor(
     private sitesService: SitesService,
@@ -32,6 +25,25 @@ export class SitesComponent implements OnInit {
     this.getSites();
   }
 
+  generateEmptySite = (): Site => ({
+    id: '',
+    name: '',
+    connector: {
+      id: '',
+    },
+    siteToken: {
+      token: '',
+    },
+  });
+
+  listen($event) {
+    if ($event.action === 'new') {
+      this.openCreateSitesModal(this.createSites);
+    } else if ($event.action === 'delete') {
+      this.openDeleteSiteModal(this.deleteSite, this.sites[0].id);
+    }
+  }
+
   getSites() {
     this.sitesService.getSites().subscribe((data: any[]) => {
       this.sites = data;
@@ -39,50 +51,27 @@ export class SitesComponent implements OnInit {
   }
 
   addSite() {
-    this.inputSites.push({
-      id: '',
-      name: '',
-      connectorId: '',
-    });
+    this.inputSites.push(this.generateEmptySite());
   }
 
   open(content) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  transformInputToRequestParams() {
-    const transformedSite = {
-      id: this.site.id,
-      name: this.site.name,
-      connector: {
-        id: this.site.connectorId,
-      },
-    };
-    return transformedSite;
-  }
-
   openCreateSitesModal(createSites) {
     this.modalService
       .open(createSites, { ariaLabelledBy: 'modal-basic-title' })
-      .result.then(() => {
-        const sites = this.inputSites.map((site) => ({
-          id: site.id,
-          name: site.name,
-          connector: {
-            id: site.connectorId,
-          },
-        }));
-
-        this.sitesService.addSites(sites).subscribe((data: any[]) => {
-          this.sites = [];
-          this.site = {
-            id: '',
-            name: '',
-            connectorId: '',
-          };
-          this.getSites();
-        });
-      });
+      .result.then(
+        (onfulfilled) => {
+          this.sitesService
+            .addSites(this.inputSites)
+            .subscribe((data: any[]) => {
+              this.site = this.generateEmptySite();
+              this.getSites();
+            });
+        },
+        (onrejected) => {}
+      );
   }
 
   openDeleteSiteModal(deleteSite, siteId) {
@@ -90,32 +79,18 @@ export class SitesComponent implements OnInit {
       .open(deleteSite, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(() => {
         this.sitesService.deleteSite(siteId).subscribe((data: any) => {
-          // this.site = {
-          //   id: data.id,
-          //   name: data.name,
-          //   connectorId: data.connector.id,
-          // };
+          this.site = this.generateEmptySite();
           this.getSites();
         });
       });
   }
 
   openEditSiteModal(createSite, site) {
-    this.site = {
-      id: site.id,
-      name: site.name,
-      connectorId: site.connector.id,
-    };
     this.modalService
       .open(createSite, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(() => {
-        const site = this.transformInputToRequestParams();
         this.sitesService.updateSite(site).subscribe((data: any[]) => {
-          this.site = {
-            id: '',
-            name: '',
-            connectorId: '',
-          };
+          this.site = this.generateEmptySite();
           this.getSites();
         });
       });

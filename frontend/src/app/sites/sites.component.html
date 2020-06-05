@@ -1,48 +1,35 @@
-<div class="header row">
-  <div class="col-md-11">
-    <h2 class="title">Sites</h2>
+<app-list-actions
+  (messageEvent)="listen($event)"
+  [showItemActions]="true"
+></app-list-actions>
+<div class="container-fluid">
+  <div class="header row">
+    <div class="col-md-11">
+      <h2 class="title">Sites</h2>
+    </div>
   </div>
-  <!-- <div class="col-md-1">
-    <button class="btn btn-primary" (click)="openCreateSitesModal(createSites)">
-      Add Sites
-    </button>
-  </div> -->
-</div>
-<div class="content">
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Connector</th>
-        <th scope="col">Token</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let site of sites; index as i">
-        <th scope="row">{{ i + 1 }}</th>
-        <td>
-          {{ site.name }}
-        </td>
-        <td>{{ site.connector.name }}</td>
-        <td>{{ site.siteToken.token }}</td>
-        <!-- <td style="width: 15%;">
-          <button
-            class="btn btn-link"
-            (click)="openEditSiteModal(createSite, site)"
-          >
-            Edit
-          </button>
-          <button
-            class="btn btn-link"
-            (click)="openDeleteSiteModal(deleteModal, site.id)"
-          >
-            Delete
-          </button>
-        </td> -->
-      </tr>
-    </tbody>
-  </table>
+  <div class="content">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Connector</th>
+          <th scope="col">Token</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let site of sites; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>
+            {{ site.name }}
+          </td>
+          <td>{{ site.connector.name }}</td>
+          <td>{{ site.siteToken?.token }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <ng-template #createSite let-modal>
@@ -75,7 +62,7 @@
 
       <div class="form-group">
         <label for="connector">Connector</label>
-        <select id="connector" [(ngModel)]="site.connectorId">
+        <select id="connector" [(ngModel)]="site.connector.id">
           <option selected value="1">Wordpress</option>
         </select>
       </div>
@@ -142,7 +129,7 @@
       </div>
       <div class="form-group">
         <label for="connector">Connector</label>
-        <select id="connector" [(ngModel)]="site.connectorId">
+        <select id="connector" [(ngModel)]="site.connector.id">
           <option selected value="1">Wordpress</option>
         </select>
       </div>
