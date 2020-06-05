@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ClipboardModule } from 'ngx-clipboard';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,6 +35,7 @@ import { ListActionsComponent } from './shared/components/list-actions/list-acti
     NgbModule,
     HttpClientModule,
     IconsModule,
+    ClipboardModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent],
