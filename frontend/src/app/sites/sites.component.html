@@ -1,0 +1,182 @@
+<app-list-actions
+  (messageEvent)="listen($event)"
+  [showItemActions]="false"
+></app-list-actions>
+<div class="container-fluid sites-container">
+  <div class="header row">
+    <div class="col-md-11">
+      <h2 class="title display-5">Sites</h2>
+    </div>
+  </div>
+  <div class="content">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col" style="width: 10%;">#</th>
+          <th scope="col" style="width: 25%;">Name</th>
+          <th scope="col" style="width: 25%;">Connector</th>
+          <th scope="col" style="width: 25%;">Token</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let site of sites; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>
+            {{ site.name }}
+          </td>
+          <td>{{ site.connector.name }}</td>
+          <td>
+            <button
+              class="btn btn-link"
+              ngxClipboard
+              [cbContent]="site.siteToken?.token"
+            >
+              {{ site.siteToken?.token }}
+            </button>
+          </td>
+          <td>
+            <div ngbDropdown class="d-inline-block" placement="right-bottom">
+              <i-feather name="more-vertical" ngbDropdownToggle></i-feather>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button
+                  ngbDropdownItem
+                  (click)="openEditSiteModal(createSite, site)"
+                >
+                  <i-feather name="edit2" class="small-icon"></i-feather>
+                  Edit
+                </button>
+                <button
+                  ngbDropdownItem
+                  (click)="openDeleteSiteModal(deleteModal, site.id)"
+                >
+                  <i-feather name="trash2" class="small-icon"></i-feather>
+                  Delete
+                </button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-template #createSite let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Create Site</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <div class="input-group">
+          <input
+            id="name"
+            class="form-control"
+            placeholder="Ex - Netflix"
+            name="name"
+            type="text"
+            [(ngModel)]="site.name"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="connector">Connector</label>
+        <select id="connector" [(ngModel)]="site.connector.id">
+          <option selected value="1">Wordpress</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn" (click)="modal.close()" ngbAutofocus>
+      Save
+    </button>
+    <button type="button" class="btn" (click)="modal.dismiss()">
+      Cancel
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #deleteModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Delete Site</h4>
+  </div>
+  <div class="modal-body">
+    Are you sure you want to delete this site?
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="modal.close()"
+      ngbAutofocus
+    >
+      Confirm
+    </button>
+    <button type="button" class="btn" (click)="modal.dismiss()">
+      Cancel
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #createSites let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Create Sites</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div *ngFor="let site of inputSites; index as i">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <div class="input-group">
+          <input
+            id="name"
+            class="form-control"
+            placeholder="Ex - Netflix"
+            name="name"
+            type="text"
+            [(ngModel)]="site.name"
+          />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="connector">Connector</label>
+        <select id="connector" [(ngModel)]="site.connector.id">
+          <option selected value="1">Wordpress</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <button class="btn btn-light" (click)="addSite()">Add Another</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn" (click)="modal.close()" ngbAutofocus>
+      Save
+    </button>
+    <button type="button" class="btn" (click)="modal.dismiss()">
+      Cancel
+    </button>
+  </div>
+</ng-template>

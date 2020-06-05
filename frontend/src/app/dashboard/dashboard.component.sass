@@ -1,21 +1,69 @@
-.example-container
-    display: flex
-    flex-direction: column
-    position: absolute
+@import "../../variables.sass"
+
+/*
+ * Navbar    
+ */
+
+.navbar
+    background-color: $base-color
+
+/*
+ * Sidebar
+ */
+
+.feather
+    width: 16px
+    height: 16px
+    vertical-align: text-bottom
+
+.sidebar
+    position: fixed
     top: 0
     bottom: 0
     left: 0
-    right: 0
+    z-index: 100
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1)
+    background-color: $bg-gray
+    padding-left: 0px
+    padding-right: 0px
 
-.example-is-mobile .example-toolbar
-    position: fixed
-    z-index: 2
+@media (max-width: 767.98px)
+.sidebar
+    top: 3.5rem
+    display: flex
+    align-items: center
 
-h1.example-app-name
-    margin-left: 8px
+    .menu-icon
+        padding: 1rem
 
-.example-sidenav-container
-    flex: 1
+.sidebar-sticky
+    position: relative
+    top: 0
+    height: calc(100vh - 48px)
+    padding-top: .5rem
+    overflow-x: hidden
+    overflow-y: auto
 
-    .example-is-mobile &
-        flex: 1 0 auto
+.sidebar .nav-link
+    font-weight: 500
+    color: $font-color
+
+    & .feather
+        margin-right: 4px
+        color: #727272
+
+    &.active
+        color: white
+        background-color: $base-color
+
+    &:hover .feather,
+
+    &.active .feather
+        color: inherit
+
+.sidebar-heading
+    font-size: .75rem
+    text-transform: uppercase
+
+.btn-white
+    color: white
