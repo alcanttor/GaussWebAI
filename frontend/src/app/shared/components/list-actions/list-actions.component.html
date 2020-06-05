@@ -1,0 +1,14 @@
+<div class="container-fluid list-actions-container">
+  <div class="row">
+    <div class="col">
+      <button class="btn" (click)="emitEvent('add')">
+        <i-feather name="plus" class="small-icon"></i-feather>
+        New
+      </button>
+      <button class="btn" (click)="emitEvent('delete')" *ngIf="showItemActions">
+        <i-feather name="trash-2" class="small-icon"></i-feather>
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
