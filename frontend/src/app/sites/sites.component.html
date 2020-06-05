@@ -1,21 +1,21 @@
 <app-list-actions
   (messageEvent)="listen($event)"
-  [showItemActions]="true"
+  [showItemActions]="false"
 ></app-list-actions>
-<div class="container-fluid">
+<div class="container-fluid sites-container">
   <div class="header row">
     <div class="col-md-11">
-      <h2 class="title">Sites</h2>
+      <h2 class="title display-5">Sites</h2>
     </div>
   </div>
   <div class="content">
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">Name</th>
-          <th scope="col">Connector</th>
-          <th scope="col">Token</th>
+          <th scope="col" style="width: 10%;">#</th>
+          <th scope="col" style="width: 25%;">Name</th>
+          <th scope="col" style="width: 25%;">Connector</th>
+          <th scope="col" style="width: 25%;">Token</th>
         </tr>
       </thead>
       <tbody>
@@ -25,7 +25,36 @@
             {{ site.name }}
           </td>
           <td>{{ site.connector.name }}</td>
-          <td>{{ site.siteToken?.token }}</td>
+          <td>
+            <button
+              class="btn btn-link"
+              ngxClipboard
+              [cbContent]="site.siteToken?.token"
+            >
+              {{ site.siteToken?.token }}
+            </button>
+          </td>
+          <td>
+            <div ngbDropdown class="d-inline-block" placement="right-bottom">
+              <i-feather name="more-vertical" ngbDropdownToggle></i-feather>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button
+                  ngbDropdownItem
+                  (click)="openEditSiteModal(createSite, site)"
+                >
+                  <i-feather name="edit2" class="small-icon"></i-feather>
+                  Edit
+                </button>
+                <button
+                  ngbDropdownItem
+                  (click)="openDeleteSiteModal(deleteModal, site.id)"
+                >
+                  <i-feather name="trash2" class="small-icon"></i-feather>
+                  Delete
+                </button>
+              </div>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>

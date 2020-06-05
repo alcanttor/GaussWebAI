@@ -37,7 +37,7 @@ export class SitesComponent implements OnInit {
   });
 
   listen($event) {
-    if ($event.action === 'new') {
+    if ($event.action === 'add') {
       this.openCreateSitesModal(this.createSites);
     } else if ($event.action === 'delete') {
       this.openDeleteSiteModal(this.deleteSite, this.sites[0].id);
@@ -59,6 +59,7 @@ export class SitesComponent implements OnInit {
   }
 
   openCreateSitesModal(createSites) {
+    this.inputSites.push(this.generateEmptySite());
     this.modalService
       .open(createSites, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
@@ -77,22 +78,30 @@ export class SitesComponent implements OnInit {
   openDeleteSiteModal(deleteSite, siteId) {
     this.modalService
       .open(deleteSite, { ariaLabelledBy: 'modal-basic-title' })
-      .result.then(() => {
-        this.sitesService.deleteSite(siteId).subscribe((data: any) => {
-          this.site = this.generateEmptySite();
-          this.getSites();
-        });
-      });
+      .result.then(
+        (onfulfilled) => {
+          this.sitesService.deleteSite(siteId).subscribe((data: any) => {
+            this.site = this.generateEmptySite();
+            this.getSites();
+          });
+        },
+        (onrejected) => {}
+      );
   }
 
   openEditSiteModal(createSite, site) {
+    this.site = site;
+    console.log(site);
     this.modalService
       .open(createSite, { ariaLabelledBy: 'modal-basic-title' })
-      .result.then(() => {
-        this.sitesService.updateSite(site).subscribe((data: any[]) => {
-          this.site = this.generateEmptySite();
-          this.getSites();
-        });
-      });
+      .result.then(
+        (onfulfilled) => {
+          this.sitesService.updateSite(site).subscribe((data: any[]) => {
+            this.site = this.generateEmptySite();
+            this.getSites();
+          });
+        },
+        (onrejected) => {}
+      );
   }
 }
