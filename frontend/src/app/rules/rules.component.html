@@ -1,1 +1,47 @@
-<p>rules works!</p>
+<app-list-actions
+  (messageEvent)="listen($event)"
+  [showItemActions]="false"
+></app-list-actions>
+<div class="container-fluid rules-container">
+  <div class="header row">
+    <div class="col-md-11">
+      <h2 class="title display-5">Rules</h2>
+    </div>
+  </div>
+  <div class="content">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col" style="width: 10%;">#</th>
+          <th scope="col" style="width: 25%;">Name</th>
+          <th scope="col" style="width: 25%;">Type</th>
+          <th scope="col" style="width: 25%;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rule of rules; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>
+            {{ rule.name }}
+          </td>
+          <td>Manual</td>
+          <td>
+            <div ngbDropdown class="d-inline-block" placement="right-bottom">
+              <i-feather name="more-vertical" ngbDropdownToggle></i-feather>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button ngbDropdownItem>
+                  <i-feather name="edit2" class="small-icon"></i-feather>
+                  Edit
+                </button>
+                <button ngbDropdownItem>
+                  <i-feather name="trash2" class="small-icon"></i-feather>
+                  Delete
+                </button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
