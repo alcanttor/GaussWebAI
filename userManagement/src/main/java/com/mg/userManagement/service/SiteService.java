@@ -9,9 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.mg.userManagement.entity.Rule;
+import com.mg.userManagement.entity.RuleGroup;
 import com.mg.userManagement.entity.Site;
 import com.mg.userManagement.entity.SiteToken;
 import com.mg.userManagement.entity.User;
+import com.mg.userManagement.repo.RuleRepository;
 import com.mg.userManagement.repo.SiteRepository;
 import com.mg.userManagement.repo.UserRepository;
 
@@ -24,7 +26,9 @@ public class SiteService {
 	private SiteRepository siteRepository;
 	@Autowired
 	private UserRepository userRepository;
-
+	
+	@Autowired
+	private RuleService ruleService ; 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	/*
@@ -144,7 +148,7 @@ public class SiteService {
 		if (updatedSite != null) {
 			updatedSite.setName(site.getName());
 			updatedSite.setConnector(site.getConnector());
-			updatedSite.setRules(site.getRules());
+			updatedSite.setRuleGroups(site.getRuleGroups());
 			try {
 				updatedSite = siteRepository.save(updatedSite);
 			}catch(IllegalArgumentException ex) {
@@ -173,46 +177,14 @@ public class SiteService {
 			return null;
 	}
 
-	/* Add new rule for the given site */
-	public Site addRulebySiteId(Integer siteId, Rule rule) {
-		Optional<Site> siteOptional = siteRepository.findById(siteId);
-		Site site = siteOptional.get();
-
-		if (siteOptional.isPresent()) {
-			logger.info("Site [{}] found; attempting to add new rule to it", site.getName());
-
-			List<Rule> rules = site.getRules();
-			if (rules == null) {
-				rules = new ArrayList<>();
-			}
-
-			rules.add(rule);
-			site.setRules(rules);
-			logger.info("New rule added for the site: [{}]", site.getName());
-
-			try {
-				return siteRepository.save(site);
-			}
-
-			catch (Exception ex) {
-				logger.error("Save failed while trying to add new rule for the site: ", ex);
-				return null;
-			}
-		} else {
-			logger.error("Site [{}] not found", site.getName());
-			return null;
-		}
-	}
-
-	/* Retrieves list of rules for a given userId */
-	public List<Rule> getAllRulesbyUserID(Integer userId) {
+	public List<RuleGroup> getAllRuleGroupsbyUserID(Integer userId) {
 		logger.info("Retreiving user info for the listing the sites");
 		User user = userRepository.findById(userId).get();
 
 		logger.info("Retreiving sites for user [{}]", user.getUsername());
 		Optional<List<Site>> sites = siteRepository.getByUser(user);
 
-		List<Rule> globalUserRules = new ArrayList<Rule>();
+		List<RuleGroup> globalUserRuleGroups = new ArrayList<RuleGroup>();
 
 		if (sites.isPresent()) {
 			logger.info("Sites found for user [{}]", user.getUsername());
@@ -220,22 +192,22 @@ public class SiteService {
 
 			for (Site site : sitesList) {
 				logger.info("Retreiving rules for site [{}]", site.getName());
-				List<Rule> rules = site.getRules();
+				List<RuleGroup> ruleGroups = site.getRuleGroups();
 
-				if (rules == null) {
-					logger.info("No rules found for site [{}]", site.getName());
+				if (ruleGroups == null) {
+					logger.info("No rule groups found for site [{}]", site.getName());
 					continue;
 				}
-				for (Rule rule : rules)
-					globalUserRules.add(rule);
+				for (RuleGroup ruleGroup : ruleGroups)
+					globalUserRuleGroups.add(ruleGroup);
 			}
 
-			if (globalUserRules.isEmpty())
+			if (globalUserRuleGroups.isEmpty())
 				logger.info("No rules found for user [{}]", user.getUsername());
 			else
 				logger.info("Rules found for user [{}]", user.getUsername());
 
-			return globalUserRules;
+			return globalUserRuleGroups;
 		} else {
 			logger.info("No sites and rules found for user [{}]", user.getUsername());
 			return null;
@@ -271,5 +243,52 @@ public class SiteService {
 		}
 		return site;
 	}*/
+
+	public Site addRuleGroupToSiteId(Integer siteId, RuleGroup ruleGroup) {
+		Optional<Site> siteOptional = siteRepository.findById(siteId);
+		Site site = siteOptional.get();
+
+		if (siteOptional.isPresent()) {
+			logger.info("Site [{}] found; attempting to add new ruleGroup to it", site.getName());
+				
+			List<RuleGroup> ruleGroups = site.getRuleGroups();
+			if (ruleGroups == null) {
+				ruleGroups = new ArrayList<>();
+			}
+			
+			List<Rule> savedRules = saveRules(ruleGroup.getRules());
+			ruleGroup.setRules(savedRules);
+			ruleGroups.add(ruleGroup);
+			site.setRuleGroups(ruleGroups);
+			logger.info("New ruleGroup added for the site: [{}]", site.getName());
+
+			try {
+				return siteRepository.save(site);
+			}
+
+			catch (Exception ex) {
+				logger.error("Save failed while trying to add new rulegroup for the site: ", ex);
+				return null;
+			}
+		} else {
+			logger.error("Site [{}] not found", site.getName());
+			return null;
+		}
+
+	}
+
+private List<Rule> saveRules(List<Rule> rules) {
+	List<Rule> savedRules = new ArrayList<>();
+	for(Rule rule : rules)
+	{
+		try {
+			savedRules.add(ruleService.mergeRule(rule));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	return savedRules;
+}
 
 }

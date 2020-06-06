@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import com.google.common.reflect.TypeToken;
 import com.mg.userManagement.dto.RegisterSitesDTO;
 import com.mg.userManagement.dto.RuleDTO;
+import com.mg.userManagement.dto.RuleGroupDTO;
 import com.mg.userManagement.dto.SiteDTO;
 import com.mg.userManagement.entity.Rule;
+import com.mg.userManagement.entity.RuleGroup;
 import com.mg.userManagement.entity.Site;
 import com.mg.userManagement.service.SiteService;
 
@@ -74,26 +76,19 @@ public class SiteServiceDTO {
 		return modelMapper.map(updatedSite, SiteDTO.class);
 	}
 	
-	public SiteDTO addRulebySite(Integer siteId, RuleDTO ruleDTO) {
-		Rule rule = modelMapper.map(ruleDTO, Rule.class);
-		Site site = siteService.addRulebySiteId(siteId, rule);
-		return modelMapper.map(site, SiteDTO.class);
-	}
 	
-	public List<RuleDTO> getAllRulesbyUser(Integer userId){
-		List<Rule> allRules = siteService.getAllRulesbyUserID(userId);
+	public List<RuleGroupDTO> getAllRuleGroupsbyUser(Integer userId){
+		List<RuleGroup> allRules = siteService.getAllRuleGroupsbyUserID(userId);
 		@SuppressWarnings("serial")
-		Type listRulesbyUser = new TypeToken<List<RuleDTO>>() {}.getType();
+		Type listRulesbyUser = new TypeToken<List<RuleGroupDTO>>() {}.getType();
 		return modelMapper.map(allRules, listRulesbyUser);
 	}
-	/*
-	public SiteDTO assignTemplate(Integer siteId,Integer ruleId, Integer emailTemplateId) {
-		try {
-			Site site = siteService.asociateTemplate(siteId, ruleId,  emailTemplateId);
-			return modelMapper.map(site, SiteDTO.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}*/
+	
+	
+	public SiteDTO addRuleGroupToSite(Integer siteId, RuleGroupDTO ruleGroupDTO) {
+		RuleGroup ruleGroup = modelMapper.map(ruleGroupDTO, RuleGroup.class);
+		Site site = siteService.addRuleGroupToSiteId(siteId, ruleGroup);
+		return modelMapper.map(site, SiteDTO.class);
+
+	}
 }

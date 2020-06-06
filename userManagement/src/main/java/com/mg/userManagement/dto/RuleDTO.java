@@ -11,10 +11,6 @@ public class RuleDTO {
 	SystemRule systemRule;
 	
 	Boolean enabled;
-
-	private String name;
-	private String description;
-	private String label;
 	
 	private EmailTemplateDTO emailTemplate;
 	
@@ -35,24 +31,6 @@ public class RuleDTO {
 	}
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public String getLabel() {
-		return label;
-	}
-	public void setLabel(String label) {
-		this.label = label;
 	}
 	public EmailTemplateDTO getEmailTemplate() {
 		return emailTemplate;

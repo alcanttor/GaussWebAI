@@ -5,7 +5,7 @@ import javax.persistence.Id;
 public class SystemRuleDTO {
 	
 	private Integer id;
-	private String descripton;
+	private String description;
 	private SystemEventDTO systemEvent;
 	private ActionDTO action;
 	private ConnectorDTO connector;
@@ -15,11 +15,12 @@ public class SystemRuleDTO {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getDescripton() {
-		return descripton;
+	
+	public String getDescription() {
+		return description;
 	}
-	public void setDescripton(String descripton) {
-		this.descripton = descripton;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	public SystemEventDTO getSystemEvent() {
 		return systemEvent;

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mg.userManagement.dto.RegisterSitesDTO;
 import com.mg.userManagement.dto.RuleDTO;
+import com.mg.userManagement.dto.RuleGroupDTO;
 import com.mg.userManagement.dto.SiteDTO;
 import com.mg.userManagement.dtoservice.SiteServiceDTO;
 @CrossOrigin(origins="*",allowedHeaders="*")
@@ -57,18 +58,18 @@ public class SiteController {
 		return siteServiceDTO.updateSitebyUser(siteListDTO, userId);
 	}
 	
-	/*invoke service to add new rule to the site*/
-	@PostMapping(value="/addrule/{siteId}")
-	public SiteDTO addRule(@PathVariable Integer siteId, @RequestBody RuleDTO ruleDTO)
+	
+	@PostMapping(value="/addruleGroup/{siteId}")
+	public SiteDTO addRuleGroup(@PathVariable Integer siteId, @RequestBody RuleGroupDTO ruleGroupDTO)
 	{
-		return siteServiceDTO.addRulebySite(siteId, ruleDTO);
+		return siteServiceDTO.addRuleGroupToSite(siteId, ruleGroupDTO);
 	}
 	
 	/*invoke service to get list of all rules for a given user*/
-	@PostMapping(value="/getallrules/{userId}")
-	public List<RuleDTO> getAllRules(@PathVariable Integer userId)
+	@GetMapping(value="/getallruleGroups/{userId}")
+	public List<RuleGroupDTO> getAllRules(@PathVariable Integer userId)
 	{
-		return siteServiceDTO.getAllRulesbyUser(userId);
+		return siteServiceDTO.getAllRuleGroupsbyUser(userId);
 	}
 	
 	/*public SiteDTO asociateTemplate(Integer siteId,Integer ruleId, Integer emailTemplateId)

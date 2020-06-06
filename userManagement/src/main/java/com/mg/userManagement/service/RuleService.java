@@ -34,11 +34,11 @@ public class RuleService {
 				savedRules.add(this.save(rule));
 			}
 			catch(IllegalArgumentException ex) {
-				logger.error("Invalid Arguement. Process for rule [{}] creation failed", rule.getName());
+				logger.error("Invalid Arguement. Process for rule [{}] creation failed", rule.getId());
 				logger.error("", ex);
 			}
 			catch(Exception ex) {
-				logger.error("Process for rule [{}] creation failed", rule.getName());
+				logger.error("Process for rule [{}] creation failed", rule.getId());
 				logger.error("", ex);
 			}
 		}
@@ -61,13 +61,8 @@ public class RuleService {
 		if (ruleOptional.isPresent())
 		{
 			Rule ruleinDb = ruleOptional.get();
-			ruleinDb.setEmailTemplate(rule.getEmailTemplate());
-			ruleinDb.setDescription(rule.getDescription());
-			ruleinDb.setEnabled(rule.getEnabled());
-			ruleinDb.setLabel(rule.getLabel());
-			ruleinDb.setName(rule.getName());
-			ruleinDb.setSystemRule(rule.getSystemRule());
-			return ruleRepository.save(ruleinDb);
+			rule.setId(ruleinDb.getId());
+			return ruleRepository.save(rule);
 		}
 		else 
 		{
@@ -75,5 +70,22 @@ public class RuleService {
 				throw new Exception("Rule not found");
 		}
 	}
+	
+	public Rule mergeRule(Rule rule) throws Exception 
+	{
+		
+		Optional<Rule> ruleOptional = ruleRepository.findBysystemRuleId(rule.getSystemRule().getId());
+		if (ruleOptional.isPresent())
+		{
+			Rule ruleinDb = ruleOptional.get();
+			rule.setId(ruleinDb.getId());
+			return ruleRepository.save(rule);
+		}
+		else 
+		{
+			return ruleRepository.save(rule);
+		}
+	}
+	
 	
 }

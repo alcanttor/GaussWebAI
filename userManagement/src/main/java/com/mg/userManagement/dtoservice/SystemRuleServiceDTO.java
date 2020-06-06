@@ -1,6 +1,7 @@
 package com.mg.userManagement.dtoservice;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -42,9 +43,6 @@ public class SystemRuleServiceDTO {
 		return modelMapper.map(systemRuleService.get(id), SystemRuleDTO.class);
 	}
 
-	public SystemRuleDTO getRuleBySiteId(Integer siteId) {
-		return modelMapper.map(systemRuleService.getBySiteId(siteId), SystemRuleDTO.class);
-	}
 
 	public SystemRuleDTO getRuleByConnectorId(Integer connectorId) {
 		return modelMapper.map(systemRuleService.getByConnectorId(connectorId), SystemRuleDTO.class);
@@ -72,6 +70,16 @@ public class SystemRuleServiceDTO {
 		}
 		return result;
 
+	}
+
+	public List<SystemRuleDTO> getAllRules(Integer connectorId) {
+		List<SystemRule> rules = systemRuleService.getByConnectorId(connectorId);
+		List<SystemRuleDTO> result = new ArrayList<>();
+		for (SystemRule rule : rules)
+		{
+			result.add(modelMapper.map(rule, SystemRuleDTO.class));
+		}
+		return result;
 	}
 	
 	

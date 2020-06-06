@@ -12,7 +12,7 @@ public class SystemRule extends BaseEntity{
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="systemRule_seq")
 	private Integer id;
-	private String descripton;
+	private String description;
 	@OneToOne
 	private SystemEvent systemEvent;
 	@OneToOne
@@ -26,11 +26,11 @@ public class SystemRule extends BaseEntity{
 		this.id = id;
 	}
 	
-	public String getDescripton() {
-		return descripton;
+	public String getDescription() {
+		return description;
 	}
-	public void setDescripton(String descripton) {
-		this.descripton = descripton;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	public SystemEvent getSystemEvent() {
 		return systemEvent;

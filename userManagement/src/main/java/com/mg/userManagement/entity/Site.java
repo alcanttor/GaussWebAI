@@ -29,7 +29,7 @@ public class Site extends BaseEntity {
 	@OneToOne(cascade=CascadeType.ALL)
 	private SiteToken siteToken;
 	@OneToMany(cascade=CascadeType.ALL)
-	private List<Rule> rules;
+	private List<RuleGroup> ruleGroups;
 	
 	public Site(){}
 	
@@ -57,11 +57,13 @@ public class Site extends BaseEntity {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public List<Rule> getRules() {
-		return rules;
+
+	public List<RuleGroup> getRuleGroups() {
+		return ruleGroups;
 	}
-	public void setRules(List<Rule> rules) {
-		this.rules = rules;
+
+	public void setRuleGroups(List<RuleGroup> ruleGroups) {
+		this.ruleGroups = ruleGroups;
 	}
 
 	public SiteToken getSiteToken() {

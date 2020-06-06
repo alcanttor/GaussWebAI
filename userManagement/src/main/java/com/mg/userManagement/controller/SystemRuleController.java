@@ -19,35 +19,29 @@ import com.mg.userManagement.dtoservice.SystemRuleServiceDTO;
 public class SystemRuleController {
 
 	@Autowired
-	SystemRuleServiceDTO systemRuleServiceDTO; 
-	
+	SystemRuleServiceDTO systemRuleServiceDTO;
+
 	@PostMapping(value = "/addSystemRule")
-	public SystemRuleDTO save(@RequestBody SystemRuleDTO systemRule)
-	{
-		return systemRuleServiceDTO.saveRule(systemRule); 
+	public SystemRuleDTO save(@RequestBody SystemRuleDTO systemRule) {
+		return systemRuleServiceDTO.saveRule(systemRule);
 	}
-	
+
 	@GetMapping(value = "/getSystemRule")
-	public List<SystemRuleDTO> getAll()
-	{
-		return systemRuleServiceDTO.getAllRules(); 
+	public List<SystemRuleDTO> getAll() {
+		return systemRuleServiceDTO.getAllRules();
 	}
-	
-	@GetMapping(value = "/getSystemRule/{siteId}")
-	public SystemRuleDTO getBySiteId(@PathVariable Integer siteId)
-	{
-		return systemRuleServiceDTO.getRuleBySiteId(siteId); 
+
+	@GetMapping(value = "/getSystemRuleByConnector/{connectorId}")
+	public List<SystemRuleDTO> getSyatemRuleByConnectorId(@PathVariable Integer connectorId) {
+		return systemRuleServiceDTO.getAllRules(connectorId);
 	}
-	
 	@GetMapping(value = "/getEventsbyConnector/{connectorId}")
-	public Set<SystemEventDTO> getbyConnectorId(@PathVariable Integer connectorId)
-	{
-		return systemRuleServiceDTO.getEventsByConnectorId(connectorId); 
+	public Set<SystemEventDTO> getbyConnectorId(@PathVariable Integer connectorId) {
+		return systemRuleServiceDTO.getEventsByConnectorId(connectorId);
 	}
-	
+
 	@GetMapping(value = "/getActionsByConnectorsAndActions/{ConnectorId}/{SystemEventId}")
-	public Set<ActionDTO> getActionsByEventId(@PathVariable Integer ConnectorId,@PathVariable Integer SystemEventId)
-	{
-		return systemRuleServiceDTO.getEventsByConnectorIdandAction(ConnectorId,SystemEventId); 
+	public Set<ActionDTO> getActionsByEventId(@PathVariable Integer ConnectorId, @PathVariable Integer SystemEventId) {
+		return systemRuleServiceDTO.getEventsByConnectorIdandAction(ConnectorId, SystemEventId);
 	}
 }
