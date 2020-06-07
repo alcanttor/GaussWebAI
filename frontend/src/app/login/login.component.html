@@ -17,7 +17,7 @@
                 <div class="form-group">
                   <label for="username">Username</label>
                   <div class="input-group">
-                    <input id="username" type="text" />
+                    <input id="username" type="text" [(ngModel)]="username" />
                   </div>
                 </div>
               </div>
@@ -25,13 +25,19 @@
                 <div class="form-group">
                   <label for="password">Password</label>
                   <div class="input-group">
-                    <input type="password" id="password" />
+                    <input
+                      type="password"
+                      id="password"
+                      [(ngModel)]="password"
+                    />
                   </div>
                 </div>
               </div>
               <div class="col-xs-12 col-md-12">
                 <div class="form-group">
-                  <button class="btn btn-primary">Login</button>
+                  <button class="btn btn-primary" (click)="login()">
+                    Login
+                  </button>
                   <button class="btn btn-link">Forgot password?</button>
                 </div>
               </div>

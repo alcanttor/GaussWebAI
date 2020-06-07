@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   FormControl,
   FormGroupDirective,
@@ -13,13 +14,15 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./login.component.sass'],
 })
 export class LoginComponent implements OnInit {
-  constructor(private auth: AuthService) {}
+  public username: string;
+  public password: string;
+  constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {}
 
-  submit() {
-    this.auth.login('sample', 'sample', () => {
-      console.log('Sample');
+  login() {
+    this.auth.login(this.username, this.password, () => {
+      this.router.navigateByUrl('/home');
     });
   }
 }
