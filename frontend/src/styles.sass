@@ -2,7 +2,20 @@
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap'
+@import './variables'
 
 .no-padding
     padding-left: 0px !important
     padding-right: 0px !important
+
+.btn
+    border-radius: 0px
+
+.btn-primary
+    background-color: $base-color !important
+    border-color: $base-color !important
+    color: white
+
+.form-group
+    label
+        font-weight: 600
