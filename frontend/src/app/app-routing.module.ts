@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SitesComponent } from './sites/sites.component';
 import { RulesComponent } from './rules/rules.component';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -11,6 +12,7 @@ const routes: Routes = [
   {
     path: 'home',
     component: DashboardComponent,
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: '',
