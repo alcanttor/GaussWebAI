@@ -33,7 +33,10 @@
                   <i-feather name="edit2" class="small-icon"></i-feather>
                   Edit
                 </button>
-                <button ngbDropdownItem>
+                <button
+                  ngbDropdownItem
+                  (click)="openDeleteModal(deleteModal, rule.id)"
+                >
                   <i-feather name="trash2" class="small-icon"></i-feather>
                   Delete
                 </button>
@@ -45,3 +48,143 @@
     </table>
   </div>
 </div>
+
+<ng-template #createRule let-modal>
+  <div class="modal-header">
+    <h4 class="title" id="modal-basic-title">Build Manual Rule</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="name">Rule Name</label>
+      <div class="input-group">
+        <input
+          id="name"
+          class="form-control"
+          placeholder="Add a rule name"
+          name="name"
+          type="text"
+          [(ngModel)]="rule.name"
+          ngbAutofocus
+        />
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description">Rule Description</label>
+      <div class="input-group">
+        <textarea
+          id="description"
+          class="form-control"
+          placeholder="Add a rule description"
+          name="description"
+          type="text"
+          [(ngModel)]="rule.description"
+        ></textarea>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="typeahead-focus">
+        <i-feather name="search"></i-feather>
+        Choose a site</label
+      >
+      <div class="input-group">
+        <input
+          type="text"
+          id="typeahead-focus"
+          class="form-control"
+          [(ngModel)]="site"
+          [ngbTypeahead]="siteSearch"
+          [resultTemplate]="rt"
+          (focus)="siteFocus$.next($any($event).target.value)"
+          (click)="siteClickEvents($event, instance)"
+          #instance="ngbTypeahead"
+          [inputFormatter]="siteFormatter"
+          (ngModelChange)="updateSiteDependencies()"
+        />
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="typeahead-focus">
+        <i-feather name="search"></i-feather>
+        Choose a trigger</label
+      >
+      <div class="input-group">
+        <input
+          type="text"
+          id="typeahead-focus-triggers"
+          class="form-control"
+          [(ngModel)]="trigger"
+          [ngbTypeahead]="triggerSearch"
+          [resultTemplate]="rt"
+          (focus)="triggerFocus$.next($any($event).target.value)"
+          (click)="triggerClickEvents($event, triggerInstance)"
+          #triggerInstance="ngbTypeahead"
+          [inputFormatter]="triggerFormatter"
+        />
+      </div>
+    </div>
+
+    <!-- <div class="form-group">
+      <label for="typeahead-focus">
+        <i-feather name="search"></i-feather>
+        Choose an action</label
+      >
+      <div class="input-group">
+        <input
+          type="text"
+          id="typeahead-focus-actions"
+          class="form-control"
+          [(ngModel)]="action"
+          [ngbTypeahead]="search"
+          [resultTemplate]="rt"
+          (focus)="focus$.next($any($event).target.value)"
+          (click)="clickEvents($event, instance)"
+          #actionInstance="ngbTypeahead"
+          [inputFormatter]="formatter"
+        />
+      </div>
+    </div> -->
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="modal.close()">
+      Create
+    </button>
+    <button type="button" class="btn" (click)="modal.dismiss()">
+      Cancel
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #deleteModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Delete Site</h4>
+  </div>
+  <div class="modal-body">
+    Are you sure you want to delete this rule?
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="modal.close()"
+      ngbAutofocus
+    >
+      Confirm
+    </button>
+    <button type="button" class="btn" (click)="modal.dismiss()">
+      Cancel
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #rt let-r="result" let-t="term">
+  <ngb-highlight [result]="r.name" [term]="t" class="lol"></ngb-highlight>
+</ng-template>

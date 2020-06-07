@@ -9,7 +9,7 @@ export class RulesService {
   private token: string;
   constructor(private httpClient: HttpClient) {}
 
-  createRule(siteId, rule) {
+  addRule(siteId, rule) {
     return this.httpClient.post(`${config.BASE_URL}/addrule/${siteId}`, rule);
   }
 
@@ -18,7 +18,7 @@ export class RulesService {
   }
 
   deleteRule(id) {
-    return this.httpClient.get(`${config.BASE_URL}/deletesitebyid/${id}`);
+    return this.httpClient.get(`${config.BASE_URL}/deleterulebyid/${id}`);
   }
 
   editRule(rule) {
@@ -28,6 +28,12 @@ export class RulesService {
   getEventsByConnector(connectorId) {
     return this.httpClient.get(
       `${config.BASE_URL}/getEventsbyConnector/${connectorId}`
+    );
+  }
+
+  getActions(eventId, connectorId) {
+    return this.httpClient.get(
+      `${config.BASE_URL}/getActionsByConnectorsAndActions/${connectorId}/${eventId}`
     );
   }
 }

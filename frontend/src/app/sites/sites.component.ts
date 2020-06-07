@@ -64,12 +64,10 @@ export class SitesComponent implements OnInit {
       .open(createSites, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
         (onfulfilled) => {
-          this.sitesService
-            .addSites(this.inputSites)
-            .subscribe((data: any[]) => {
-              this.site = this.generateEmptySite();
-              this.getSites();
-            });
+          this.sitesService.addSites(this.inputSites).subscribe(() => {
+            this.site = this.generateEmptySite();
+            this.getSites();
+          });
         },
         (onrejected) => {}
       );
@@ -80,8 +78,7 @@ export class SitesComponent implements OnInit {
       .open(deleteSite, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
         (onfulfilled) => {
-          this.sitesService.deleteSite(siteId).subscribe((data: any) => {
-            this.site = this.generateEmptySite();
+          this.sitesService.deleteSite(siteId).subscribe(() => {
             this.getSites();
           });
         },
@@ -96,7 +93,7 @@ export class SitesComponent implements OnInit {
       .open(createSite, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
         (onfulfilled) => {
-          this.sitesService.updateSite(site).subscribe((data: any[]) => {
+          this.sitesService.updateSite(site).subscribe(() => {
             this.site = this.generateEmptySite();
             this.getSites();
           });
