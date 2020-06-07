@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import config from '../shared/config';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SitesService {
-  private token: string;
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private auth: AuthService) {}
 
   getSites() {
-    console.log(config.BASE_URL);
-    return this.httpClient.get(`${config.BASE_URL}/getsitebyuserid/1`);
+    return this.httpClient.get(
+      `${config.BASE_URL}/getsitebyuserid/1`,
+      this.auth.getAuthHeader()
+    );
   }
 
   deleteSite(id) {

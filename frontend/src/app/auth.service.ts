@@ -1,22 +1,37 @@
 import { Injectable } from '@angular/core';
+import config from './shared/config';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private token: string;
-  constructor() {}
+  constructor(private httpClient: HttpClient) {}
 
-  login(email, password, cb) {
-    this.token = '<some_token>';
-    if (cb) {
-      cb();
-    }
+  login(username, password, cb) {
+    this.httpClient
+      .get(`${config.BASE_URL}/token/${username}/${password}`, {
+        responseType: 'text',
+      })
+      .subscribe((token: string) => {
+        localStorage.setItem('token', token);
+        if (cb) {
+          cb();
+        }
+      });
+  }
+
+  getAuthHeader() {
+    return {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+    };
   }
 
   logout() {
-    this.token = null;
+    localStorage.removeItem('token');
   }
 
-  getAuthorizationHeaders() {}
+  isLoggedIn() {
+    return !!localStorage.getItem('token');
+  }
 }
