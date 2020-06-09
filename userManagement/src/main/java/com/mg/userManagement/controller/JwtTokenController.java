@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mg.userManagement.dto.AuthorizationTokenResponse;
+import com.mg.userManagement.entity.User;
 import com.mg.userManagement.service.JwtService;
 
 /**Authentication controller class*/
@@ -34,7 +36,7 @@ public class JwtTokenController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@GetMapping(value = "/token/{user}/{pass}")
-	public ResponseEntity<?> getJwtToken(@PathVariable String user, @PathVariable String pass) throws Exception {
+	public AuthorizationTokenResponse getJwtToken(@PathVariable String user, @PathVariable String pass) throws Exception {
 		try {
 			//Authenticate the credentials based on user provided username and password
 			authenticationManager.authenticate( new UsernamePasswordAuthenticationToken(user, pass));
@@ -44,9 +46,12 @@ public class JwtTokenController {
 			logger.error(e.getMessage());
 			throw new Exception("Incorrect username or password", e);
 		}
-		UserDetails userDetails = userDetailsService.loadUserByUsername(user);
+		User userDetails = (User) userDetailsService.loadUserByUsername(user);
 		String jwt = jwtService.generateToken(userDetails);
 		logger.debug("Security token generated");
-		return ResponseEntity.ok(jwt);
+		AuthorizationTokenResponse response = new AuthorizationTokenResponse();
+		response.setJwt(jwt);
+		response.setUserId(userDetails.getId());
+		return response;
 	}
 }
