@@ -17,7 +17,6 @@ import com.mg.userManagement.dto.SystemRuleDTO;
 import com.mg.userManagement.dtoservice.SystemRuleServiceDTO;
 
 @RestController
-@CrossOrigin(origins="*",allowedHeaders="*")
 public class SystemRuleController {
 
 	@Autowired

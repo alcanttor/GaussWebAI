@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mg.userManagement.dto.RuleDTO;
 import com.mg.userManagement.dtoservice.RuleServiceDTO;
-@CrossOrigin(origins="*",allowedHeaders="*")
 @RestController
 public class RuleController {
 

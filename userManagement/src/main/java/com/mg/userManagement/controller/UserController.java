@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mg.userManagement.dto.AllUsersDTO;
 import com.mg.userManagement.dto.UserDTO;
 import com.mg.userManagement.dtoservice.UserServiceDTO;
-@CrossOrigin(origins="*",allowedHeaders="*")
 @RestController
 public class UserController {
 	

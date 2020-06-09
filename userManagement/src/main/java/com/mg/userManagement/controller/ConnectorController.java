@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mg.userManagement.dto.ConnectorDTO;
 import com.mg.userManagement.dtoservice.ConnectorServiceDTO;
 
-@CrossOrigin(origins="*",allowedHeaders="*")
 @RestController
 public class ConnectorController {
 

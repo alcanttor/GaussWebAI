@@ -15,7 +15,7 @@ import com.mg.userManagement.dto.RuleGroupDTO;
 import com.mg.userManagement.dto.SiteDTO;
 import com.mg.userManagement.dtoservice.SiteServiceDTO;
 
-@CrossOrigin(origins="*",allowedHeaders="*")
+
 @RestController
 public class SiteController {
 	

@@ -14,7 +14,6 @@ import com.mg.userManagement.dto.EmailLabelDTO;
 import com.mg.userManagement.dtoservice.EmailLabelServiceDTO;
 
 
-@CrossOrigin(origins="*",allowedHeaders="*")
 @RestController
 public class EmailLabelController {
 

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mg.userManagement.dto.ActionDTO;
 import com.mg.userManagement.dtoservice.ActionServiceDTO;
 
-@CrossOrigin(origins="*",allowedHeaders="*")
 @RestController
 public class ActionController {
 

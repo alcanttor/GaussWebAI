@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mg.userManagement.dto.EmailTemplateDTO;
 import com.mg.userManagement.dtoservice.EmailTemplateServiceDTO;
 
-@CrossOrigin(origins="*",allowedHeaders="*")
 @RestController
 public class EmailTemplateController {
 

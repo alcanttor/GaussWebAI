@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mg.userManagement.dto.SystemEventDTO;
 import com.mg.userManagement.dtoservice.SystemEventServiceDTO;
-@CrossOrigin(origins="*",allowedHeaders="*")
 @RestController
 public class SystemEventController {
 
