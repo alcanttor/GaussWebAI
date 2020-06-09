@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mg.userManagement.service.JwtService;
@@ -36,7 +35,6 @@ public class JwtTokenController {
 
 	@GetMapping(value = "/token/{user}/{pass}")
 	public ResponseEntity<?> getJwtToken(@PathVariable String user, @PathVariable String pass) throws Exception {
-		System.out.println("----------------------------------------------------------------"+user +" : "+pass);
 		try {
 			//Authenticate the credentials based on user provided username and password
 			authenticationManager.authenticate( new UsernamePasswordAuthenticationToken(user, pass));

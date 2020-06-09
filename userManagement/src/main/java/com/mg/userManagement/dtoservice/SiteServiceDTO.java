@@ -9,10 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.reflect.TypeToken;
 import com.mg.userManagement.dto.RegisterSitesDTO;
-import com.mg.userManagement.dto.RuleDTO;
 import com.mg.userManagement.dto.RuleGroupDTO;
 import com.mg.userManagement.dto.SiteDTO;
-import com.mg.userManagement.entity.Rule;
 import com.mg.userManagement.entity.RuleGroup;
 import com.mg.userManagement.entity.Site;
 import com.mg.userManagement.service.SiteService;

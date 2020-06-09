@@ -13,7 +13,6 @@ import com.mg.userManagement.entity.RuleGroup;
 import com.mg.userManagement.entity.Site;
 import com.mg.userManagement.entity.SiteToken;
 import com.mg.userManagement.entity.User;
-import com.mg.userManagement.repo.RuleRepository;
 import com.mg.userManagement.repo.SiteRepository;
 import com.mg.userManagement.repo.UserRepository;
 

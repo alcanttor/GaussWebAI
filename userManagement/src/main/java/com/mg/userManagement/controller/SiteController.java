@@ -8,14 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mg.userManagement.dto.RegisterSitesDTO;
-import com.mg.userManagement.dto.RuleDTO;
 import com.mg.userManagement.dto.RuleGroupDTO;
 import com.mg.userManagement.dto.SiteDTO;
 import com.mg.userManagement.dtoservice.SiteServiceDTO;
+
 @CrossOrigin(origins="*",allowedHeaders="*")
 @RestController
 public class SiteController {

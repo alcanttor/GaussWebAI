@@ -1,7 +1,5 @@
 package com.mg.userManagement.dto;
 
-import javax.persistence.Id;
-
 public class SystemRuleDTO {
 	
 	private Integer id;
