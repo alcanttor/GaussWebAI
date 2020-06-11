@@ -13,6 +13,7 @@ export class AuthService {
       .get(`${config.BASE_URL}/token/${username}/${password}`)
       .subscribe((response: any) => {
         localStorage.setItem('token', response.jwt);
+        localStorage.setItem('userId', response.userId);
         if (cb) {
           cb();
         }
@@ -27,9 +28,15 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('userId');
   }
+  s;
 
   isLoggedIn() {
     return !!localStorage.getItem('token');
+  }
+
+  getUserId() {
+    return localStorage.getItem('userId');
   }
 }
