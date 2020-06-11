@@ -55,6 +55,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.anyRequest().authenticated().and().exceptionHandling().and().sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).httpBasic();
+		
+		
+		
+	/*	httpSecurity.
+		     cors().and().csrf().disable()
+		            .authorizeRequests()                                                                
+		            .antMatchers("/**").permitAll()
+		            .antMatchers("/login").hasRole("ADMIN")                                      
+		            .antMatchers("/Signup").hasRole("USER")
+		            .and()
+		            .exceptionHandling()
+		            .accessDeniedPage("/access-denied")
+		            .and()
+		            .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+		            .addFilter(new JWTAuthorizationFilter(authenticationManager(), customUserDetailService));*/
 	}
 	
 	@Override
