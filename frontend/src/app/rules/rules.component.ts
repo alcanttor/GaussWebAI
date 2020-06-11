@@ -56,7 +56,7 @@ export class RulesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.rulesService.getRules(1).subscribe((data: any[]) => {
+    this.rulesService.getRules(6).subscribe((data: any[]) => {
       this.rules = data;
     });
     this.rule = this.generateEmptyRule();

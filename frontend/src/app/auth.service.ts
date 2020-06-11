@@ -10,11 +10,9 @@ export class AuthService {
 
   login(username, password, cb) {
     this.httpClient
-      .get(`${config.BASE_URL}/token/${username}/${password}`, {
-        responseType: 'text',
-      })
-      .subscribe((token: string) => {
-        localStorage.setItem('token', token);
+      .get(`${config.BASE_URL}/token/${username}/${password}`)
+      .subscribe((response: any) => {
+        localStorage.setItem('token', response.jwt);
         if (cb) {
           cb();
         }

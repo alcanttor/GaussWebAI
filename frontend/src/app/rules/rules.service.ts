@@ -1,20 +1,23 @@
 import { Injectable } from '@angular/core';
 import config from '../shared/config';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RulesService {
-  private token: string;
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private auth: AuthService) {}
 
   addRule(siteId, rule) {
     return this.httpClient.post(`${config.BASE_URL}/addrule/${siteId}`, rule);
   }
 
   getRules(userId) {
-    return this.httpClient.post(`${config.BASE_URL}/getallrules/${userId}`, {});
+    return this.httpClient.post(
+      `${config.BASE_URL}/getallrules/${userId}`,
+      this.auth.getAuthHeader()
+    );
   }
 
   deleteRule(id) {
