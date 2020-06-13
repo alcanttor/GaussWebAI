@@ -122,6 +122,7 @@ export class RulesComponent implements OnInit {
   }
 
   openCreateModal(createRule) {
+    this.rule = this.generateEmptyRule();
     this.modalService
       .open(createRule, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
