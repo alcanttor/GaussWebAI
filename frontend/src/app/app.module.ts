@@ -19,6 +19,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListActionsComponent } from './shared/components/list-actions/list-actions.component';
 import { RulesComponent } from './rules/rules.component';
 import { SearchAndSelectComponent } from './shared/components/search-and-select/search-and-select.component';
+import { EmailLabelsComponent } from './email-labels/email-labels.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { SearchAndSelectComponent } from './shared/components/search-and-select/
     ListActionsComponent,
     RulesComponent,
     SearchAndSelectComponent,
+    EmailLabelsComponent,
   ],
   imports: [
     BrowserModule,
