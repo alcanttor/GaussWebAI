@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -20,6 +20,10 @@ import { ListActionsComponent } from './shared/components/list-actions/list-acti
 import { RulesComponent } from './rules/rules.component';
 import { SearchAndSelectComponent } from './shared/components/search-and-select/search-and-select.component';
 import { EmailLabelsComponent } from './email-labels/email-labels.component';
+import { EmailTemplatesComponent } from './email-templates/email-templates.component';
+
+import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
+import { TypeaheadModule } from 'ngx-type-ahead';
 
 @NgModule({
   declarations: [
@@ -31,6 +35,7 @@ import { EmailLabelsComponent } from './email-labels/email-labels.component';
     RulesComponent,
     SearchAndSelectComponent,
     EmailLabelsComponent,
+    EmailTemplatesComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,9 +47,10 @@ import { EmailLabelsComponent } from './email-labels/email-labels.component';
     HttpClientModule,
     IconsModule,
     ClipboardModule,
+    RichTextEditorModule,
+    TypeaheadModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}

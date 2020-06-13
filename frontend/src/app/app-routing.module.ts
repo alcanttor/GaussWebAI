@@ -6,6 +6,7 @@ import { SitesComponent } from './sites/sites.component';
 import { RulesComponent } from './rules/rules.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { EmailLabelsComponent } from './email-labels/email-labels.component';
+import { EmailTemplatesComponent } from './email-templates/email-templates.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -29,6 +30,10 @@ const routes: Routes = [
           {
             path: 'labels',
             component: EmailLabelsComponent,
+          },
+          {
+            path: 'templates',
+            component: EmailTemplatesComponent,
           },
         ],
       },
