@@ -1,0 +1,21 @@
+<div class="form-group">
+  <div class="input-group">
+    <input
+      [ngbTypeahead]="search"
+      type="text"
+      id="typeahead-focus"
+      class="form-control"
+      [(ngModel)]="entity"
+      #instance="ngbTypeahead"
+      [resultTemplate]="rt"
+      (focus)="focus$.next($any($event).target.value)"
+      (click)="clickEvents($event, instance)"
+      [inputFormatter]="inputFormatter"
+      (ngModelChange)="updateDependencies()"
+    />
+  </div>
+</div>
+
+<ng-template #rt let-r="result" let-t="term">
+  <ngb-highlight [result]="r[label]" [term]="t"></ngb-highlight>
+</ng-template>
