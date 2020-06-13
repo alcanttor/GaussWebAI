@@ -10,21 +10,35 @@ export class SitesService {
   constructor(private httpClient: HttpClient, private auth: AuthService) {}
 
   getSites() {
+    const userId = this.auth.getUserId();
     return this.httpClient.get(
-      `${config.BASE_URL}/getsitebyuserid/1`,
+      `${config.BASE_URL}/getsitebyuserid/${userId}`,
       this.auth.getAuthHeader()
     );
   }
 
   deleteSite(id) {
-    return this.httpClient.get(`${config.BASE_URL}/deletesitebyid/${id}`);
+    return this.httpClient.get(
+      `${config.BASE_URL}/deletesitebyid/${id}`,
+      this.auth.getAuthHeader()
+    );
   }
 
   addSites(sites) {
-    return this.httpClient.post(`${config.BASE_URL}/addsites/1`, sites);
+    const userId = this.auth.getUserId();
+    return this.httpClient.post(
+      `${config.BASE_URL}/addsites/${userId}`,
+      sites,
+      this.auth.getAuthHeader()
+    );
   }
 
   updateSite(site) {
-    return this.httpClient.post(`${config.BASE_URL}/updatesite/1`, site);
+    const userId = this.auth.getUserId();
+    return this.httpClient.post(
+      `${config.BASE_URL}/updatesite/${userId}`,
+      site,
+      this.auth.getAuthHeader()
+    );
   }
 }

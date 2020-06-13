@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -18,6 +18,7 @@ import { SitesComponent } from './sites/sites.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListActionsComponent } from './shared/components/list-actions/list-actions.component';
 import { RulesComponent } from './rules/rules.component';
+import { SearchAndSelectComponent } from './shared/components/search-and-select/search-and-select.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { RulesComponent } from './rules/rules.component';
     SitesComponent,
     ListActionsComponent,
     RulesComponent,
+    SearchAndSelectComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,5 +43,6 @@ import { RulesComponent } from './rules/rules.component';
   ],
   providers: [AuthService],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}

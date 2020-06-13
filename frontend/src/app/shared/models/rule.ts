@@ -15,20 +15,26 @@
 //     }
 //   }
 
+export interface SubRule {
+  emailTemplate: string;
+  id: number;
+  systemRule: {
+    action: {
+      id: number;
+    };
+    connector: {
+      id: string;
+    };
+    systemEvent: {
+      id: number;
+      description?: string;
+    };
+  };
+}
+
 export interface Rule {
   id: number;
   name: string;
   description: string;
-  action: {
-    id: number;
-    name: string;
-  };
-  connector: {
-    id: number;
-    name: string;
-  };
-  systemEvent: {
-    id: number;
-    description: string;
-  };
+  rules: SubRule[];
 }
