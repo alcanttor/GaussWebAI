@@ -17,7 +17,7 @@ public class ConnectorController {
 	@Autowired
 	ConnectorServiceDTO connectorServiceDTO;
 	
-	@PostMapping(value="/addConnector")
+	@PostMapping(value="/addconnector")
 	public ConnectorDTO saveConnector(@RequestBody ConnectorDTO connectorDTO)
 	{
 		return connectorServiceDTO.saveConnector(connectorDTO); 

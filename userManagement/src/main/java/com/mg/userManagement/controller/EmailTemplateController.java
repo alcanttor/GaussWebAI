@@ -18,7 +18,7 @@ public class EmailTemplateController {
 	@Autowired
 	private EmailTemplateServiceDTO emailTemplateServiceDTO;
 	
-	@PostMapping(value="/addEmailTemplate/{userId}")
+	@PostMapping(value="/addemailtemplate/{userId}")
 	public EmailTemplateDTO add(@RequestBody EmailTemplateDTO emailTemplateDTO, @PathVariable Integer userId)
 	{
 		try {
@@ -29,13 +29,13 @@ public class EmailTemplateController {
 		}
 	}
 	
-	@GetMapping(value="/getEmailTemplatesbyuserid/{userId}")
+	@GetMapping(value="/getemailtemplatesbyuserid/{userId}")
 	public List<EmailTemplateDTO> getSitebyUser(@PathVariable Integer userId) throws Exception
 	{
 		return emailTemplateServiceDTO.getEmailTemplatesByUserId(userId);
 	}
 	
-	@PostMapping(value="/updateEmailTemplate/{templateId}")
+	@PostMapping(value="/updateemailtemplate/{templateId}")
 	public EmailTemplateDTO updateTemplate(@RequestBody EmailTemplateDTO emailTemplateDTO, @PathVariable Integer templateId)
 	{
 		try {

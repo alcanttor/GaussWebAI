@@ -13,7 +13,7 @@ public class RuleController {
 	@Autowired
 	RuleServiceDTO ruleServiceDTO; 
 	
-	@PostMapping(value = "/updateRule")
+	@PostMapping(value = "/updaterule")
 	public RuleDTO saveAction(@RequestBody RuleDTO ruleDto , Integer ruleId)
 	{
 		try{

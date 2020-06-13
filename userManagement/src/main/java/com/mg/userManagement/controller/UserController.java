@@ -19,7 +19,7 @@ public class UserController {
 		return userServiceDTO.getAllUsers();
 	}*/
 	
-	@PostMapping(value="/saveUser")
+	@PostMapping(value="/saveuser")
 	public UserDTO save(@RequestBody UserDTO userCreateDTO)
 	{
 		return userServiceDTO.createUser(userCreateDTO);
