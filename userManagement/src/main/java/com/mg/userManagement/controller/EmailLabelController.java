@@ -36,11 +36,11 @@ public class EmailLabelController {
 		return emailLabelServiceDTO.getEmailLabelByUserId(userId);
 	}
 	
-	@PostMapping(value="/updateemaillabel/{LabelId}")
-	public EmailLabelDTO updateEmailLabel(@RequestBody EmailLabelDTO emailLabelDTO, @PathVariable Integer LabelId)
+	@PostMapping(value="/updateemaillabel/{emailLabelId}")
+	public EmailLabelDTO updateEmailLabel(@RequestBody EmailLabelDTO emailLabelDTO, @PathVariable Integer emailLabelId)
 	{
 		try {
-			return emailLabelServiceDTO.updateEmailLabel(LabelId, emailLabelDTO) ;
+			return emailLabelServiceDTO.updateEmailLabel(emailLabelId, emailLabelDTO) ;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -69,6 +69,12 @@ public class EmailLabelController {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	@GetMapping(value="/deleteemaillabelbyid/{emailLabelId}")
+	public List<EmailLabelDTO> deleteLabelId(@PathVariable Integer emailLabelId)
+	{
+		return emailLabelServiceDTO.deleteEmailLabel(emailLabelId);
 	}
 	
 }

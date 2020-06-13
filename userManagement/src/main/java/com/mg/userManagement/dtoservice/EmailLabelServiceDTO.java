@@ -56,4 +56,12 @@ public class EmailLabelServiceDTO {
 	{
 		return modelMapper.map(emailLabelService.associateTemplate(labelId, emailLabelId), EmailLabelDTO.class);
 	}
+	
+	public List<EmailLabelDTO> deleteEmailLabel(Integer emailLabelId)
+	{
+		@SuppressWarnings("serial")
+		Type listEmailLabels = new TypeToken<List<EmailLabelDTO>>() {}.getType();
+		return modelMapper.map(emailLabelService.deleteLabelbyId(emailLabelId), listEmailLabels);
+	}
+	
 }

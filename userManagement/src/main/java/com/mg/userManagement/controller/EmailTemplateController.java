@@ -59,6 +59,7 @@ public class EmailTemplateController {
 		}
 	}
 	
+	@GetMapping(value="/deletetemplatebyid/{emailTemplateId}")
 	public List<EmailTemplateDTO> deleteTemplate(@PathVariable Integer emailTemplateId)
 	{
 		return emailTemplateServiceDTO.deleteEmailTemplatebyId(emailTemplateId);

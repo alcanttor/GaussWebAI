@@ -3,8 +3,6 @@ package com.mg.userManagement.service;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +19,6 @@ public class SystemRuleService {
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	 @Transactional
 	public SystemRule save(SystemRule systemRule)
 	{
 		try {
