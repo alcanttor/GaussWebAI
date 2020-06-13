@@ -8,6 +8,10 @@ import {
   MoreVertical,
   Menu,
   Search,
+  Home,
+  Clock,
+  Mail,
+  X,
 } from 'angular-feather/icons';
 
 // Select some icons (use an object, not an array)
@@ -18,6 +22,10 @@ const icons = {
   MoreVertical,
   Menu,
   Search,
+  Home,
+  Clock,
+  Mail,
+  X,
 };
 
 @NgModule({

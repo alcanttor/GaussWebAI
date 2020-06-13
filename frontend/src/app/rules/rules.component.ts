@@ -5,9 +5,6 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
-import { Observable, Subject, merge } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { Rule } from '../shared/models/rule';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RulesService } from './rules.service';
@@ -22,15 +19,6 @@ import { Site } from '../shared/models/site';
 })
 export class RulesComponent implements OnInit {
   @ViewChild('createRule') createRule: ElementRef;
-  @ViewChild('deleteModal') deleteRule: ElementRef;
-
-  @ViewChild('instance') instance: NgbTypeahead;
-  @ViewChild('triggerInstance') triggerInstance: NgbTypeahead;
-  siteFocus$ = new Subject<string>();
-  siteClick$ = new Subject<string>();
-
-  triggerFocus$ = new Subject<string>();
-  triggerClick$ = new Subject<string>();
 
   public rules: Rule[] = [];
   public rule: Rule;
@@ -48,6 +36,7 @@ export class RulesComponent implements OnInit {
   public triggers = [];
   public trigger = {};
   public action = {};
+  public actions = {};
 
   constructor(
     private rulesService: RulesService,
@@ -56,66 +45,18 @@ export class RulesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.rulesService.getRules(6).subscribe((data: any[]) => {
-      this.rules = data;
-    });
+    this.getRules();
     this.rule = this.generateEmptyRule();
     this.sitesService.getSites().subscribe((data: Site[]) => {
       this.sites = data;
     });
   }
 
-  siteFormatter = (x: Site) => x.name;
-
-  triggerFormatter = (x: any) => x.name;
-
-  siteClickEvents($event, typeaheadInstance) {
-    if (typeaheadInstance.isPopupOpen()) {
-      this.siteClick$.next($event.target.value);
-    }
+  getRules() {
+    this.rulesService.getRules().subscribe((data: any[]) => {
+      this.rules = data;
+    });
   }
-
-  triggerClickEvents($event, typeaheadInstance) {
-    if (typeaheadInstance.isPopupOpen()) {
-      this.triggerClick$.next($event.target.value);
-    }
-  }
-
-  siteSearch = (text$: Observable<string>) => {
-    const debouncedText$ = text$.pipe(
-      debounceTime(200),
-      distinctUntilChanged()
-    );
-
-    return merge(debouncedText$, this.siteFocus$, this.siteClick$).pipe(
-      map((term) =>
-        (term === ''
-          ? this.sites
-          : this.sites.filter(
-              (v) => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1
-            )
-        ).slice(0, 10)
-      )
-    );
-  };
-
-  triggerSearch = (text$: Observable<string>) => {
-    const debouncedText$ = text$.pipe(
-      debounceTime(200),
-      distinctUntilChanged()
-    );
-
-    return merge(debouncedText$, this.triggerFocus$, this.triggerClick$).pipe(
-      map((term) =>
-        (term === ''
-          ? this.triggers
-          : this.triggers.filter(
-              (v) => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1
-            )
-        ).slice(0, 10)
-      )
-    );
-  };
 
   updateSiteDependencies() {
     this.trigger = {};
@@ -124,7 +65,14 @@ export class RulesComponent implements OnInit {
       .getEventsByConnector(this.site.connector.id)
       .subscribe((data: any[]) => {
         this.triggers = data;
-        console.log(this.triggers);
+      });
+  }
+
+  getActionsForEvent(eventId) {
+    this.rulesService
+      .getActions(eventId, this.site.connector.id)
+      .subscribe((data: any[]) => {
+        this.actions = data;
       });
   }
 
@@ -132,25 +80,45 @@ export class RulesComponent implements OnInit {
     id: null,
     description: '',
     name: '',
-    action: {
-      id: null,
-      name: '',
-    },
-    connector: {
-      id: null,
-      name: '',
-    },
-    systemEvent: {
-      id: null,
-      description: '',
-    },
+    rules: [],
   });
+
+  listenForSearchAndSelect = ($event) => {
+    console.log($event);
+    if ($event.name === 'sites-search' && $event.value.id) {
+      this.site = $event.value;
+      this.updateSiteDependencies();
+    } else if ($event.name === 'triggers-search' && $event.value.id) {
+      this.rule.rules[$event.key]['systemRule']['systemEvent'] = $event.value;
+      this.getActionsForEvent($event.value.id);
+    } else if ($event.name === 'actions-search' && $event.value.id) {
+      this.rule.rules[$event.key]['systemRule']['action'] = $event.value;
+    }
+  };
+
+  addSubRule() {
+    this.rule.rules.push({
+      emailTemplate: null,
+      id: null,
+      systemRule: {
+        action: {
+          id: null,
+        },
+        connector: this.site.connector,
+        systemEvent: {
+          id: null,
+        },
+      },
+    });
+  }
+
+  removeSubRule(index) {
+    this.rule.rules.splice(index, 1);
+  }
 
   listen($event) {
     if ($event.action === 'add') {
       this.openCreateModal(this.createRule);
-    } else if ($event.action === 'delete') {
-      this.openDeleteModal(this.deleteRule, this.rules[0].id);
     }
   }
 
@@ -159,23 +127,28 @@ export class RulesComponent implements OnInit {
       .open(createRule, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
         (onfulfilled) => {
+          console.log(this.rule);
           this.rulesService.addRule(this.site.id, this.rule).subscribe(() => {
             this.rule = this.generateEmptyRule();
-            this.rulesService.getRules(1);
+            this.getRules();
           });
         },
         (onrejected) => {}
       );
   }
 
-  openDeleteModal(deleteRule, ruleId) {
+  openEditModal(createRule, rule) {
+    this.rule = rule;
+    console.log(rule);
     this.modalService
-      .open(deleteRule, { ariaLabelledBy: 'modal-basic-title' })
+      .open(createRule, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
         (onfulfilled) => {
-          this.rulesService.deleteRule(ruleId).subscribe(() => {
-            this.rulesService.getRules(1);
-          });
+          console.log(this.rule);
+          // this.rulesService.addRule(this.site.id, this.rule).subscribe(() => {
+          //   this.rule = this.generateEmptyRule();
+          //   this.getRules();
+          // });
         },
         (onrejected) => {}
       );
