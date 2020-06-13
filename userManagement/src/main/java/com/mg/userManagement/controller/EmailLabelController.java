@@ -20,7 +20,7 @@ public class EmailLabelController {
 	private EmailLabelServiceDTO emailLabelServiceDTO;
 	
 	@PostMapping(value="/addEmailLabel/{userId}")
-	public EmailLabelDTO add(@RequestBody EmailLabelDTO emailLabelDTO, @PathVariable Integer userId)
+	public EmailLabelDTO addLabels(@RequestBody EmailLabelDTO emailLabelDTO, @PathVariable Integer userId)
 	{
 		try {
 			return emailLabelServiceDTO.createEmailLabel(userId, emailLabelDTO);
@@ -31,13 +31,13 @@ public class EmailLabelController {
 	}
 	
 	@GetMapping(value="/getEmailLabelsbyuserid/{userId}")
-	public List<EmailLabelDTO> getSitebyUser(@PathVariable Integer userId) throws Exception
+	public List<EmailLabelDTO> getEmailLabelsnuUserId(@PathVariable Integer userId) throws Exception
 	{
 		return emailLabelServiceDTO.getEmailLabelByUserId(userId);
 	}
 	
 	@PostMapping(value="/updateEmailLabel/{LabelId}")
-	public EmailLabelDTO updateTemplate(@RequestBody EmailLabelDTO emailLabelDTO, @PathVariable Integer LabelId)
+	public EmailLabelDTO updateEmailLabel(@RequestBody EmailLabelDTO emailLabelDTO, @PathVariable Integer LabelId)
 	{
 		try {
 			return emailLabelServiceDTO.updateEmailLabel(LabelId, emailLabelDTO) ;

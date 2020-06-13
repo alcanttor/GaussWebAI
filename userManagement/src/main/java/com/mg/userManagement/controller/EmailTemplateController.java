@@ -35,7 +35,7 @@ public class EmailTemplateController {
 		return emailTemplateServiceDTO.getEmailTemplatesByUserId(userId);
 	}
 	
-	@PostMapping(value="/updateEmailTemplate/{userId}")
+	@PostMapping(value="/updateEmailTemplate/{templateId}")
 	public EmailTemplateDTO updateTemplate(@RequestBody EmailTemplateDTO emailTemplateDTO, @PathVariable Integer templateId)
 	{
 		try {
@@ -57,6 +57,11 @@ public class EmailTemplateController {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public List<EmailTemplateDTO> deleteTemplate(@PathVariable Integer emailTemplateId)
+	{
+		return emailTemplateServiceDTO.deleteEmailTemplatebyId(emailTemplateId);
 	}
 	
 	

@@ -39,21 +39,25 @@ public class UserService {
 		return userRepository.findAll();
 	}
 	
-	public User getUserById(Integer id) throws Exception
+	public User getUserById(Integer id)
 	{
-		java.util.Optional<User> userOptional = userRepository.findById(id);
-		if (userOptional.isPresent())
-		{
-			logger.info("User already exists for GaussWebAI");
-			return userOptional.get();
+		try {
+			java.util.Optional<User> userOptional = userRepository.findById(id);
+			if (userOptional.isPresent())
+			{
+				logger.info("User already exists for GaussWebAI");
+				return userOptional.get();
+			}
+			else
+			{
+				logger.info("No existing record found for the user");
+				logger.error("User ["+id+"] not valild");
+			}
 		}
-		else
-		{
-			logger.info("No existing record found for the user");
-			throw new Exception("User ["+id+"] not valild");
+		catch (Exception ex) {
+			logger.error("Error stack: ", ex);
 		}
-		
-		
+		return null;
 	}
 	
 	public boolean isUservalid(String name, String password)
