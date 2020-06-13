@@ -84,7 +84,6 @@ export class RulesComponent implements OnInit {
   });
 
   listenForSearchAndSelect = ($event) => {
-    console.log($event);
     if ($event.name === 'sites-search' && $event.value.id) {
       this.site = $event.value;
       this.updateSiteDependencies();
@@ -127,7 +126,6 @@ export class RulesComponent implements OnInit {
       .open(createRule, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
         (onfulfilled) => {
-          console.log(this.rule);
           this.rulesService.addRule(this.site.id, this.rule).subscribe(() => {
             this.rule = this.generateEmptyRule();
             this.getRules();
@@ -139,16 +137,14 @@ export class RulesComponent implements OnInit {
 
   openEditModal(createRule, rule) {
     this.rule = rule;
-    console.log(rule);
     this.modalService
       .open(createRule, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
         (onfulfilled) => {
-          console.log(this.rule);
-          // this.rulesService.addRule(this.site.id, this.rule).subscribe(() => {
-          //   this.rule = this.generateEmptyRule();
-          //   this.getRules();
-          // });
+          this.rulesService.addRule(this.site.id, this.rule).subscribe(() => {
+            this.rule = this.generateEmptyRule();
+            this.getRules();
+          });
         },
         (onrejected) => {}
       );
