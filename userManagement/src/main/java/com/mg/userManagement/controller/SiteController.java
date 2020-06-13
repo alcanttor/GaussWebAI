@@ -58,14 +58,14 @@ public class SiteController {
 	}
 	
 	
-	@PostMapping(value="/addruleGroup/{siteId}")
+	@PostMapping(value="/addrulegroup/{siteId}")
 	public SiteDTO addRuleGroup(@PathVariable Integer siteId, @RequestBody RuleGroupDTO ruleGroupDTO)
 	{
 		return siteServiceDTO.addRuleGroupToSite(siteId, ruleGroupDTO);
 	}
 	
 	/*invoke service to get list of all rules for a given user*/
-	@GetMapping(value="/getallruleGroups/{userId}")
+	@GetMapping(value="/getallrulegroups/{userId}")
 	public List<RuleGroupDTO> getAllRules(@PathVariable Integer userId)
 	{
 		return siteServiceDTO.getAllRuleGroupsbyUser(userId);

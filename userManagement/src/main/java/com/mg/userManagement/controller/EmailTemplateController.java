@@ -47,7 +47,7 @@ public class EmailTemplateController {
 		}
 	}
 	
-	@GetMapping(value="/getById/{emailTemplateId}")
+	@GetMapping(value="/getbyid/{emailTemplateId}")
 	public EmailTemplateDTO getById(@PathVariable Integer emailTemplateId)
 	{
 		try {

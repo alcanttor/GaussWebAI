@@ -48,7 +48,7 @@ public class EmailLabelController {
 		}
 	}
 	
-	@GetMapping(value="/getEmailLabelById/{emailLabelId}")
+	@GetMapping(value="/getemaillabelbyid/{emailLabelId}")
 	public EmailLabelDTO getById(@PathVariable Integer emailLabelId)
 	{
 		try {
