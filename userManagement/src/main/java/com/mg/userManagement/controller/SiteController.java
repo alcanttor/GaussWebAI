@@ -59,7 +59,7 @@ public class SiteController {
 	
 	
 	@PostMapping(value="/addrulegroup/{siteId}")
-	public SiteDTO addRuleGroup(@PathVariable Integer siteId, @RequestBody RuleGroupDTO ruleGroupDTO)
+	public List<RuleGroupDTO> addRuleGroup(@PathVariable Integer siteId, @RequestBody RuleGroupDTO ruleGroupDTO)
 	{
 		return siteServiceDTO.addRuleGroupToSite(siteId, ruleGroupDTO);
 	}
