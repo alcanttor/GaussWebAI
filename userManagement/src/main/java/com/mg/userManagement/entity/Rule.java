@@ -1,5 +1,6 @@
 package com.mg.userManagement.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +14,7 @@ public class Rule extends BaseEntity {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="rule_seq")
 	private Integer id;
 	
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	SystemRule systemRule;
 	
 	private Boolean enabled;
