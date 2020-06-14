@@ -29,10 +29,7 @@
             <div ngbDropdown class="d-inline-block" placement="right-bottom">
               <i-feather name="more-vertical" ngbDropdownToggle></i-feather>
               <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <button
-                  ngbDropdownItem
-                  (click)="openEditModal(createRule, rule)"
-                >
+                <button ngbDropdownItem (click)="openEditModal(editRule, rule)">
                   <i-feather name="edit2" class="small-icon"></i-feather>
                   Edit
                 </button>
@@ -52,6 +49,143 @@
         There are no rules, you can add one by clicking on new
       </div>
     </div>
+  </div>
+</ng-template>
+
+<ng-template #editRule let-modal>
+  <div class="modal-header">
+    <h4 class="title" id="modal-basic-title">Build Manual Rule</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="name">Rule Name</label>
+      <div class="input-group">
+        <input
+          id="name"
+          class="form-control"
+          placeholder="Add a rule name"
+          name="name"
+          type="text"
+          [(ngModel)]="rule.name"
+          ngbAutofocus
+        />
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description">Rule Description</label>
+      <div class="input-group">
+        <textarea
+          id="description"
+          class="form-control"
+          placeholder="Add a rule description"
+          name="description"
+          type="text"
+          [(ngModel)]="rule.description"
+        ></textarea>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="typeahead-focus">
+        <i-feather name="search"></i-feather>
+        Choose a site</label
+      >
+      <app-search-and-select
+        (onSearch)="listenForSearchAndSelect($event)"
+        [options]="sites"
+        [selected]="site"
+        label="name"
+        id="typeahead-focus"
+        name="sites-search"
+        [disabled]="!!site.id && !!site.name"
+      >
+      </app-search-and-select>
+    </div>
+
+    <h6>Select a trigger and an action</h6>
+    <hr />
+    <div *ngFor="let subRule of rule.rules; index as index">
+      <div class="form-group">
+        <label for="typeahead-focus">
+          <i-feather name="search"></i-feather>
+          Choose a trigger</label
+        >
+        <i-feather
+          *ngIf="index !== 0"
+          name="x"
+          class="float-right small-icon"
+          (click)="removeSubRule(index)"
+        ></i-feather>
+        <div class="input-group">
+          <app-search-and-select
+            (onSearch)="listenForSearchAndSelect($event)"
+            [options]="getFilteredTriggers()"
+            [selected]="subRule['systemRule']['systemEvent']"
+            name="triggers-search"
+            [key]="index"
+            label="description"
+          >
+          </app-search-and-select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="typeahead-focus">
+          <i-feather name="search"></i-feather>
+          Choose an action</label
+        >
+        <div class="input-group">
+          <app-search-and-select
+            (onSearch)="listenForSearchAndSelect($event)"
+            [options]="getFilteredActions()"
+            [selected]="subRule['systemRule']['action']"
+            [key]="index"
+            name="actions-search"
+            label="name"
+          >
+          </app-search-and-select>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="subRule['emailTemplate']">
+        <label for="typeahead-focus">
+          <i-feather name="search"></i-feather>
+          Choose an email template</label
+        >
+        <div class="input-group">
+          <app-search-and-select
+            (onSearch)="listenForSearchAndSelect($event)"
+            [options]="templates"
+            [selected]="subRule['emailTemplate']"
+            [key]="index"
+            name="templates-search"
+            label="name"
+          >
+          </app-search-and-select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <button class="btn btn-light" (click)="addSubRule()">
+          Add Another
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="modal.close()">
+      Save
+    </button>
+    <button type="button" class="btn" (click)="modal.dismiss()">
+      Cancel
+    </button>
   </div>
 </ng-template>
 
@@ -107,6 +241,7 @@
         label="name"
         id="typeahead-focus"
         name="sites-search"
+        [disabled]="false"
       >
       </app-search-and-select>
     </div>
@@ -128,8 +263,8 @@
         <div class="input-group">
           <app-search-and-select
             (onSearch)="listenForSearchAndSelect($event)"
-            [options]="triggers"
-            [selected]="rule.rules[index]['systemRule']['systemEvent']"
+            [options]="getFilteredTriggers()"
+            [selected]="subRule['systemRule']['systemEvent']"
             name="triggers-search"
             [key]="index"
             label="description"
@@ -145,10 +280,27 @@
         <div class="input-group">
           <app-search-and-select
             (onSearch)="listenForSearchAndSelect($event)"
-            [options]="actions"
-            [selected]="rule.rules[index]['systemRule']['action']"
+            [options]="getFilteredActions()"
+            [selected]="subRule['systemRule']['action']"
             [key]="index"
             name="actions-search"
+            label="name"
+          >
+          </app-search-and-select>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="subRule.emailTemplate">
+        <label for="typeahead-focus">
+          <i-feather name="search"></i-feather>
+          Choose an email template</label
+        >
+        <div class="input-group">
+          <app-search-and-select
+            (onSearch)="listenForSearchAndSelect($event)"
+            [selected]="subRule['systemRule']['emailTemplate']"
+            [options]="templates"
+            [key]="index"
+            name="templates-search"
             label="name"
           >
           </app-search-and-select>
