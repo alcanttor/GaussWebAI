@@ -35,12 +35,12 @@ public class EmailTemplateServiceDTO {
 		return modelMapper.map(emailTemplateService.update(emailTemplateId, emailTemplate), EmailTemplateDTO.class);
 	}
 	
-	public List<EmailTemplateDTO> getAll()
+	/*public List<EmailTemplateDTO> getAll()
 	{
 		@SuppressWarnings("serial")
 		Type listEmailTemplates = new TypeToken<List<EmailTemplateDTO>>() {}.getType(); 
 		return modelMapper.map(emailTemplateService.getAll(), listEmailTemplates);
-	}
+	}*/
 
 	public List<EmailTemplateDTO> getEmailTemplatesByUserId(Integer userId) throws Exception{
 		@SuppressWarnings("serial")
@@ -63,5 +63,9 @@ public class EmailTemplateServiceDTO {
 		}
 	}
 
-	
+	public List<EmailTemplateDTO> getEmailTemplatesByLabelId(Integer labelId, Integer userId){
+		@SuppressWarnings("serial")
+		Type listEmailTemplates = new TypeToken<List<EmailTemplateDTO>>() {}.getType(); 
+		return modelMapper.map(emailTemplateService.getEmailTemplatesbyLabelId(labelId, userId), listEmailTemplates);
+	}
 }

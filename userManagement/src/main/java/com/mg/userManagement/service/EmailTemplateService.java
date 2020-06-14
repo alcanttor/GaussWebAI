@@ -1,5 +1,6 @@
 package com.mg.userManagement.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.mg.userManagement.entity.EmailLabel;
 import com.mg.userManagement.entity.EmailTemplate;
 import com.mg.userManagement.entity.User;
 import com.mg.userManagement.repo.EmailTemplateRepository;
@@ -146,6 +149,38 @@ public class EmailTemplateService {
 		
 	}
 
+	public List<EmailTemplate> getEmailTemplatesbyLabelId(Integer labelId, Integer userId){
+		try {
+			logger.info("Retrieving all emailTemplates");
+			List<EmailTemplate> emailTemplates = this.getEmailTemplatesByUserId(userId);
+			
+			List<EmailTemplate> filteredTemplates = new ArrayList<EmailTemplate>();
+			logger.info("Filtering emailTemplates based on labels");
+			for(EmailTemplate template: emailTemplates) {
+				List<EmailLabel> emailLabels = template.getLabels();
+				
+				for(EmailLabel label:emailLabels) {
+					if(label.getId() == labelId) {
+						filteredTemplates.add(template);
+						break;
+					}
+				}
+			}
+			
+			return filteredTemplates;
+			
+		}catch(IllegalArgumentException ex) {
+			logger.error("Invalid arguements passed while trying to get email tenplate");
+			logger.error("", ex);
+		}
+		catch(Exception ex)
+		{
+			logger.error("Exception while trying to get emaiul template");
+			logger.error("", ex);
+		}
+		return null;
+	}
+	
 	
 
 }

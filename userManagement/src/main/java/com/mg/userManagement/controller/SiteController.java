@@ -64,12 +64,12 @@ public class SiteController {
 		return siteServiceDTO.addRuleGroupToSite(siteId, ruleGroupDTO);
 	}
 	
-	/*invoke service to get list of all rules for a given user*/
+	/*invoke service to get list of all rules for a given user
 	@GetMapping(value="/getallrulegroups/{userId}")
 	public List<RuleGroupDTO> getAllRules(@PathVariable Integer userId)
 	{
 		return siteServiceDTO.getAllRuleGroupsbyUser(userId);
-	}
+	}*/
 	
 	/*public SiteDTO asociateTemplate(Integer siteId,Integer ruleId, Integer emailTemplateId)
 	{
