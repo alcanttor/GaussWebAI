@@ -6,6 +6,7 @@ public class ActionDTO {
 	@Id
 	private Integer id;
 	private String name;
+	private Boolean onEmail;
 	public Integer getId() {
 		return id;
 	}
@@ -17,6 +18,14 @@ public class ActionDTO {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	
+	public Boolean getOnEmail() {
+		return onEmail;
+	}
+	public void setOnEmail(Boolean onEmail) {
+		this.onEmail = onEmail;
 	}
 	@Override
 	public int hashCode() {

@@ -12,6 +12,7 @@ public class Action extends BaseEntity {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="action_seq")
 	private Integer id;
 	private String name;
+	private Boolean onEmail;
 	public Integer getId() {
 		return id;
 	}
@@ -23,6 +24,12 @@ public class Action extends BaseEntity {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public Boolean getOnEmail() {
+		return onEmail;
+	}
+	public void setOnEmail(Boolean onEmail) {
+		this.onEmail = onEmail;
 	}
 	
 	
