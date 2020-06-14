@@ -13,7 +13,7 @@ public class SystemEventController {
 	@Autowired
 	SystemEventServiceDTO systemEventServiceDTO; 
 	
-	@PostMapping(value = "/addEvent")
+	@PostMapping(value = "/addevent")
 	public SystemEventDTO save(@RequestBody SystemEventDTO systemEventDTO)
 	{
 		System.out.println("in controller ..."+systemEventDTO);

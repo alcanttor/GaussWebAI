@@ -13,7 +13,7 @@ public class RuleGroupController {
 	@Autowired
 	RuleGroupServiceDTO ruleGroupServiceDTO; 
 	
-	@PostMapping(value = "/updateRuleGroup")
+	@PostMapping(value = "/updaterulegroup")
 	public RuleGroupDTO saveAction(@RequestBody RuleGroupDTO ruleGroupDto , Integer ruleGroupId)
 	{
 		try{

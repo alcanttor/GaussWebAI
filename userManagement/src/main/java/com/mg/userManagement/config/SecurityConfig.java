@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.csrf().disable().cors().and().
 		authorizeRequests().antMatchers("/token/**").permitAll()
 			.antMatchers("/swagger-ui.html/**").permitAll()
-			.antMatchers("/saveUser/**").permitAll()
+			.antMatchers("/saveuser/**").permitAll()
 			.antMatchers(HttpMethod.OPTIONS).permitAll()
 			.anyRequest().authenticated().and().exceptionHandling().and().sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS);

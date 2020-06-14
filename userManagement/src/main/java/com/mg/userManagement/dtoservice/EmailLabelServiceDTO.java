@@ -45,15 +45,23 @@ public class EmailLabelServiceDTO {
 	public List<EmailLabelDTO> getEmailLabelByUserId(Integer userId) throws Exception{
 		@SuppressWarnings("serial")
 		Type listEmailLabels = new TypeToken<List<EmailLabelDTO>>() {}.getType(); 
-		return modelMapper.map(emailLabelService.getByUserId(userId), listEmailLabels);
+		return modelMapper.map(emailLabelService.getEmailLablesByUserId(userId), listEmailLabels);
 	}
 
 	public EmailLabelDTO getEmailLabelById(Integer emailLabelId) throws Exception {
-		return modelMapper.map(emailLabelService.getById(emailLabelId), EmailLabelDTO.class);
+		return modelMapper.map(emailLabelService.getLabelById(emailLabelId), EmailLabelDTO.class);
 	}
 
 	public EmailLabelDTO associateTemplateToRule(Integer labelId, Integer emailLabelId) throws Exception 
 	{
 		return modelMapper.map(emailLabelService.associateTemplate(labelId, emailLabelId), EmailLabelDTO.class);
 	}
+	
+	public List<EmailLabelDTO> deleteEmailLabel(Integer emailLabelId)
+	{
+		@SuppressWarnings("serial")
+		Type listEmailLabels = new TypeToken<List<EmailLabelDTO>>() {}.getType();
+		return modelMapper.map(emailLabelService.deleteLabelbyId(emailLabelId), listEmailLabels);
+	}
+	
 }

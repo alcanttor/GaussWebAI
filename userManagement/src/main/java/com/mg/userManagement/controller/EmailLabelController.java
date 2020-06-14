@@ -19,8 +19,8 @@ public class EmailLabelController {
 	@Autowired
 	private EmailLabelServiceDTO emailLabelServiceDTO;
 	
-	@PostMapping(value="/addEmailLabel/{userId}")
-	public EmailLabelDTO add(@RequestBody EmailLabelDTO emailLabelDTO, @PathVariable Integer userId)
+	@PostMapping(value="/addemaillabel/{userId}")
+	public EmailLabelDTO addLabels(@RequestBody EmailLabelDTO emailLabelDTO, @PathVariable Integer userId)
 	{
 		try {
 			return emailLabelServiceDTO.createEmailLabel(userId, emailLabelDTO);
@@ -30,17 +30,17 @@ public class EmailLabelController {
 		}
 	}
 	
-	@GetMapping(value="/getEmailLabelsbyuserid/{userId}")
-	public List<EmailLabelDTO> getSitebyUser(@PathVariable Integer userId) throws Exception
+	@GetMapping(value="/getemaillabelsbyuserid/{userId}")
+	public List<EmailLabelDTO> getEmailLabelsnuUserId(@PathVariable Integer userId) throws Exception
 	{
 		return emailLabelServiceDTO.getEmailLabelByUserId(userId);
 	}
 	
-	@PostMapping(value="/updateEmailLabel/{LabelId}")
-	public EmailLabelDTO updateTemplate(@RequestBody EmailLabelDTO emailLabelDTO, @PathVariable Integer LabelId)
+	@PostMapping(value="/updateemaillabel/{emailLabelId}")
+	public EmailLabelDTO updateEmailLabel(@RequestBody EmailLabelDTO emailLabelDTO, @PathVariable Integer emailLabelId)
 	{
 		try {
-			return emailLabelServiceDTO.updateEmailLabel(LabelId, emailLabelDTO) ;
+			return emailLabelServiceDTO.updateEmailLabel(emailLabelId, emailLabelDTO) ;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -48,7 +48,7 @@ public class EmailLabelController {
 		}
 	}
 	
-	@GetMapping(value="/getEmailLabelById/{emailLabelId}")
+	@GetMapping(value="/getemaillabelbyid/{emailLabelId}")
 	public EmailLabelDTO getById(@PathVariable Integer emailLabelId)
 	{
 		try {
@@ -69,6 +69,12 @@ public class EmailLabelController {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	@GetMapping(value="/deleteemaillabelbyid/{emailLabelId}")
+	public List<EmailLabelDTO> deleteLabelId(@PathVariable Integer emailLabelId)
+	{
+		return emailLabelServiceDTO.deleteEmailLabel(emailLabelId);
 	}
 	
 }

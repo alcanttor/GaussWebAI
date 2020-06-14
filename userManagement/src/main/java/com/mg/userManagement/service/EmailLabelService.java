@@ -27,16 +27,16 @@ public class EmailLabelService {
 		User user = userService.getUserById(userId);
 		emailLabel.setUser(user);
 		try {
-			logger.info("Attempting to save new email template: "+emailLabel.getName());
+			logger.info("Attempting to save new email label: "+emailLabel.getName());
 			return emailLabelRepository.save(emailLabel);
 		}
 		catch(IllegalArgumentException ex) {
-			logger.error("Invalid arguements passed while trying to email template: "+emailLabel.getName());
+			logger.error("Invalid arguements passed while trying to email label: "+emailLabel.getName());
 			logger.error("", ex);
 		}
 		catch(Exception ex)
 		{
-			logger.error("Exception while trying to save email template: "+emailLabel.getName());
+			logger.error("Exception while trying to save email label: "+emailLabel.getName());
 			logger.error("", ex);
 		}
 		return null;
@@ -45,37 +45,40 @@ public class EmailLabelService {
 	public EmailLabel update(Integer emailLabelId, EmailLabel emailLabel) throws Exception
 	{
 		Optional<EmailLabel> existingtemplateOptional = emailLabelRepository.findById(emailLabelId) ;
+		
 		if (existingtemplateOptional.isPresent())
 		{
-			emailLabel.setId(emailLabelId);
+			EmailLabel updatedLabel = existingtemplateOptional.get();
+			updatedLabel.setId(emailLabelId);
+			updatedLabel.setName(emailLabel.getName());
 			try {
-				logger.info("Attempting to update email template: "+emailLabel.getName());
-				return emailLabelRepository.save(emailLabel);
+				logger.info("Attempting to update email label: "+emailLabel.getName());
+				return emailLabelRepository.save(updatedLabel);
 			}
 			catch(IllegalArgumentException ex) {
-				logger.error("Invalid arguements passed while trying to update email template: "+emailLabel.getName());
+				logger.error("Invalid arguements passed while trying to update email label: "+emailLabel.getName());
 				logger.error("", ex);
 			}
 			catch(Exception ex)
 			{
-				logger.error("Exception while trying to update email template: "+emailLabel.getName());
+				logger.error("Exception while trying to update email label: "+emailLabel.getName());
 				logger.error("", ex);
 			}
 			return null;
 		}
 		else
 		{
-			throw new Exception("No template exists for id ["+emailLabelId+"]");
+			throw new Exception("No labels exists for id ["+emailLabelId+"]");
 		}
 	}
 	
 	public List<EmailLabel> getAll()
 	{
-		logger.info("Listing all email templates");
+		logger.info("Listing all email labels");
 		return emailLabelRepository.findAll();
 	}
 
-	public List<EmailLabel> getByUserId(Integer userId) throws Exception{
+	public List<EmailLabel> getEmailLablesByUserId(Integer userId) throws Exception{
 		User user = userService.getUserById(userId);
 		Optional<List<EmailLabel>> emailLabelOptional = emailLabelRepository.findByUser(user);
 		if(emailLabelOptional.isPresent())
@@ -84,12 +87,12 @@ public class EmailLabelService {
 		}
 		else
 		{
-			throw new Exception("No Template exists for userId ["+userId+"]");
+			throw new Exception("No label exists for userId ["+userId+"]");
 		}
 		
 	}
 
-	public EmailLabel getById(Integer emailLabelId) throws Exception {
+	public EmailLabel getLabelById(Integer emailLabelId) throws Exception {
 		Optional<EmailLabel> emailLabelOptional = emailLabelRepository.findById(emailLabelId);
 		if (emailLabelOptional.isPresent())
 		{
@@ -97,10 +100,29 @@ public class EmailLabelService {
 		}
 		else
 		{
-			throw new Exception("Email template not found");
+			throw new Exception("Email template label not found");
 		}
 	}
 
+	
+	public List<EmailLabel> deleteLabelbyId(Integer emailLabelId){
+		try {
+			Integer userId = emailLabelRepository.findById(emailLabelId).get().getUser().getId();
+			emailLabelRepository.deleteById(emailLabelId);
+			return this.getEmailLablesByUserId(userId);
+		}
+		catch(IllegalArgumentException ex) {
+			logger.error("Invalid arguements passed while trying to delete email label");
+			logger.error("", ex);
+		}
+		catch(Exception ex)
+		{
+			logger.error("Exception while trying to delete email label");
+			logger.error("", ex);
+		}
+		return null;
+	}
+	
 	public EmailLabel associateTemplate(Integer labelId, Integer emailLabelId) throws Exception 
 	{/*
 		EmailLabel emailLabel = getById(templateId);

@@ -14,7 +14,7 @@ public class ActionController {
 	@Autowired
 	ActionServiceDTO actionServiceDTO; 
 	
-	@PostMapping(value = "/addAction")
+	@PostMapping(value = "/addaction")
 	public ActionDTO saveAction(@RequestBody ActionDTO actionDTO)
 	{
 		return actionServiceDTO.saveAction(actionDTO); 

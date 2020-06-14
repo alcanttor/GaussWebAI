@@ -18,7 +18,7 @@ public class EmailTemplateController {
 	@Autowired
 	private EmailTemplateServiceDTO emailTemplateServiceDTO;
 	
-	@PostMapping(value="/addEmailTemplate/{userId}")
+	@PostMapping(value="/addemailtemplate/{userId}")
 	public EmailTemplateDTO add(@RequestBody EmailTemplateDTO emailTemplateDTO, @PathVariable Integer userId)
 	{
 		try {
@@ -29,13 +29,13 @@ public class EmailTemplateController {
 		}
 	}
 	
-	@GetMapping(value="/getEmailTemplatesbyuserid/{userId}")
+	@GetMapping(value="/getemailtemplatesbyuserid/{userId}")
 	public List<EmailTemplateDTO> getSitebyUser(@PathVariable Integer userId) throws Exception
 	{
 		return emailTemplateServiceDTO.getEmailTemplatesByUserId(userId);
 	}
 	
-	@PostMapping(value="/updateEmailTemplate/{userId}")
+	@PostMapping(value="/updateemailtemplate/{templateId}")
 	public EmailTemplateDTO updateTemplate(@RequestBody EmailTemplateDTO emailTemplateDTO, @PathVariable Integer templateId)
 	{
 		try {
@@ -47,7 +47,7 @@ public class EmailTemplateController {
 		}
 	}
 	
-	@GetMapping(value="/getById/{emailTemplateId}")
+	@GetMapping(value="/getbyid/{emailTemplateId}")
 	public EmailTemplateDTO getById(@PathVariable Integer emailTemplateId)
 	{
 		try {
@@ -59,5 +59,15 @@ public class EmailTemplateController {
 		}
 	}
 	
+	@GetMapping(value="/deletetemplatebyid/{emailTemplateId}")
+	public List<EmailTemplateDTO> deleteTemplate(@PathVariable Integer emailTemplateId)
+	{
+		return emailTemplateServiceDTO.deleteEmailTemplatebyId(emailTemplateId);
+	}
 	
+	@GetMapping(value="/gettemplatesbylabelid/{emaillabelId}/{userId}")
+	public List<EmailTemplateDTO> getById(@PathVariable Integer labelId, @PathVariable Integer userId)
+	{
+		return emailTemplateServiceDTO.getEmailTemplatesByLabelId(labelId, userId);
+	}
 }

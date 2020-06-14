@@ -58,18 +58,18 @@ public class SiteController {
 	}
 	
 	
-	@PostMapping(value="/addruleGroup/{siteId}")
-	public SiteDTO addRuleGroup(@PathVariable Integer siteId, @RequestBody RuleGroupDTO ruleGroupDTO)
+	@PostMapping(value="/addrulegroup/{siteId}")
+	public List<SiteDTO> addRuleGroup(@PathVariable Integer siteId, @RequestBody RuleGroupDTO ruleGroupDTO)
 	{
 		return siteServiceDTO.addRuleGroupToSite(siteId, ruleGroupDTO);
 	}
 	
-	/*invoke service to get list of all rules for a given user*/
-	@GetMapping(value="/getallruleGroups/{userId}")
+	/*invoke service to get list of all rules for a given user
+	@GetMapping(value="/getallrulegroups/{userId}")
 	public List<RuleGroupDTO> getAllRules(@PathVariable Integer userId)
 	{
 		return siteServiceDTO.getAllRuleGroupsbyUser(userId);
-	}
+	}*/
 	
 	/*public SiteDTO asociateTemplate(Integer siteId,Integer ruleId, Integer emailTemplateId)
 	{
