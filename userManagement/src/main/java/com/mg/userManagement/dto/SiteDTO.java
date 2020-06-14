@@ -1,7 +1,11 @@
 package com.mg.userManagement.dto;
 
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Id;
+
+import com.mg.userManagement.entity.RuleGroup;
 
 /**DTO mapping class for user site mapping fields*/
 public class SiteDTO {
@@ -16,6 +20,16 @@ public class SiteDTO {
 	private SiteTokenDTO siteToken;
 	
 	private ConnectorDTO connector;
+	
+	private List<RuleGroup> ruleGroups;
+	
+	public List<RuleGroup> getRuleGroups() {
+		return ruleGroups;
+	}
+	
+	public void setRuleGroups(List<RuleGroup> ruleGroups) {
+		this.ruleGroups = ruleGroups;
+	}
 	
 	public Integer getId() {
 		return id;

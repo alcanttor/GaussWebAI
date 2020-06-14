@@ -83,13 +83,13 @@ public class SiteServiceDTO {
 	}
 	
 	
-	public List<RuleGroupDTO> addRuleGroupToSite(Integer siteId, RuleGroupDTO ruleGroupDTO) {
+	public List<SiteDTO> addRuleGroupToSite(Integer siteId, RuleGroupDTO ruleGroupDTO) {
 		RuleGroup ruleGroup = modelMapper.map(ruleGroupDTO, RuleGroup.class);
 		Site site = siteService.addRuleGroupToSiteId(siteId, ruleGroup);
 		
 		if(site!=null) {
 			Integer userId = ((siteService.getSiteById(siteId)).getUser()).getId();
-			return this.getAllRuleGroupsbyUser(userId);
+			return this.getSitesbyUser(userId);
 		}
 		else
 			return null;
