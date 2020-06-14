@@ -16,6 +16,7 @@ export class SearchAndSelectComponent implements OnInit {
   };
   @Input() label = 'name';
   @Input() name = '';
+  @Input() disabled = false;
   @Output() onSearch = new EventEmitter<object>();
   private debouncer: Subject<string> = new Subject<string>();
   click$ = new Subject<string>();
@@ -34,7 +35,7 @@ export class SearchAndSelectComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.selected.id) {
+    if (this.selected?.id) {
       this.entity = this.selected;
     }
   }
