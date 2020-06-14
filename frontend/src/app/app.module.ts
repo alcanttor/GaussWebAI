@@ -18,6 +18,12 @@ import { SitesComponent } from './sites/sites.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListActionsComponent } from './shared/components/list-actions/list-actions.component';
 import { RulesComponent } from './rules/rules.component';
+import { SearchAndSelectComponent } from './shared/components/search-and-select/search-and-select.component';
+import { EmailLabelsComponent } from './email-labels/email-labels.component';
+import { EmailTemplatesComponent } from './email-templates/email-templates.component';
+
+import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
+import { TypeaheadModule } from 'ngx-type-ahead';
 
 @NgModule({
   declarations: [
@@ -27,6 +33,9 @@ import { RulesComponent } from './rules/rules.component';
     SitesComponent,
     ListActionsComponent,
     RulesComponent,
+    SearchAndSelectComponent,
+    EmailLabelsComponent,
+    EmailTemplatesComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +47,8 @@ import { RulesComponent } from './rules/rules.component';
     HttpClientModule,
     IconsModule,
     ClipboardModule,
+    RichTextEditorModule,
+    TypeaheadModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent],

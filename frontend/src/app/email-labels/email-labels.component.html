@@ -1,0 +1,120 @@
+<app-list-actions
+  (messageEvent)="listen($event)"
+  [showItemActions]="false"
+></app-list-actions>
+<div class="container-fluid labels-container">
+  <div class="header row">
+    <div class="col-md-11">
+      <h2 class="title display-5">Email Labels</h2>
+    </div>
+  </div>
+  <div class="content">
+    <table class="table" *ngIf="labels.length > 0; else emptyLabels">
+      <thead>
+        <tr>
+          <th scope="col" style="width: 10%;">#</th>
+          <th scope="col" style="width: 65%;">Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let label of labels; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>
+            {{ label.name }}
+          </td>
+          <td>
+            <div ngbDropdown class="d-inline-block" placement="right-bottom">
+              <i-feather name="more-vertical" ngbDropdownToggle></i-feather>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button
+                  ngbDropdownItem
+                  (click)="openEditModal(createLabel, label)"
+                >
+                  <i-feather name="edit2" class="small-icon"></i-feather>
+                  Edit
+                </button>
+                <button
+                  ngbDropdownItem
+                  (click)="openDeleteModal(deleteLabel, label)"
+                >
+                  <i-feather name="x" class="small-icon"></i-feather>
+                  Delete
+                </button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-template #emptyLabels>
+  <div class="container" style="margin-top: 50px;">
+    <div class="row">
+      <div class="col text-center">
+        There are no labels, you can add one by clicking on new
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #createLabel let-modal>
+  <div class="modal-header">
+    <h4 class="title" id="modal-basic-title">Create a label</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="name">Label Name</label>
+      <div class="input-group">
+        <input
+          id="name"
+          class="form-control"
+          placeholder="Add a rule name"
+          name="name"
+          type="text"
+          [(ngModel)]="label.name"
+          ngbAutofocus
+        />
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="modal.close()">
+      Save
+    </button>
+    <button type="button" class="btn" (click)="modal.dismiss()">
+      Cancel
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #deleteLabel let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Delete Label</h4>
+  </div>
+  <div class="modal-body">
+    Are you sure you want to delete this label?
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="modal.close()"
+      ngbAutofocus
+    >
+      Confirm
+    </button>
+    <button type="button" class="btn" (click)="modal.dismiss()">
+      Cancel
+    </button>
+  </div>
+</ng-template>

@@ -6,38 +6,37 @@ import { AuthService } from '../auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class SitesService {
+export class EmailLabelsService {
   constructor(private httpClient: HttpClient, private auth: AuthService) {}
 
-  getSites() {
-    const userId = this.auth.getUserId();
-    return this.httpClient.get(
-      `${config.BASE_URL}/getsitebyuserid/${userId}`,
-      this.auth.getAuthHeader()
-    );
-  }
-
-  deleteSite(id) {
-    return this.httpClient.get(
-      `${config.BASE_URL}/deletesitebyid/${id}`,
-      this.auth.getAuthHeader()
-    );
-  }
-
-  addSites(sites) {
+  addLabel(label) {
     const userId = this.auth.getUserId();
     return this.httpClient.post(
-      `${config.BASE_URL}/addsites/${userId}`,
-      sites,
+      `${config.BASE_URL}/addemaillabel/${userId}`,
+      label,
       this.auth.getAuthHeader()
     );
   }
 
-  updateSite(site) {
+  getLabels() {
     const userId = this.auth.getUserId();
+    return this.httpClient.get(
+      `${config.BASE_URL}/getemaillabelsbyuserid/${userId}`,
+      this.auth.getAuthHeader()
+    );
+  }
+
+  updateLabel(label) {
     return this.httpClient.post(
-      `${config.BASE_URL}/updatesite/${userId}`,
-      site,
+      `${config.BASE_URL}/updateemaillabel/${label.id}`,
+      label,
+      this.auth.getAuthHeader()
+    );
+  }
+
+  deleteLabel(labelId) {
+    return this.httpClient.get(
+      `${config.BASE_URL}/deleteemaillabelbyid/${labelId}`,
       this.auth.getAuthHeader()
     );
   }

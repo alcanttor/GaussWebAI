@@ -6,38 +6,37 @@ import { AuthService } from '../auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class SitesService {
+export class EmailTemplatesService {
   constructor(private httpClient: HttpClient, private auth: AuthService) {}
 
-  getSites() {
+  getTemplates() {
     const userId = this.auth.getUserId();
     return this.httpClient.get(
-      `${config.BASE_URL}/getsitebyuserid/${userId}`,
+      `${config.BASE_URL}/getemailtemplatesbyuserid/${userId}`,
       this.auth.getAuthHeader()
     );
   }
 
-  deleteSite(id) {
+  addTemplate(template) {
+    const userId = this.auth.getUserId();
+    return this.httpClient.post(
+      `${config.BASE_URL}/addemailtemplate/${userId}`,
+      template,
+      this.auth.getAuthHeader()
+    );
+  }
+
+  updateTemplate(template) {
+    return this.httpClient.post(
+      `${config.BASE_URL}/updateemailtemplate/${template.id}`,
+      template,
+      this.auth.getAuthHeader()
+    );
+  }
+
+  delete(templateId) {
     return this.httpClient.get(
-      `${config.BASE_URL}/deletesitebyid/${id}`,
-      this.auth.getAuthHeader()
-    );
-  }
-
-  addSites(sites) {
-    const userId = this.auth.getUserId();
-    return this.httpClient.post(
-      `${config.BASE_URL}/addsites/${userId}`,
-      sites,
-      this.auth.getAuthHeader()
-    );
-  }
-
-  updateSite(site) {
-    const userId = this.auth.getUserId();
-    return this.httpClient.post(
-      `${config.BASE_URL}/updatesite/${userId}`,
-      site,
+      `${config.BASE_URL}/deletetemplatebyid/${templateId}`,
       this.auth.getAuthHeader()
     );
   }

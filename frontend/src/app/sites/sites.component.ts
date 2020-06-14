@@ -23,6 +23,7 @@ export class SitesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSites();
+    this.inputSites.push(this.generateEmptySite());
   }
 
   generateEmptySite = (): Site => ({
@@ -58,8 +59,11 @@ export class SitesComponent implements OnInit {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
+  removeInputSite(index) {
+    this.inputSites.splice(index, 1);
+  }
+
   openCreateSitesModal(createSites) {
-    this.inputSites.push(this.generateEmptySite());
     this.modalService
       .open(createSites, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
@@ -69,7 +73,9 @@ export class SitesComponent implements OnInit {
             this.getSites();
           });
         },
-        (onrejected) => {}
+        (onrejected) => {
+          this.inputSites = [this.generateEmptySite()];
+        }
       );
   }
 
@@ -98,7 +104,9 @@ export class SitesComponent implements OnInit {
             this.getSites();
           });
         },
-        (onrejected) => {}
+        (onrejected) => {
+          this.site = this.generateEmptySite();
+        }
       );
   }
 }

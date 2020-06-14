@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="content">
-    <table class="table">
+    <table class="table" *ngIf="sites.length > 0; else emptySites">
       <thead>
         <tr>
           <th scope="col" style="width: 10%;">#</th>
@@ -61,6 +61,16 @@
   </div>
 </div>
 
+<ng-template #emptySites>
+  <div class="container" style="margin-top: 50px;">
+    <div class="row">
+      <div class="col text-center">
+        There are no sites, you can add one by clicking on new
+      </div>
+    </div>
+  </div>
+</ng-template>
+
 <ng-template #createSite let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Create Site</h4>
@@ -74,31 +84,42 @@
     </button>
   </div>
   <div class="modal-body">
-    <div>
-      <div class="form-group">
-        <label for="name">Name</label>
-        <div class="input-group">
-          <input
-            id="name"
-            class="form-control"
-            placeholder="Ex - Netflix"
-            name="name"
-            type="text"
-            [(ngModel)]="site.name"
-          />
-        </div>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <div class="input-group">
+        <input
+          id="name"
+          class="form-control"
+          placeholder="Ex - Netflix"
+          name="name"
+          type="text"
+          [(ngModel)]="site.name"
+          required
+        />
       </div>
+    </div>
 
-      <div class="form-group">
-        <label for="connector">Connector</label>
-        <select id="connector" [(ngModel)]="site.connector.id">
+    <div class="form-group">
+      <label for="connector">Connector</label>
+      <div class="input-group">
+        <select
+          required
+          id="connector"
+          [(ngModel)]="site.connector.id"
+          class="custom-select custom-select-md mb-2"
+        >
           <option selected value="1">Wordpress</option>
         </select>
       </div>
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn" (click)="modal.close()" ngbAutofocus>
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="modal.close()"
+      ngbAutofocus
+    >
       Save
     </button>
     <button type="button" class="btn" (click)="modal.dismiss()">
@@ -144,10 +165,19 @@
   <div class="modal-body">
     <div *ngFor="let site of inputSites; index as i">
       <div class="form-group">
-        <label for="name">Name</label>
+        <div>
+          <label for="name">Name </label>
+          <i-feather
+            *ngIf="i !== 0"
+            name="x"
+            class="float-right small-icon"
+            (click)="removeInputSite(i)"
+          ></i-feather>
+        </div>
         <div class="input-group">
           <input
             id="name"
+            required
             class="form-control"
             placeholder="Ex - Netflix"
             name="name"
@@ -158,9 +188,16 @@
       </div>
       <div class="form-group">
         <label for="connector">Connector</label>
-        <select id="connector" [(ngModel)]="site.connector.id">
-          <option selected value="1">Wordpress</option>
-        </select>
+        <div class="input-group">
+          <select
+            required
+            id="connector"
+            [(ngModel)]="site.connector.id"
+            class="custom-select custom-select-md mb-2"
+          >
+            <option selected value="1">Wordpress</option>
+          </select>
+        </div>
       </div>
     </div>
 
@@ -172,7 +209,12 @@
   </div>
 
   <div class="modal-footer">
-    <button type="button" class="btn" (click)="modal.close()" ngbAutofocus>
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="modal.close()"
+      ngbAutofocus
+    >
       Save
     </button>
     <button type="button" class="btn" (click)="modal.dismiss()">
