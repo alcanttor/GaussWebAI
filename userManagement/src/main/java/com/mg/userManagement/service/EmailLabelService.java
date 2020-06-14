@@ -107,8 +107,9 @@ public class EmailLabelService {
 	
 	public List<EmailLabel> deleteLabelbyId(Integer emailLabelId){
 		try {
+			Integer userId = emailLabelRepository.findById(emailLabelId).get().getUser().getId();
 			emailLabelRepository.deleteById(emailLabelId);
-			return this.getEmailLablesByUserId(emailLabelRepository.findById(emailLabelId).get().getUser().getId());
+			return this.getEmailLablesByUserId(userId);
 		}
 		catch(IllegalArgumentException ex) {
 			logger.error("Invalid arguements passed while trying to delete email label");
