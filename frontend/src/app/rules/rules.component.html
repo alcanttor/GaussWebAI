@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="content">
-    <table class="table">
+    <table class="table" *ngIf="rules.length > 0; else emptyRules">
       <thead>
         <tr>
           <th scope="col" style="width: 10%;">#</th>
@@ -44,6 +44,16 @@
     </table>
   </div>
 </div>
+
+<ng-template #emptyRules>
+  <div class="container" style="margin-top: 50px;">
+    <div class="row">
+      <div class="col text-center">
+        There are no rules, you can add one by clicking on new
+      </div>
+    </div>
+  </div>
+</ng-template>
 
 <ng-template #createRule let-modal>
   <div class="modal-header">
