@@ -2,13 +2,11 @@ package com.mg.userManagement.dto;
 
 import javax.persistence.Id;
 
-import com.mg.userManagement.entity.SystemRule;
-
 public class RuleDTO {
 	@Id
 	private Integer id;
 	
-	SystemRule systemRule;
+	SystemRuleDTO systemRule;
 	
 	Boolean enabled;
 	
@@ -20,10 +18,10 @@ public class RuleDTO {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public SystemRule getSystemRule() {
+	public SystemRuleDTO getSystemRule() {
 		return systemRule;
 	}
-	public void setSystemRule(SystemRule systemRule) {
+	public void setSystemRule(SystemRuleDTO systemRule) {
 		this.systemRule = systemRule;
 	}
 	public Boolean getEnabled() {

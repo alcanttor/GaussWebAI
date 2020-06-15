@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.persistence.Id;
 
-import com.mg.userManagement.entity.RuleGroup;
-
 /**DTO mapping class for user site mapping fields*/
 public class SiteDTO {
 	@Id
@@ -21,13 +19,13 @@ public class SiteDTO {
 	
 	private ConnectorDTO connector;
 	
-	private List<RuleGroup> ruleGroups;
+	private List<RuleGroupDTO> ruleGroups;
 	
-	public List<RuleGroup> getRuleGroups() {
+	public List<RuleGroupDTO> getRuleGroups() {
 		return ruleGroups;
 	}
 	
-	public void setRuleGroups(List<RuleGroup> ruleGroups) {
+	public void setRuleGroups(List<RuleGroupDTO> ruleGroups) {
 		this.ruleGroups = ruleGroups;
 	}
 	
