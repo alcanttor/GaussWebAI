@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class ApplicationConfiguration {
 
-	@Value("${user.magement.site}")
+	@Value("${user.management.site}")
 	private String siteUrl;
 
 	public String getSiteUrl() {

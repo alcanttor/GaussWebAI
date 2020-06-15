@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.mg.gateWay.config.ApplicationConfiguration;
-import com.mg.gateWay.model.Site;
+import com.mg.gateWay.model.SiteDTO;
 
 @Service
 public class UserManagementService {
@@ -20,11 +20,11 @@ public class UserManagementService {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	public Site getSitebyName(String siteName)
+	public SiteDTO getSitebyName(String siteName)
 	{
-		Site request = new Site();
+		SiteDTO request = new SiteDTO();
 		request.setName(siteName);
-		Site site = restTemplate.postForObject(applicationConfiguration.getSiteUrl(), request, Site.class);
+		SiteDTO site = restTemplate.postForObject(applicationConfiguration.getSiteUrl(), request, SiteDTO.class);
 		logger.info("URL [{}] Request [{}] Response [{}]",applicationConfiguration.getSiteUrl(),siteName,site);
 		return site;
 	}

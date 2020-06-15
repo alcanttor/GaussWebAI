@@ -10,16 +10,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class RequestData {
 
-	private SystemEvent systemEvent;
+	private SystemEventDTO systemEvent;
 	private Map<String,String> metaData;
 	private String siteName;
-	private List<Action> actions;
+	List<RuleDTO> rules;
 	
-	
-	public SystemEvent getSystemEvent() {
+	public SystemEventDTO getSystemEvent() {
 		return systemEvent;
 	}
-	public void setSystemEvent(SystemEvent systemEvent) {
+	public void setSystemEvent(SystemEventDTO systemEvent) {
 		this.systemEvent = systemEvent;
 	}
 	public Map<String, String> getMetaData() {
@@ -34,12 +33,11 @@ public class RequestData {
 	public void setSiteName(String siteName) {
 		this.siteName = siteName;
 	}
-	public List<Action> getActions() {
-		return actions;
+	public List<RuleDTO> getRules() {
+		return rules;
 	}
-	public void setActions(List<Action> actions) {
-		this.actions = actions;
+	public void setRules(List<RuleDTO> rules) {
+		this.rules = rules;
 	}
-	
 	
 }

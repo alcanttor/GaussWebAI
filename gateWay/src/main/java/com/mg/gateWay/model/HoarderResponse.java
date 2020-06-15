@@ -3,14 +3,14 @@ package com.mg.gateWay.model;
 import org.springframework.stereotype.Component;
 
 @Component
-public class HoaderResponse {
+public class HoarderResponse {
 
 	private Boolean result;
 	private String message;
 	
-	public HoaderResponse(){}
+	public HoarderResponse(){}
 	
-	public HoaderResponse(Boolean result,String message)
+	public HoarderResponse(Boolean result,String message)
 	{
 		this.result = result;
 		this.message = message;

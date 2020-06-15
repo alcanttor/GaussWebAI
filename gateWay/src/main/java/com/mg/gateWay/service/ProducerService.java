@@ -9,13 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-
-import com.mg.gateWay.model.SystemEvent;
-import com.mg.gateWay.model.Action;
-import com.mg.gateWay.model.HoaderResponse;
+import com.mg.gateWay.model.SystemRuleDTO;
+import com.mg.gateWay.model.HoarderResponse;
 import com.mg.gateWay.model.RequestData;
-import com.mg.gateWay.model.Rule;
-import com.mg.gateWay.model.Site;
+import com.mg.gateWay.model.RuleDTO;
+import com.mg.gateWay.model.RuleGroupDTO;
+import com.mg.gateWay.model.SiteDTO;
 
 /** Singleton scoped Kafka template initiator service class */
 
@@ -32,21 +31,28 @@ public class ProducerService {
 
 	@Value("${kafka.kafkaTopic}")
 	private String kafkaTopic;
+	
+	@Value("${WordPressTriggers.trigger}")
+	private String trigger;
 
-	public HoaderResponse send(RequestData request) {
-		Site site = userManagementService.getSitebyName(request.getSiteName());
-		HoaderResponse response = isSiteRegistered(request, site);
+	public HoarderResponse send(RequestData request) {
+		
+		//get site details from usermanagement persistent data
+		SiteDTO site = userManagementService.getSitebyName(request.getSiteName());
+		
+		HoarderResponse response = isSiteRegistered(request, site);
 		logger.info("Is site registered [" + request.getSiteName() + "] result [" + response.getResult() + "]");
+		
 		if (response.getResult() == true) 
 		{
-			List<Action> validRules = getValidActions(request, site);
+			List<RuleDTO> validRules = getValidActions(request, site);
 			
 			if (validRules == null || validRules.size() == 0) {
 				response.setResult(false);
 				response.setMessage("no valid action");
 				return response;
 			} else {
-				request.setActions(validRules);
+				request.setRules(validRules);
 				kafkaRequestDataTemplate.send(kafkaTopic, request);
 				response.setMessage("request accepted");
 				response.setResult(true);
@@ -59,11 +65,11 @@ public class ProducerService {
 
 	}
 
-	private HoaderResponse isSiteRegistered(RequestData request, Site site) {
-		HoaderResponse response = new HoaderResponse();
+	private HoarderResponse isSiteRegistered(RequestData request, SiteDTO site) {
+		HoarderResponse response = new HoarderResponse();
 
 		if (site == null) {
-			response.setMessage("site [" + request.getSiteName() + "] nor registered.");
+			response.setMessage("site [" + request.getSiteName() + "] not registered.");
 			response.setResult(false);
 		} else {
 			response.setResult(true);
@@ -71,20 +77,35 @@ public class ProducerService {
 		return response;
 	}
 
-	private List<Action> getValidActions(RequestData request, Site site) {
-		List<Action> returnActions = new ArrayList<Action>();
-
-		List<Rule> rules = site.getRules();
-
-		for (Rule rule : rules) 
+	private List<RuleDTO> getValidActions(RequestData request, SiteDTO site) {
+		
+		List<RuleDTO> responseRules = new ArrayList<RuleDTO>();
+	
+		logger.info("Retrieve all rule groups for the site", site.getName());
+		List<RuleGroupDTO> ruleGroups = site.getRuleGroups();
+		
+		for (RuleGroupDTO ruleGroup : ruleGroups) 
 		{
-			logger.info("check this systemEvent [{}] Action [{}] isEnabled [{}]", rule.getSysTrigger(),rule.getAction(),rule.getEnabled());
-			if (rule.getEnabled() == true) 
-			{
-				returnActions.add(rule.getAction());
+			logger.info("Retrieve all rules within rule group for site:", site.getName());
+			List<RuleDTO> rules = ruleGroup.getRules();
+			
+			for(RuleDTO rule: rules) {
+				SystemRuleDTO systemRule = rule.getSystemRule();
+				
+				String eventTriggerDesc= systemRule.getSystemEvent().getDescription();
+				
+				logger.info("Verify if the rule is in enabled state");
+				if(rule.getEnabled()) {
+					
+					logger.info("Verify if the rule is associated with request's trigger");
+					if(eventTriggerDesc.equals(request.getMetaData().get(trigger))) {
+						responseRules.add(rule);
+					}
+				}
+				
 			}
 		}
-		return returnActions;
+		return responseRules;
 	}
 
 }
