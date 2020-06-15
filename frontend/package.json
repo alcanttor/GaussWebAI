@@ -25,6 +25,7 @@
     "@syncfusion/ej2-angular-richtexteditor": "^18.1.54",
     "angular-feather": "^6.0.10",
     "bootstrap": "^4.4.0",
+    "moment": "^2.26.0",
     "ngx-clipboard": "^13.0.1",
     "ngx-type-ahead": "^2.0.1",
     "rxjs": "~6.5.4",
