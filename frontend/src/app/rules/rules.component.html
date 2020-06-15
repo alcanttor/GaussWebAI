@@ -109,37 +109,36 @@
       </app-search-and-select>
     </div>
 
-    <h6>Select a trigger and an action</h6>
+    <div class="form-group">
+      <label for="typeahead-focus">
+        <i-feather name="search"></i-feather>
+        Choose a trigger</label
+      >
+      <div class="input-group">
+        <app-search-and-select
+          (onSearch)="listenForSearchAndSelect($event)"
+          [options]="triggers"
+          [selected]="trigger"
+          name="triggers-search"
+          label="description"
+        >
+        </app-search-and-select>
+      </div>
+    </div>
+
+    <h6>Select actions</h6>
     <hr />
     <div *ngFor="let subRule of rule.rules; index as index">
       <div class="form-group">
         <label for="typeahead-focus">
           <i-feather name="search"></i-feather>
-          Choose a trigger</label
+          Choose an action</label
         >
         <i-feather
-          *ngIf="index !== 0"
           name="x"
           class="float-right small-icon"
           (click)="removeSubRule(index)"
         ></i-feather>
-        <div class="input-group">
-          <app-search-and-select
-            (onSearch)="listenForSearchAndSelect($event)"
-            [options]="getFilteredTriggers()"
-            [selected]="subRule['systemRule']['systemEvent']"
-            name="triggers-search"
-            [key]="index"
-            label="description"
-          >
-          </app-search-and-select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="typeahead-focus">
-          <i-feather name="search"></i-feather>
-          Choose an action</label
-        >
         <div class="input-group">
           <app-search-and-select
             (onSearch)="listenForSearchAndSelect($event)"
@@ -152,7 +151,12 @@
           </app-search-and-select>
         </div>
       </div>
-      <div class="form-group" *ngIf="subRule['emailTemplate']">
+      <div
+        class="form-group"
+        *ngIf="
+          subRule['emailTemplate'] || subRule['systemRule']['action']['onEmail']
+        "
+      >
         <label for="typeahead-focus">
           <i-feather name="search"></i-feather>
           Choose an email template</label
@@ -173,7 +177,7 @@
     <div class="row">
       <div class="col-md-12">
         <button class="btn btn-light" (click)="addSubRule()">
-          Add Another
+          Add Another action
         </button>
       </div>
     </div>
@@ -246,37 +250,37 @@
       </app-search-and-select>
     </div>
 
-    <h6>Select a trigger and an action</h6>
+    <div class="form-group">
+      <label for="typeahead-focus">
+        <i-feather name="search"></i-feather>
+        Choose a trigger</label
+      >
+      <div class="input-group">
+        <app-search-and-select
+          (onSearch)="listenForSearchAndSelect($event)"
+          [options]="triggers"
+          [selected]="trigger"
+          name="triggers-search"
+          label="description"
+        >
+        </app-search-and-select>
+      </div>
+    </div>
+
+    <h6>Select actions</h6>
     <hr />
     <div *ngFor="let subRule of rule.rules; index as index">
       <div class="form-group">
         <label for="typeahead-focus">
           <i-feather name="search"></i-feather>
-          Choose a trigger</label
+          Choose an action</label
         >
         <i-feather
-          *ngIf="index !== 0"
           name="x"
           class="float-right small-icon"
           (click)="removeSubRule(index)"
         ></i-feather>
-        <div class="input-group">
-          <app-search-and-select
-            (onSearch)="listenForSearchAndSelect($event)"
-            [options]="getFilteredTriggers()"
-            [selected]="subRule['systemRule']['systemEvent']"
-            name="triggers-search"
-            [key]="index"
-            label="description"
-          >
-          </app-search-and-select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="typeahead-focus">
-          <i-feather name="search"></i-feather>
-          Choose an action</label
-        >
+
         <div class="input-group">
           <app-search-and-select
             (onSearch)="listenForSearchAndSelect($event)"
@@ -289,7 +293,10 @@
           </app-search-and-select>
         </div>
       </div>
-      <div class="form-group" *ngIf="subRule.emailTemplate">
+      <div
+        class="form-group"
+        *ngIf="hasEmailTemplate(subRule['systemRule']['action'])"
+      >
         <label for="typeahead-focus">
           <i-feather name="search"></i-feather>
           Choose an email template</label
@@ -310,7 +317,7 @@
     <div class="row">
       <div class="col-md-12">
         <button class="btn btn-light" (click)="addSubRule()">
-          Add Another
+          Add Action
         </button>
       </div>
     </div>

@@ -35,7 +35,9 @@ export class RulesComponent implements OnInit {
   };
   public sites: Site[] = [];
   public triggers = [];
-  public trigger = {};
+  public trigger = {
+    id: -1,
+  };
   public action = {};
   public actions = [];
   public templates = [];
@@ -53,6 +55,11 @@ export class RulesComponent implements OnInit {
     this.getTemplates();
   }
 
+  hasEmailTemplate(action) {
+    console.log(action);
+    return action && !!action.onEmail;
+  }
+
   getTemplates() {
     this.templateService.getTemplates().subscribe((data: any[]) => {
       this.templates = data;
@@ -66,13 +73,6 @@ export class RulesComponent implements OnInit {
     });
   }
 
-  getFilteredTriggers() {
-    const chosenTriggers = this.rule.rules.map(
-      (r) => r.systemRule.systemEvent.id
-    );
-    return this.triggers.filter((t) => !chosenTriggers.includes(t.id));
-  }
-
   getFilteredActions() {
     const chosenActions = this.rule.rules.map((r) => r.systemRule.action.id);
     return this.actions.filter((t) => !chosenActions.includes(t.id));
@@ -83,7 +83,9 @@ export class RulesComponent implements OnInit {
   }
 
   updateSiteDependencies() {
-    this.trigger = {};
+    this.trigger = {
+      id: -1,
+    };
     this.action = {};
     this.getEventsByConnector();
   }
@@ -117,9 +119,11 @@ export class RulesComponent implements OnInit {
       this.site = $event.value;
       this.updateSiteDependencies();
     } else if ($event.name === 'triggers-search' && $event.value.id) {
-      this.rule.rules[$event.key]['systemRule']['systemEvent'] = $event.value;
+      console.log(this.rule.rules[$event.key]);
+      this.trigger = $event.value;
       this.getActionsForEvent($event.value.id);
     } else if ($event.name === 'actions-search' && $event.value.id) {
+      console.log($event);
       this.rule.rules[$event.key]['systemRule']['action'] = $event.value;
     } else if ($event.name === 'templates-search' && $event.value.id) {
       this.rule.rules[$event.key]['emailTemplate'] = $event.value;
@@ -135,9 +139,7 @@ export class RulesComponent implements OnInit {
           id: null,
         },
         connector: this.site.connector,
-        systemEvent: {
-          id: null,
-        },
+        systemEvent: this.trigger,
       },
     });
   }
@@ -163,15 +165,29 @@ export class RulesComponent implements OnInit {
             this.getSites();
           });
         },
-        (onrejected) => {}
+        (onrejected) => {
+          this.trigger = { id: null };
+          this.site = {
+            id: '',
+            name: '',
+            connector: {
+              id: '',
+            },
+            siteToken: {
+              token: '',
+            },
+          };
+        }
       );
   }
 
   openEditModal(createRule, rule) {
     this.rule = rule;
+    this.trigger = this.rule.rules[0].systemRule.systemEvent;
     const siteIndex = this.sites.findIndex((s) => s.id === rule.siteId);
     this.site = this.sites[siteIndex];
     this.getEventsByConnector();
+    console.log(this.rule);
     this.modalService
       .open(createRule, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(

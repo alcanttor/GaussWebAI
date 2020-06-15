@@ -23,16 +23,7 @@ export class SearchAndSelectComponent implements OnInit {
   focus$ = new Subject<string>();
   public entity;
 
-  constructor() {
-    this.debouncer.pipe(debounceTime(100)).subscribe(() =>
-      this.onSearch.emit({
-        action: 'update-input',
-        key: this.key,
-        value: this.entity,
-        name: this.name,
-      })
-    );
-  }
+  constructor() {}
 
   ngOnInit(): void {
     if (this.selected?.id) {
@@ -43,7 +34,12 @@ export class SearchAndSelectComponent implements OnInit {
   inputFormatter = (x: any) => x[this.label];
 
   updateDependencies = () => {
-    this.debouncer.next();
+    this.onSearch.emit({
+      action: 'update-input',
+      key: this.key,
+      value: this.entity,
+      name: this.name,
+    });
   };
 
   clickEvents($event, typeaheadInstance) {
