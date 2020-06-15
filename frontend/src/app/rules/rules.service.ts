@@ -17,12 +17,15 @@ export class RulesService {
     );
   }
 
-  getRules() {
-    const userId = this.auth.getUserId();
-    return this.httpClient.get(
-      `${config.BASE_URL}/getallrulegroups/${userId}`,
-      this.auth.getAuthHeader()
-    );
+  getRules(sites) {
+    const ruleGroups = [];
+    sites.map((site) => {
+      site.ruleGroups.map((rg) => {
+        ruleGroups.push({ ...rg, siteId: site.id });
+      });
+    });
+
+    return ruleGroups;
   }
 
   deleteRule(id) {

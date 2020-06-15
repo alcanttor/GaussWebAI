@@ -1,20 +1,3 @@
-// {
-//     "id": 1,
-//     "descripton": "Email Notification on role change",
-//     "systemEvent": {
-//       "id": 1,
-//       "description": "ROLE CHANGE"
-//     },
-//     "action": {
-//       "id": 1,
-//       "name": "EMAIL"
-//     },
-//     "connector": {
-//       "id": 1,
-//       "name": "WORD PRESS"
-//     }
-//   }
-
 export interface SubRule {
   emailTemplate: string;
   id: number;
@@ -35,6 +18,7 @@ export interface SubRule {
 export interface Rule {
   id: number;
   name: string;
+  siteId: number;
   description: string;
   rules: SubRule[];
 }
