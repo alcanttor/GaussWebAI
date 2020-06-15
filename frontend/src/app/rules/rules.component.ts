@@ -11,6 +11,7 @@ import { RulesService } from './rules.service';
 import { SitesService } from '../sites/sites.service';
 import { EmailTemplatesService } from '../email-templates/email-templates.service';
 import { Site } from '../shared/models/site';
+import moment from 'moment';
 
 @Component({
   selector: 'app-rules',
@@ -56,7 +57,6 @@ export class RulesComponent implements OnInit {
   }
 
   hasEmailTemplate(action) {
-    console.log(action);
     return action && !!action.onEmail;
   }
 
@@ -119,11 +119,13 @@ export class RulesComponent implements OnInit {
       this.site = $event.value;
       this.updateSiteDependencies();
     } else if ($event.name === 'triggers-search' && $event.value.id) {
-      console.log(this.rule.rules[$event.key]);
       this.trigger = $event.value;
+      this.rule.rules = this.rule.rules.map((r) => {
+        r.systemRule.systemEvent = this.trigger;
+        return r;
+      });
       this.getActionsForEvent($event.value.id);
     } else if ($event.name === 'actions-search' && $event.value.id) {
-      console.log($event);
       this.rule.rules[$event.key]['systemRule']['action'] = $event.value;
     } else if ($event.name === 'templates-search' && $event.value.id) {
       this.rule.rules[$event.key]['emailTemplate'] = $event.value;
@@ -142,6 +144,10 @@ export class RulesComponent implements OnInit {
         systemEvent: this.trigger,
       },
     });
+  }
+
+  getFormattedDate(datetimeString) {
+    return moment(datetimeString).fromNow();
   }
 
   removeSubRule(index) {
@@ -187,7 +193,7 @@ export class RulesComponent implements OnInit {
     const siteIndex = this.sites.findIndex((s) => s.id === rule.siteId);
     this.site = this.sites[siteIndex];
     this.getEventsByConnector();
-    console.log(this.rule);
+    this.getActionsForEvent(this.trigger.id);
     this.modalService
       .open(createRule, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(

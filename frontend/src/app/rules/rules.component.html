@@ -13,8 +13,9 @@
       <thead>
         <tr>
           <th scope="col" style="width: 10%;">#</th>
-          <th scope="col" style="width: 25%;">Name</th>
-          <th scope="col" style="width: 25%;">Type</th>
+          <th scope="col" style="width: 20%;">Name</th>
+          <th scope="col" style="width: 15%;">Type</th>
+          <th scope="col" style="width: 25%;">Last Updated</th>
           <th scope="col" style="width: 25%;"></th>
         </tr>
       </thead>
@@ -25,6 +26,13 @@
             {{ rule.name }}
           </td>
           <td>Manual</td>
+          <td>
+            {{
+              rule.updatedDateTime
+                ? getFormattedDate(rule.updatedDateTime)
+                : "NA"
+            }}
+          </td>
           <td>
             <div ngbDropdown class="d-inline-block" placement="right-bottom">
               <i-feather name="more-vertical" ngbDropdownToggle></i-feather>
@@ -154,7 +162,7 @@
       <div
         class="form-group"
         *ngIf="
-          subRule['emailTemplate'] || subRule['systemRule']['action']['onEmail']
+          subRule['systemRule']['action']['onEmail'] || subRule['emailTemplate']
         "
       >
         <label for="typeahead-focus">

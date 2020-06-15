@@ -37,7 +37,7 @@ export class RulesService {
 
   editRule(rule) {
     return this.httpClient.post(
-      `${config.BASE_URL}/updaterule`,
+      `${config.BASE_URL}/updaterulegroup/${rule.id}`,
       rule,
       this.auth.getAuthHeader()
     );
