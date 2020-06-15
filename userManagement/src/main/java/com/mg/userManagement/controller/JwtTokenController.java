@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mg.userManagement.dto.AuthorizationTokenResponse;
+import com.mg.userManagement.entity.SiteToken;
 import com.mg.userManagement.entity.User;
 import com.mg.userManagement.service.JwtService;
+import com.mg.userManagement.service.SiteTokenService;
 
 /**Authentication controller class*/
 @RestController
@@ -29,6 +31,9 @@ public class JwtTokenController {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
+	
+	@Autowired
+	private SiteTokenService siteTokenService;
 	
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -52,4 +57,18 @@ public class JwtTokenController {
 		response.setUserId(userDetails.getId());
 		return response;
 	}
+	
+	@GetMapping(value = "/token/{siteToken}")
+	public AuthorizationTokenResponse getJwtTokenbySiteToken(@PathVariable String siteToken) throws Exception {
+		SiteToken stoken = siteTokenService.getSiteTokenFromToken(siteToken);
+		if (stoken == null)
+			throw new Exception("Token not valid");
+		String jwt = jwtService.generateToken(siteToken);
+		logger.debug("Security token generated");
+		AuthorizationTokenResponse response = new AuthorizationTokenResponse();
+		response.setJwt(jwt);
+		response.setUserId(null);
+		return response;
+	}
+
 }

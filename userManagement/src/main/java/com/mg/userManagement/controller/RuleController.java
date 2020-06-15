@@ -1,6 +1,7 @@
 package com.mg.userManagement.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,8 +14,8 @@ public class RuleController {
 	@Autowired
 	RuleServiceDTO ruleServiceDTO; 
 	
-	@PostMapping(value = "/updaterule")
-	public RuleDTO saveAction(@RequestBody RuleDTO ruleDto , Integer ruleId)
+	@PostMapping(value = "/updaterule/{ruleId}")
+	public RuleDTO saveAction(@RequestBody RuleDTO ruleDto ,@PathVariable Integer ruleId)
 	{
 		try{
 		return ruleServiceDTO.updateRule(ruleDto,ruleId); 

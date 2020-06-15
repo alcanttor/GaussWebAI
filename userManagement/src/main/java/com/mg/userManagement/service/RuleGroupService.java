@@ -1,5 +1,6 @@
 package com.mg.userManagement.service;
 
+import java.util.List;
 import java.util.Optional;
 
 //import org.slf4j.Logger;
@@ -7,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mg.userManagement.entity.Rule;
 import com.mg.userManagement.entity.RuleGroup;
 import com.mg.userManagement.repo.RuleGroupRepository;
 
@@ -15,6 +17,9 @@ public class RuleGroupService {
 
 	@Autowired
 	private RuleGroupRepository ruleGroupRepository;
+	
+	@Autowired
+	private RuleService ruleService;
 	
 	//private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
@@ -28,6 +33,7 @@ public class RuleGroupService {
 		if (rg.isPresent())
 		{
 			RuleGroup rgDB = rg.get();
+			saveRules(ruleGroup.getRules());
 			ruleGroup.setId(rgDB.getId());
 			return ruleGroupRepository.save(ruleGroup);
 		}
@@ -35,6 +41,12 @@ public class RuleGroupService {
 		{
 			throw new  Exception();
 		}
+		
+	}
+
+	private void saveRules(List<Rule> rules) throws Exception {
+		for(Rule rule : rules)
+		ruleService.mergeRule(rule);
 		
 	}
 }

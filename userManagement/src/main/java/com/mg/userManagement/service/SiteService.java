@@ -50,7 +50,7 @@ public class SiteService {
 				savedSite.add(existingSite);
 			} else {
 				logger.info("Site [{}] registration process starts", site.getName());
-				site.setSiteToken(generateToken());			
+				site.setSiteToken(generateToken(site.getName()));			
 				site.setUser(user);
 				try {
 					savedSite.add(siteRepository.save(site));
@@ -83,7 +83,7 @@ public class SiteService {
 
 			// Add implementation to get auto-generated token and set it for
 			// site entity
-			site.setSiteToken(generateToken());
+			site.setSiteToken(generateToken(site.getName()));
 			site.setUser(user);
 			try {
 				return siteRepository.save(site);
@@ -100,10 +100,10 @@ public class SiteService {
 		}
 	}
 
-	private SiteToken generateToken() {
+	private SiteToken generateToken(String name) {
 		SiteToken token = new SiteToken();
 		token.setIsValid(true);
-		token.setToken(""+System.currentTimeMillis());
+		token.setToken(""+System.currentTimeMillis()+name);
 		return token;
 	}
 
