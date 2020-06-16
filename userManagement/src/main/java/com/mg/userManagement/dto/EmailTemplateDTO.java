@@ -13,8 +13,8 @@ public class EmailTemplateDTO {
 	private String template;
 	private List<EmailLabelDTO> labels;
 	
-	private Date createdDate;
-	private Date updatedDate;
+	private Date createdDateTime;
+	private Date updatedDateTime;
 	
 	private UserDTO user;
 	
@@ -36,17 +36,18 @@ public class EmailTemplateDTO {
 	public void setTemplate(String template) {
 		this.template = template;
 	}
-	public Date getCreatedDate() {
-		return createdDate;
+	
+	public Date getCreatedDateTime() {
+		return createdDateTime;
 	}
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
+	public void setCreatedDateTime(Date createdDateTime) {
+		this.createdDateTime = createdDateTime;
 	}
-	public Date getUpdatedDate() {
-		return updatedDate;
+	public Date getUpdatedDateTime() {
+		return updatedDateTime;
 	}
-	public void setUpdatedDate(Date updatedDate) {
-		this.updatedDate = updatedDate;
+	public void setUpdatedDateTime(Date updatedDateTime) {
+		this.updatedDateTime = updatedDateTime;
 	}
 	public UserDTO getUser() {
 		return user;
