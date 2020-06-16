@@ -11,6 +11,8 @@ public class ApplicationConfiguration {
 	@Value("${user.management.site}")
 	private String siteUrl;
 
+	@Value("${user.management.token}")
+	private String tokenUrl;
 	public String getSiteUrl() {
 		return siteUrl;
 	}
@@ -19,6 +21,15 @@ public class ApplicationConfiguration {
 		this.siteUrl = siteUrl;
 	}
 	
+	
+	public String getTokenUrl() {
+		return tokenUrl;
+	}
+
+	public void setTokenUrl(String tokenUrl) {
+		this.tokenUrl = tokenUrl;
+	}
+
 	@Bean
 	public RestTemplate restTemplate()
 	{

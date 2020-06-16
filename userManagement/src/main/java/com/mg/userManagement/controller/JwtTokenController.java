@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mg.userManagement.dto.AuthorizationTokenResponse;
+import com.mg.userManagement.entity.Site;
 import com.mg.userManagement.entity.SiteToken;
 import com.mg.userManagement.entity.User;
 import com.mg.userManagement.service.JwtService;
+import com.mg.userManagement.service.SiteService;
 import com.mg.userManagement.service.SiteTokenService;
 
 /**Authentication controller class*/
@@ -34,6 +36,9 @@ public class JwtTokenController {
 	
 	@Autowired
 	private SiteTokenService siteTokenService;
+	
+	@Autowired
+	private SiteService siteService;
 	
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -58,10 +63,11 @@ public class JwtTokenController {
 		return response;
 	}
 	
-	@GetMapping(value = "/token/{siteToken}")
-	public AuthorizationTokenResponse getJwtTokenbySiteToken(@PathVariable String siteToken) throws Exception {
-		SiteToken stoken = siteTokenService.getSiteTokenFromToken(siteToken);
-		if (stoken == null)
+	@GetMapping(value = "/tokenApp/{siteToken}/{siteName}")
+	public AuthorizationTokenResponse getJwtTokenbySiteToken(@PathVariable String siteToken, @PathVariable String siteName) throws Exception {
+			Site site = siteService.getSitebyNameandToken(siteName, siteToken);
+			System.out.println("site found : "+site);
+		if (site == null)
 			throw new Exception("Token not valid");
 		String jwt = jwtService.generateToken(siteToken);
 		logger.debug("Security token generated");

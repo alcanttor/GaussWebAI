@@ -293,4 +293,10 @@ private List<Rule> saveRules(List<Rule> rules) {
 	return savedRules;
 }
 
+public Site getSitebyNameandToken(String siteName, String token)
+{
+	System.out.println("here...............................................................");
+	return siteRepository.getByNameAndToken(siteName, token);
+}
+
 }
