@@ -6,6 +6,10 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -24,14 +28,18 @@ public class UserManagementService {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	public SiteDTO getSitebyName(String siteName)
+	public SiteDTO getSitebyName(String siteName,String siteToken)
 	{
-		//call getToken method to every call and set in header
-		SiteDTO request = new SiteDTO();
-		request.setName(siteName);
-		SiteDTO site = restTemplate.postForObject(applicationConfiguration.getSiteUrl(), request, SiteDTO.class);
+		String jwt = getToken(siteName, siteToken);
+	    Map<String, String> params = new HashMap<String, String>();
+	    params.put("siteToken", siteToken);
+	    params.put("siteName", siteName);
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.set("Authorization", jwt);
+	    HttpEntity entity = new HttpEntity(headers);
+	    ResponseEntity<SiteDTO> site = restTemplate.exchange(applicationConfiguration.getSiteUrl(),HttpMethod.GET,entity,SiteDTO.class,params);
 		logger.info("URL [{}] Request [{}] Response [{}]",applicationConfiguration.getSiteUrl(),siteName,site);
-		return site;
+		return site.getBody();
 	}
 	
 	private String getToken(String siteName, String siteToken)

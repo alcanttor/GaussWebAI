@@ -64,6 +64,12 @@ public class SiteController {
 		return siteServiceDTO.addRuleGroupToSite(siteId, ruleGroupDTO);
 	}
 	
+	@GetMapping(value="/getSiteDetails/{siteName}/{siteToken}")
+	public SiteDTO getSitebyNameandToken(@PathVariable String siteName, @PathVariable String siteToken)
+	{
+		return siteServiceDTO.getSitebyNameandToken(siteName, siteToken);
+	}
+	
 	/*invoke service to get list of all rules for a given user
 	@GetMapping(value="/getallrulegroups/{userId}")
 	public List<RuleGroupDTO> getAllRules(@PathVariable Integer userId)

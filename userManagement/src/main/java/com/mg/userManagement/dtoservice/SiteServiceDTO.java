@@ -95,4 +95,9 @@ public class SiteServiceDTO {
 			return null;
 
 	}
+	
+	public SiteDTO getSitebyNameandToken(String siteName, String token)
+	{
+		return modelMapper.map(siteService.getSitebyNameandToken(siteName, token),SiteDTO.class);
+	}
 }
