@@ -24,6 +24,7 @@ export class RulesComponent implements OnInit {
 
   public rules: Rule[] = [];
   public rule: Rule;
+  public enable: Boolean;
   public site: Site = {
     id: '',
     name: '',
@@ -112,6 +113,7 @@ export class RulesComponent implements OnInit {
     name: '',
     siteId: -1,
     rules: [],
+    enabled: false,
   });
 
   listenForSearchAndSelect = ($event) => {

@@ -20,5 +20,6 @@ export interface Rule {
   name: string;
   siteId: number;
   description: string;
+  enabled: boolean;
   rules: SubRule[];
 }

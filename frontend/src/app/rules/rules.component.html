@@ -134,6 +134,11 @@
       </div>
     </div>
 
+    <div class="form-group">
+      <label for="typeahead-focus">Enable</label>
+      <ui-switch [(ngModel)]="rule.enabled" class="float-right"></ui-switch>
+    </div>
+
     <h6>Select actions</h6>
     <hr />
     <div *ngFor="let subRule of rule.rules; index as index">
@@ -184,7 +189,11 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <button class="btn btn-light" (click)="addSubRule()">
+        <button
+          class="btn btn-light"
+          (click)="addSubRule()"
+          [disabled]="rule.rules.length >= actions.length"
+        >
           Add Another action
         </button>
       </div>
@@ -246,16 +255,18 @@
         <i-feather name="search"></i-feather>
         Choose a site</label
       >
-      <app-search-and-select
-        (onSearch)="listenForSearchAndSelect($event)"
-        [options]="sites"
-        [selected]="site"
-        label="name"
-        id="typeahead-focus"
-        name="sites-search"
-        [disabled]="false"
-      >
-      </app-search-and-select>
+      <div class="input-group">
+        <app-search-and-select
+          (onSearch)="listenForSearchAndSelect($event)"
+          [options]="sites"
+          [selected]="site"
+          label="name"
+          id="typeahead-focus"
+          name="sites-search"
+          [disabled]="false"
+        >
+        </app-search-and-select>
+      </div>
     </div>
 
     <div class="form-group">
@@ -273,6 +284,11 @@
         >
         </app-search-and-select>
       </div>
+    </div>
+
+    <div class="form-group">
+      <label for="typeahead-focus">Enable</label>
+      <ui-switch [(ngModel)]="rule.enabled" class="float-right"></ui-switch>
     </div>
 
     <h6>Select actions</h6>
@@ -324,7 +340,11 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <button class="btn btn-light" (click)="addSubRule()">
+        <button
+          class="btn btn-light"
+          (click)="addSubRule()"
+          [disabled]="rule.rules.length >= actions.length"
+        >
           Add Action
         </button>
       </div>

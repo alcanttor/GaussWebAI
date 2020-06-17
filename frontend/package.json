@@ -28,6 +28,7 @@
     "moment": "^2.26.0",
     "ngx-clipboard": "^13.0.1",
     "ngx-type-ahead": "^2.0.1",
+    "ngx-ui-switch": "^9.0.2",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

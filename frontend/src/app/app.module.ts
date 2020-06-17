@@ -24,6 +24,7 @@ import { EmailTemplatesComponent } from './email-templates/email-templates.compo
 
 import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
 import { TypeaheadModule } from 'ngx-type-ahead';
+import { UiSwitchModule } from 'ngx-ui-switch';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { TypeaheadModule } from 'ngx-type-ahead';
     ClipboardModule,
     RichTextEditorModule,
     TypeaheadModule,
+    UiSwitchModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent],
