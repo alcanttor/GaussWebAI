@@ -12,6 +12,7 @@ import {
   Clock,
   Mail,
   X,
+  Check,
 } from 'angular-feather/icons';
 
 // Select some icons (use an object, not an array)
@@ -26,6 +27,7 @@ const icons = {
   Clock,
   Mail,
   X,
+  Check,
 };
 
 @NgModule({

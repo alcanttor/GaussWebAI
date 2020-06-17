@@ -14,8 +14,8 @@
         <tr>
           <th scope="col" style="width: 10%;">#</th>
           <th scope="col" style="width: 20%;">Name</th>
-          <th scope="col" style="width: 15%;">Type</th>
           <th scope="col" style="width: 25%;">Last Updated</th>
+          <th scope="col" style="width: 15%;">Enabled</th>
           <th scope="col" style="width: 25%;"></th>
         </tr>
       </thead>
@@ -25,13 +25,18 @@
           <td>
             {{ rule.name }}
           </td>
-          <td>Manual</td>
           <td>
             {{
               rule.updatedDateTime
                 ? getFormattedDate(rule.updatedDateTime)
                 : "NA"
             }}
+          </td>
+          <td *ngIf="rule.enabled">
+            <i-feather name="check" style="color: lightgreen;"></i-feather>
+          </td>
+          <td *ngIf="!rule.enabled">
+            <i-feather name="x"></i-feather>
           </td>
           <td>
             <div ngbDropdown class="d-inline-block" placement="right-bottom">
