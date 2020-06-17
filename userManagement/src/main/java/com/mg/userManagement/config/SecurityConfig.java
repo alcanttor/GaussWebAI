@@ -51,6 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		authorizeRequests().antMatchers("/token/**").permitAll()
 			.antMatchers("/swagger-ui.html/**").permitAll()
 			.antMatchers("/saveuser/**").permitAll()
+			.antMatchers("/tokenApp/**").permitAll()
 			.antMatchers(HttpMethod.OPTIONS).permitAll()
 			.anyRequest().authenticated().and().exceptionHandling().and().sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS);

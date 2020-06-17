@@ -14,11 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mg.userManagement.dto.AuthorizationTokenResponse;
 import com.mg.userManagement.entity.Site;
-import com.mg.userManagement.entity.SiteToken;
 import com.mg.userManagement.entity.User;
 import com.mg.userManagement.service.JwtService;
 import com.mg.userManagement.service.SiteService;
-import com.mg.userManagement.service.SiteTokenService;
 
 /**Authentication controller class*/
 @RestController
@@ -33,9 +31,6 @@ public class JwtTokenController {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
-	
-	@Autowired
-	private SiteTokenService siteTokenService;
 	
 	@Autowired
 	private SiteService siteService;
@@ -69,7 +64,7 @@ public class JwtTokenController {
 			System.out.println("site found : "+site);
 		if (site == null)
 			throw new Exception("Token not valid");
-		String jwt = jwtService.generateToken(siteToken);
+		String jwt = jwtService.generateToken(site.getUser().getUsername());
 		logger.debug("Security token generated");
 		AuthorizationTokenResponse response = new AuthorizationTokenResponse();
 		response.setJwt(jwt);
