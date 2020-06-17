@@ -101,7 +101,7 @@ public class ProducerService {
 				String eventTriggerDesc= systemRule.getSystemEvent().getDescription();
 				
 				logger.info("Verify if the rule is in enabled state");
-				if(rule.getEnabled()) {
+				if((rule.getEnabled() == null) || (rule.getEnabled() == true)) {
 					
 					logger.info("Verify if the rule is associated with request's trigger");
 					if(eventTriggerDesc.equals(request.getMetaData().get(reqTrigger))) {

@@ -30,7 +30,7 @@ public class UserManagementService {
 	
 	public SiteDTO getSitebyName(String siteName, String siteToken)
 	{
-		String jwt = getToken(siteName, siteToken);
+		String jwt = "Bearer "+getToken(siteName, siteToken);
 	    Map<String, String> params = new HashMap<String, String>();
 	    params.put("siteToken", siteToken);
 	    params.put("siteName", siteName);
