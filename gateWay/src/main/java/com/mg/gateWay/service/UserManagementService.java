@@ -28,7 +28,7 @@ public class UserManagementService {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	public SiteDTO getSitebyName(String siteName,String siteToken)
+	public SiteDTO getSitebyName(String siteName, String siteToken)
 	{
 		String jwt = getToken(siteName, siteToken);
 	    Map<String, String> params = new HashMap<String, String>();

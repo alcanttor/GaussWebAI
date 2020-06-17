@@ -33,15 +33,21 @@ public class ProducerService {
 	private String kafkaTopic;
 	
 	@Value("${WordPressTriggers.trigger}")
-	private String trigger;
+	private String reqTrigger;
+	
+	@Value("${WordPressTriggers.site}")
+	private String reqSite;
+
+	@Value("${WordPressTriggers.token}")
+	private String reqSiteToken;
 
 	public HoarderResponse send(RequestData request) {
 		
 		//get site details from usermanagement persistent data
-		SiteDTO site = userManagementService.getSitebyName(request.getSiteName());
+		SiteDTO site = userManagementService.getSitebyName(request.getMetaData().get(reqSite), request.getMetaData().get(reqSiteToken));
 		
 		HoarderResponse response = isSiteRegistered(request, site);
-		logger.info("Is site registered [" + request.getSiteName() + "] result [" + response.getResult() + "]");
+		logger.info("Is site registered [" + request.getMetaData().get(reqSite) + "] result [" + response.getResult() + "]");
 		
 		if (response.getResult() == true) 
 		{
@@ -69,7 +75,7 @@ public class ProducerService {
 		HoarderResponse response = new HoarderResponse();
 
 		if (site == null) {
-			response.setMessage("site [" + request.getSiteName() + "] not registered.");
+			response.setMessage("site [" + request.getMetaData().get(reqSite) + "] not registered.");
 			response.setResult(false);
 		} else {
 			response.setResult(true);
@@ -98,7 +104,7 @@ public class ProducerService {
 				if(rule.getEnabled()) {
 					
 					logger.info("Verify if the rule is associated with request's trigger");
-					if(eventTriggerDesc.equals(request.getMetaData().get(trigger))) {
+					if(eventTriggerDesc.equals(request.getMetaData().get(reqTrigger))) {
 						responseRules.add(rule);
 					}
 				}
