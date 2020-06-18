@@ -4,6 +4,7 @@ import com.mg.gaussWorker.model.BaseEvent;
 
 public class SmsData extends BaseEvent{
 
+	private static final long serialVersionUID = 1L;
 	public SmsData(Object source) {
 		super(source);
 	}

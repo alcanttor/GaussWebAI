@@ -4,38 +4,37 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.mg.gaussWorker.email.model.EmailConstants;
-import com.mg.gaussWorker.email.model.EmailData;
-import com.mg.gaussWorker.model.Action;
+import com.mg.gaussWorker.email.service.EmailWrapper;
+import com.mg.gaussWorker.model.ActionList;
 import com.mg.gaussWorker.model.BaseEvent;
 import com.mg.gaussWorker.model.RequestData;
-import com.mg.gaussWorker.sms.model.SmsConstants;
-import com.mg.gaussWorker.sms.model.SmsData;
+import com.mg.gaussWorker.model.RuleDTO;
+import com.mg.gaussWorker.sms.service.SmsWrapper;
 
-/**Central service class to parse incoming action IDs
- * Needs to be further decoupled to separate out the underlying business logic*/
+/**Central service class to parse incoming action IDs*/
 @Service
 public class EventFactory {
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-	public BaseEvent generateEvent(Action action, RequestData requestData) {
+	public BaseEvent generateEvent(RuleDTO rule, RequestData requestData) {
 
-		switch (action) {
+		String actionName = rule.getSystemRule().getAction().getName();
+
+		switch (ActionList.get(actionName)) {
 		case EMAIL:
 			logger.info("email event generated");
-			EmailData event = new EmailData(this);
+			EmailWrapper emailWrapper = new EmailWrapper();
+			return emailWrapper.prepareEmailObject(rule, requestData);
+			/*EmailData event = new EmailData(this);
 	        event.setSubject(requestData.getMetaData().get(EmailConstants.subject));
 	        event.setText(requestData.getMetaData().get(EmailConstants.text));
 	        event.setTo(requestData.getMetaData().get(EmailConstants.to));	
-	        return event;
+	        return event;*/
 			
 		case SMS:
 			logger.info("sms event genrated");
-			SmsData smsEvent = new SmsData(this);
-			smsEvent.setFrom(requestData.getMetaData().get(SmsConstants.from));
-			smsEvent.setText(requestData.getMetaData().get(SmsConstants.text));
-			smsEvent.setTo(requestData.getMetaData().get(SmsConstants.to));
-			return smsEvent;
+			SmsWrapper smsWrapper = new SmsWrapper();
+			return smsWrapper.prepareSmsObject(requestData);
 	
 		default:
 			

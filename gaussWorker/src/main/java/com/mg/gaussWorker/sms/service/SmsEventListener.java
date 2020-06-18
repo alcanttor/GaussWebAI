@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
 
-import com.mg.gaussWorker.email.service.EmailSenderService;
 import com.mg.gaussWorker.sms.model.SmsData;
 
 @Service

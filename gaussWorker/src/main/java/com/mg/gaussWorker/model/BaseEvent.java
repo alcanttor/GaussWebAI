@@ -3,7 +3,7 @@ package com.mg.gaussWorker.model;
 import java.util.Date;
 
 import org.springframework.context.ApplicationEvent;
-import org.springframework.stereotype.Component;
+//import org.springframework.stereotype.Component;
 
 
 public class BaseEvent extends ApplicationEvent{
