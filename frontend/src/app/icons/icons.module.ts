@@ -13,6 +13,7 @@ import {
   Mail,
   X,
   Check,
+  Folder,
 } from 'angular-feather/icons';
 
 // Select some icons (use an object, not an array)
@@ -28,6 +29,7 @@ const icons = {
   Mail,
   X,
   Check,
+  Folder,
 };
 
 @NgModule({
