@@ -9,12 +9,12 @@ import { AuthService } from '../auth.service';
 export class EmailTemplatesService {
   constructor(private httpClient: HttpClient, private auth: AuthService) {}
 
-  getTemplates() {
+  getTemplates(labelId = '') {
     const userId = this.auth.getUserId();
-    return this.httpClient.get(
-      `${config.BASE_URL}/getemailtemplatesbyuserid/${userId}`,
-      this.auth.getAuthHeader()
-    );
+    const URL = labelId
+      ? `${config.BASE_URL}/gettemplatesbylabelid/${labelId}/${userId}`
+      : `${config.BASE_URL}/getemailtemplatesbyuserid/${userId}`;
+    return this.httpClient.get(URL, this.auth.getAuthHeader());
   }
 
   addTemplate(template) {

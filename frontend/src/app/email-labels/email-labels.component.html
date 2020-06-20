@@ -1,5 +1,10 @@
 <div class="container-fluid labels-container">
-  <div *ngFor="let label of labels; index as i" class="label">
+  <div
+    *ngFor="let label of labels; index as i"
+    class="label"
+    (drop)="onDrop($event, label.id)"
+    (dragover)="onDragOver($event)"
+  >
     <a [href]="'/home/emails/templates?labelId=' + label.id">
       <i-feather name="folder" class="small-icon"></i-feather>
       {{ label.name }}</a

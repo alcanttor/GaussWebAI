@@ -43,6 +43,21 @@ export class EmailLabelsComponent implements OnInit {
     }
   }
 
+  onDragOver = (e) => {
+    e.preventDefault();
+    return false;
+  };
+
+  onDrop(e, labelId) {
+    e.preventDefault();
+    const draggedTemplateId = e.dataTransfer.getData('templateId');
+    this.labelsService
+      .associateTemplateWithLabel(draggedTemplateId, labelId)
+      .subscribe((data: any) => {
+        console.log(data);
+      });
+  }
+
   openCreateModal(createRule) {
     this.modalService
       .open(createRule, { ariaLabelledBy: 'modal-basic-title' })

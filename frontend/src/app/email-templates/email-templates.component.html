@@ -20,7 +20,7 @@
       <tbody>
         <tr *ngFor="let template of templates; index as i">
           <th scope="row">{{ i + 1 }}</th>
-          <td>
+          <td draggable="true" (dragstart)="dragStart($event, template.id)">
             {{ template.name }}
           </td>
           <td>

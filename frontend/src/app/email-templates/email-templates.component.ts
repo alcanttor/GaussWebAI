@@ -3,6 +3,7 @@ import { EmailTemplatesService } from './email-templates.service';
 import { EmailLabelsService } from '../email-labels/email-labels.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import {
   ToolbarService,
   LinkService,
@@ -27,18 +28,24 @@ export class EmailTemplatesComponent implements OnInit {
   };
   public value = '';
   public labels = [];
+  public labelId = '';
   @ViewChild('createTemplate') createTemplate: ElementRef;
   constructor(
     private templatesService: EmailTemplatesService,
     private modalService: NgbModal,
     private labelsService: EmailLabelsService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.getTemplates();
     this.labelsService.getLabels().subscribe((data: any) => {
       this.labels = data;
+    });
+
+    this.route.queryParams.subscribe((qps) => {
+      this.labelId = qps.labelId;
+      this.getTemplates();
     });
 
     this.myForm = this.formBuilder.group({
@@ -46,9 +53,14 @@ export class EmailTemplatesComponent implements OnInit {
     });
   }
 
+  dragStart(e, templateId) {
+    console.log(e);
+    e.dataTransfer.setData('templateId', templateId);
+  }
+
   getTemplates() {
-    this.templatesService.getTemplates().subscribe((data: any[]) => {
-      console.log(data);
+    const labelId = this.labelId;
+    this.templatesService.getTemplates(labelId).subscribe((data: any[]) => {
       this.templates = data;
     });
   }
