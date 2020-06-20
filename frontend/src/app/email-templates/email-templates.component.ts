@@ -54,7 +54,6 @@ export class EmailTemplatesComponent implements OnInit {
   }
 
   dragStart(e, templateId) {
-    console.log(e);
     e.dataTransfer.setData('templateId', templateId);
   }
 
@@ -66,14 +65,9 @@ export class EmailTemplatesComponent implements OnInit {
   }
 
   listen($event) {
-    console.log($event);
     if ($event.action === 'add') {
       this.openCreateModal(this.createTemplate);
     }
-  }
-
-  onChange() {
-    console.log(this.template);
   }
 
   openDeleteModal(deleteLabel, template) {

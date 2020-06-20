@@ -26,7 +26,6 @@ export class EmailLabelsComponent implements OnInit {
   getLabels() {
     this.labelsService.getLabels().subscribe((data: any[]) => {
       this.labels = data;
-      console.log(this.labels);
     });
   }
 
@@ -53,9 +52,7 @@ export class EmailLabelsComponent implements OnInit {
     const draggedTemplateId = e.dataTransfer.getData('templateId');
     this.labelsService
       .associateTemplateWithLabel(draggedTemplateId, labelId)
-      .subscribe((data: any) => {
-        console.log(data);
-      });
+      .subscribe((data: any) => {});
   }
 
   openCreateModal(createRule) {
