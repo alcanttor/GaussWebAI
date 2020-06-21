@@ -65,7 +65,7 @@ public class EmailTemplateController {
 		return emailTemplateServiceDTO.deleteEmailTemplatebyId(emailTemplateId);
 	}
 	
-	@GetMapping(value="/gettemplatesbylabelid/{emaillabelId}/{userId}")
+	@GetMapping(value="/gettemplatesbylabelid/{labelId}/{userId}")
 	public List<EmailTemplateDTO> getById(@PathVariable Integer labelId, @PathVariable Integer userId)
 	{
 		return emailTemplateServiceDTO.getEmailTemplatesByLabelId(labelId, userId);
