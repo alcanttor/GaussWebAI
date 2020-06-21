@@ -1,51 +1,39 @@
-<app-list-actions
-  (messageEvent)="listen($event)"
-  [showItemActions]="false"
-></app-list-actions>
 <div class="container-fluid labels-container">
-  <div class="header row">
-    <div class="col-md-11">
-      <h2 class="title display-5">Email Labels</h2>
+  <div
+    *ngFor="let label of labels; index as i"
+    class="label"
+    (drop)="onDrop($event, label.id)"
+    (dragover)="onDragOver($event)"
+  >
+    <a [href]="'/home/emails/templates?labelId=' + label.id">
+      <i-feather name="folder" class="small-icon"></i-feather>
+      {{ label.name }}</a
+    >
+    <div
+      ngbDropdown
+      class="d-inline-block float-right"
+      placement="right-bottom"
+    >
+      <i-feather name="more-vertical" ngbDropdownToggle></i-feather>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button ngbDropdownItem (click)="openEditModal(createLabel, label)">
+          <i-feather name="edit2" class="small-icon"></i-feather>
+          Edit
+        </button>
+        <button ngbDropdownItem (click)="openDeleteModal(deleteLabel, label)">
+          <i-feather name="x" class="small-icon"></i-feather>
+          Delete
+        </button>
+      </div>
     </div>
   </div>
-  <div class="content">
-    <table class="table" *ngIf="labels.length > 0; else emptyLabels">
-      <thead>
-        <tr>
-          <th scope="col" style="width: 10%;">#</th>
-          <th scope="col" style="width: 65%;">Name</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let label of labels; index as i">
-          <th scope="row">{{ i + 1 }}</th>
-          <td>
-            {{ label.name }}
-          </td>
-          <td>
-            <div ngbDropdown class="d-inline-block" placement="right-bottom">
-              <i-feather name="more-vertical" ngbDropdownToggle></i-feather>
-              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <button
-                  ngbDropdownItem
-                  (click)="openEditModal(createLabel, label)"
-                >
-                  <i-feather name="edit2" class="small-icon"></i-feather>
-                  Edit
-                </button>
-                <button
-                  ngbDropdownItem
-                  (click)="openDeleteModal(deleteLabel, label)"
-                >
-                  <i-feather name="x" class="small-icon"></i-feather>
-                  Delete
-                </button>
-              </div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="create-btn">
+    <button
+      class="btn btn-primary btn-sm"
+      (click)="openCreateModal(createLabel)"
+    >
+      Create a label
+    </button>
   </div>
 </div>
 

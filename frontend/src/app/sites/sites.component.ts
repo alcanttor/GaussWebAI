@@ -94,7 +94,6 @@ export class SitesComponent implements OnInit {
 
   openEditSiteModal(createSite, site) {
     this.site = site;
-    console.log(site);
     this.modalService
       .open(createSite, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
