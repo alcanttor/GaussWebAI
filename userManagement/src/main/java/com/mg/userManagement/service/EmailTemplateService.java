@@ -19,6 +19,9 @@ public class EmailTemplateService {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private EmailLabelService emailLabelService;
 
 	@Autowired
 	private EmailTemplateRepository emailTemplateRepository;
@@ -175,12 +178,38 @@ public class EmailTemplateService {
 		}
 		catch(Exception ex)
 		{
-			logger.error("Exception while trying to get emaiul template");
+			logger.error("Exception while trying to get email template");
 			logger.error("", ex);
 		}
 		return null;
 	}
 	
-	
+	public boolean associateLable(List<EmailTemplate> emailTemplates, Integer labelId)
+	{
+		EmailTemplate emailTemplateUpdate = new EmailTemplate();
+		
+		List<EmailLabel> listLabel = new ArrayList<EmailLabel>();		
+		listLabel.add(emailLabelService.getLabelById(labelId));
+		
+		for(EmailTemplate emailTemplate: emailTemplates) {
+			try {
+				Optional<EmailTemplate> emailTemplateOptional = emailTemplateRepository.findById(emailTemplate.getId());
+				if (emailTemplateOptional.isPresent())
+				{
+					emailTemplateUpdate = emailTemplateOptional.get();
+					emailTemplateUpdate.setLabels(listLabel);
+					emailTemplateRepository.save(emailTemplateUpdate);
+				}
+			}
+			catch(IllegalArgumentException ex) {
+				logger.error("", ex);
+			}
+			catch(Exception ex)
+			{
+				logger.error("", ex);
+			}
+		}
+		return true;
+	}
 
 }

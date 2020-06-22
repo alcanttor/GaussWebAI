@@ -92,16 +92,28 @@ public class EmailLabelService {
 		
 	}
 
-	public EmailLabel getLabelById(Integer emailLabelId) throws Exception {
-		Optional<EmailLabel> emailLabelOptional = emailLabelRepository.findById(emailLabelId);
-		if (emailLabelOptional.isPresent())
-		{
-			return emailLabelOptional.get();
+	public EmailLabel getLabelById(Integer emailLabelId){
+		try {
+			Optional<EmailLabel> emailLabelOptional = emailLabelRepository.findById(emailLabelId);
+			if (emailLabelOptional.isPresent())
+			{
+				return emailLabelOptional.get();
+			}
+			else
+			{
+				logger.error("Email template label not found");
+			}
 		}
-		else
-		{
-			throw new Exception("Email template label not found");
+		catch(IllegalArgumentException ex) {
+			logger.error("Invalid arguements passed while trying to delete email label");
+			logger.error("", ex);
 		}
+		catch(Exception ex)
+		{
+			logger.error("Exception while trying to delete email label");
+			logger.error("", ex);
+		}
+		return null;
 	}
 
 	
@@ -120,21 +132,6 @@ public class EmailLabelService {
 			logger.error("Exception while trying to delete email label");
 			logger.error("", ex);
 		}
-		return null;
-	}
-	
-	public EmailLabel associateTemplate(Integer labelId, Integer emailLabelId) throws Exception 
-	{/*
-		EmailLabel emailLabel = getById(templateId);
-		Rule rule = ruleService.getById(ruleId);
-		List<Rule> rules = emailLabel.getRules();
-		if (rules == null)
-		{
-			rules = new ArrayList<>();
-		}
-		rules.add(rule);
-		emailLabel.setRules(rules);
-		return update(templateId, emailLabel);*/
 		return null;
 	}
 

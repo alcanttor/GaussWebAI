@@ -51,11 +51,6 @@ public class EmailLabelServiceDTO {
 	public EmailLabelDTO getEmailLabelById(Integer emailLabelId) throws Exception {
 		return modelMapper.map(emailLabelService.getLabelById(emailLabelId), EmailLabelDTO.class);
 	}
-
-	public EmailLabelDTO associateTemplateToRule(Integer labelId, Integer emailLabelId) throws Exception 
-	{
-		return modelMapper.map(emailLabelService.associateTemplate(labelId, emailLabelId), EmailLabelDTO.class);
-	}
 	
 	public List<EmailLabelDTO> deleteEmailLabel(Integer emailLabelId)
 	{

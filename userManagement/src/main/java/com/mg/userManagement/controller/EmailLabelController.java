@@ -60,21 +60,10 @@ public class EmailLabelController {
 		}
 	}
 	
-	@GetMapping(value="/associate/{labelId}/{emailTemplateId}")
-	public EmailLabelDTO associate(@PathVariable Integer labelId, @PathVariable Integer emailTemplateId)
+	@GetMapping(value="/deleteemaillabelbyid/{labelId}")
+	public List<EmailLabelDTO> deleteLabelId(@PathVariable Integer labelId)
 	{
-		try {
-			return emailLabelServiceDTO.associateTemplateToRule(labelId,emailTemplateId);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	@GetMapping(value="/deleteemaillabelbyid/{emailLabelId}")
-	public List<EmailLabelDTO> deleteLabelId(@PathVariable Integer emailLabelId)
-	{
-		return emailLabelServiceDTO.deleteEmailLabel(emailLabelId);
+		return emailLabelServiceDTO.deleteEmailLabel(labelId);
 	}
 	
 }

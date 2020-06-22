@@ -68,4 +68,13 @@ public class EmailTemplateServiceDTO {
 		Type listEmailTemplates = new TypeToken<List<EmailTemplateDTO>>() {}.getType(); 
 		return modelMapper.map(emailTemplateService.getEmailTemplatesbyLabelId(labelId, userId), listEmailTemplates);
 	}
+
+	public boolean associateLabelToTemplates(List <EmailTemplateDTO> emailTemplateDTO, Integer labelId) {
+		
+		@SuppressWarnings("serial")
+		Type listTypeEmailTemplate = new TypeToken<List<EmailTemplate>>() {}.getType();
+		List<EmailTemplate> allEmailTemplates = modelMapper.map(emailTemplateDTO, listTypeEmailTemplate);
+		
+		return emailTemplateService.associateLable(allEmailTemplates, labelId);
+	}
 }

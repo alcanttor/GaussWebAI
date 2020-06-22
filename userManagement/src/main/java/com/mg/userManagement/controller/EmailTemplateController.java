@@ -70,4 +70,10 @@ public class EmailTemplateController {
 	{
 		return emailTemplateServiceDTO.getEmailTemplatesByLabelId(labelId, userId);
 	}
+	
+	@PostMapping(value="/associatelabeltotemplates/{labelId}")
+	public boolean associate(@RequestBody List <EmailTemplateDTO> emailTemplateDTO, @PathVariable Integer labelId)
+	{
+		return emailTemplateServiceDTO.associateLabelToTemplates(emailTemplateDTO, labelId);
+	}
 }
