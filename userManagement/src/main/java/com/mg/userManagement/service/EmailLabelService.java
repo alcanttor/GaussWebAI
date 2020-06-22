@@ -78,7 +78,7 @@ public class EmailLabelService {
 		return emailLabelRepository.findAll();
 	}
 
-	public List<EmailLabel> getEmailLablesByUserId(Integer userId) throws Exception{
+	public List<EmailLabel> getEmailLabelsByUserId(Integer userId) throws Exception{
 		User user = userService.getUserById(userId);
 		Optional<List<EmailLabel>> emailLabelOptional = emailLabelRepository.findByUser(user);
 		if(emailLabelOptional.isPresent())
@@ -121,7 +121,7 @@ public class EmailLabelService {
 		try {
 			Integer userId = emailLabelRepository.findById(emailLabelId).get().getUser().getId();
 			emailLabelRepository.deleteById(emailLabelId);
-			return this.getEmailLablesByUserId(userId);
+			return this.getEmailLabelsByUserId(userId);
 		}
 		catch(IllegalArgumentException ex) {
 			logger.error("Invalid arguements passed while trying to delete email label");

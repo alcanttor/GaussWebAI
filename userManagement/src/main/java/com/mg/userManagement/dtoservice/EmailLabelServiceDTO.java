@@ -45,7 +45,7 @@ public class EmailLabelServiceDTO {
 	public List<EmailLabelDTO> getEmailLabelByUserId(Integer userId) throws Exception{
 		@SuppressWarnings("serial")
 		Type listEmailLabels = new TypeToken<List<EmailLabelDTO>>() {}.getType(); 
-		return modelMapper.map(emailLabelService.getEmailLablesByUserId(userId), listEmailLabels);
+		return modelMapper.map(emailLabelService.getEmailLabelsByUserId(userId), listEmailLabels);
 	}
 
 	public EmailLabelDTO getEmailLabelById(Integer emailLabelId) throws Exception {
