@@ -163,7 +163,7 @@ public class EmailTemplateService {
 				List<EmailLabel> emailLabels = template.getLabels();
 				
 				for(EmailLabel label:emailLabels) {
-					if(label.getId() == labelId) {
+					if((label.getId()).equals(labelId)) {
 						filteredTemplates.add(template);
 						break;
 					}
