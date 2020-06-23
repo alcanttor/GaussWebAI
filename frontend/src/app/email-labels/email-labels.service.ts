@@ -41,9 +41,10 @@ export class EmailLabelsService {
     );
   }
 
-  associateTemplateWithLabel(templateId, labelId) {
-    return this.httpClient.get(
-      `${config.BASE_URL}/associate/${labelId}/${templateId}`,
+  associateTemplateWithLabel(templates, labelId) {
+    return this.httpClient.post(
+      `${config.BASE_URL}/associatelabeltotemplates/${labelId}`,
+      templates,
       this.auth.getAuthHeader()
     );
   }
