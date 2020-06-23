@@ -5,7 +5,14 @@
     (drop)="onDrop($event, label.id)"
     (dragover)="onDragOver($event)"
   >
-    <a [href]="'/home/emails/templates?labelId=' + label.id">
+    <a
+      [href]="
+        '/home/emails/templates?labelId=' +
+        label.id +
+        '&labelName=' +
+        label.name
+      "
+    >
       <i-feather name="folder" class="small-icon"></i-feather>
       {{ label.name }}</a
     >
@@ -26,6 +33,9 @@
         </button>
       </div>
     </div>
+  </div>
+  <div>
+    <a class="dropdown-item" href="/home/emails/templates">Templates</a>
   </div>
   <div class="create-btn">
     <button

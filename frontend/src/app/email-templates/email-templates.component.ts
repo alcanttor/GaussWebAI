@@ -29,6 +29,7 @@ export class EmailTemplatesComponent implements OnInit {
   public value = '';
   public labels = [];
   public labelId = '';
+  public labelInRouter = '';
   @ViewChild('createTemplate') createTemplate: ElementRef;
   constructor(
     private templatesService: EmailTemplatesService,
@@ -45,6 +46,7 @@ export class EmailTemplatesComponent implements OnInit {
 
     this.route.queryParams.subscribe((qps) => {
       this.labelId = qps.labelId;
+      this.labelInRouter = qps.labelName;
       this.getTemplates();
     });
 
@@ -53,8 +55,13 @@ export class EmailTemplatesComponent implements OnInit {
     });
   }
 
-  dragStart(e, templateId) {
-    e.dataTransfer.setData('templateId', templateId);
+  dragStart(e, template) {
+    e.dataTransfer.setData('templates', JSON.stringify([template]));
+  }
+
+  dragEnd(e) {
+    e.preventDefault();
+    this.getTemplates();
   }
 
   getTemplates() {
