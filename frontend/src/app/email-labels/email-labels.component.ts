@@ -50,7 +50,6 @@ export class EmailLabelsComponent implements OnInit {
   onDrop(e, labelId) {
     e.preventDefault();
     const draggedTemplates = JSON.parse(e.dataTransfer.getData('templates'));
-    console.log(draggedTemplates);
     this.labelsService
       .associateTemplateWithLabel(draggedTemplates, labelId)
       .subscribe((data: any) => {});
