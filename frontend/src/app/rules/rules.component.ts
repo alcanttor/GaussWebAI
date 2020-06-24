@@ -3,6 +3,8 @@ import {
   OnInit,
   ElementRef,
   ViewChild,
+  ViewChildren,
+  QueryList,
   ViewEncapsulation,
 } from '@angular/core';
 import { Rule } from '../shared/models/rule';
@@ -12,6 +14,11 @@ import { SitesService } from '../sites/sites.service';
 import { EmailTemplatesService } from '../email-templates/email-templates.service';
 import { Site } from '../shared/models/site';
 import moment from 'moment';
+import {
+  SortableHeader,
+  SortEvent,
+  compare,
+} from '../shared/directives/SortableHeader';
 
 @Component({
   selector: 'app-rules',
@@ -21,8 +28,10 @@ import moment from 'moment';
 })
 export class RulesComponent implements OnInit {
   @ViewChild('createRule') createRule: ElementRef;
+  @ViewChildren(SortableHeader) headers: QueryList<SortableHeader>;
 
   public rules: Rule[] = [];
+  public sortedRules: Rule[] = [];
   public rule: Rule;
   public enable: Boolean;
   public site: Site = {
@@ -61,9 +70,32 @@ export class RulesComponent implements OnInit {
     return action && !!action.onEmail;
   }
 
+  onSort({ column, direction }: SortEvent) {
+    // resetting other headers
+    this.headers.forEach((header) => {
+      if (header.sortable !== column) {
+        header.direction = '';
+      }
+    });
+
+    // sorting countries
+    if (direction === '' || column === '') {
+      this.sortedRules = this.rules;
+    } else {
+      this.sortedRules = [...this.rules].sort((a, b) => {
+        const res = compare(`${a[column]}`, `${b[column]}`);
+        return direction === 'asc' ? res : -res;
+      });
+    }
+  }
+
   getTemplates() {
     this.templateService.getTemplates().subscribe((data: any[]) => {
       this.templates = data;
+      this.templates.push({
+        name: 'Default',
+        template: null,
+      });
     });
   }
 
@@ -81,6 +113,7 @@ export class RulesComponent implements OnInit {
 
   getRules() {
     this.rules = this.rulesService.getRules(this.sites);
+    this.sortedRules = this.rules;
   }
 
   updateSiteDependencies() {
@@ -129,8 +162,10 @@ export class RulesComponent implements OnInit {
       this.getActionsForEvent($event.value.id);
     } else if ($event.name === 'actions-search' && $event.value.id) {
       this.rule.rules[$event.key]['systemRule']['action'] = $event.value;
-    } else if ($event.name === 'templates-search' && $event.value.id) {
-      this.rule.rules[$event.key]['emailTemplate'] = $event.value;
+    } else if ($event.name === 'templates-search') {
+      this.rule.rules[$event.key]['emailTemplate'] = $event.value.id
+        ? $event.value
+        : null;
     }
   };
 

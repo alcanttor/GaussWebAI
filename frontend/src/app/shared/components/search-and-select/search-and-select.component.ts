@@ -26,7 +26,7 @@ export class SearchAndSelectComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    if (this.selected?.id) {
+    if (this.selected) {
       this.entity = this.selected;
     }
   }

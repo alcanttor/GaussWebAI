@@ -1,7 +1,19 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  QueryList,
+  ViewChildren,
+  ViewChild,
+} from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SitesService } from './sites.service';
 import { Site } from '../shared/models/site';
+import {
+  SortableHeader,
+  SortEvent,
+  compare,
+} from '../shared/directives/SortableHeader';
 
 @Component({
   selector: 'app-sites',
@@ -13,8 +25,10 @@ export class SitesComponent implements OnInit {
   @ViewChild('createSites') createSites: ElementRef;
   @ViewChild('deleteModal') deleteSite: ElementRef;
   public sites: Site[] = [];
+  public sortedSites: Site[] = [];
   public site: Site;
   public inputSites: Site[] = [];
+  @ViewChildren(SortableHeader) headers: QueryList<SortableHeader>;
 
   constructor(
     private sitesService: SitesService,
@@ -24,6 +38,25 @@ export class SitesComponent implements OnInit {
   ngOnInit(): void {
     this.getSites();
     this.inputSites.push(this.generateEmptySite());
+  }
+
+  onSort({ column, direction }: SortEvent) {
+    // resetting other headers
+    this.headers.forEach((header) => {
+      if (header.sortable !== column) {
+        header.direction = '';
+      }
+    });
+
+    // sorting countries
+    if (direction === '' || column === '') {
+      this.sortedSites = this.sites;
+    } else {
+      this.sortedSites = [...this.sites].sort((a, b) => {
+        const res = compare(`${a[column]}`, `${b[column]}`);
+        return direction === 'asc' ? res : -res;
+      });
+    }
   }
 
   generateEmptySite = (): Site => ({
@@ -48,6 +81,7 @@ export class SitesComponent implements OnInit {
   getSites() {
     this.sitesService.getSites().subscribe((data: any[]) => {
       this.sites = data;
+      this.sortedSites = this.sites;
     });
   }
 

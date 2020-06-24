@@ -1,4 +1,11 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  ViewChild,
+  ViewChildren,
+  QueryList,
+} from '@angular/core';
 import { EmailTemplatesService } from './email-templates.service';
 import { EmailLabelsService } from '../email-labels/email-labels.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -10,6 +17,11 @@ import {
   ImageService,
   HtmlEditorService,
 } from '@syncfusion/ej2-angular-richtexteditor';
+import {
+  SortableHeader,
+  SortEvent,
+  compare,
+} from '../shared/directives/SortableHeader';
 
 @Component({
   selector: 'app-email-templates',
@@ -18,7 +30,8 @@ import {
   providers: [ToolbarService, LinkService, ImageService, HtmlEditorService],
 })
 export class EmailTemplatesComponent implements OnInit {
-  public templates;
+  public templates = [];
+  public sortedTemplates = [];
   myForm: FormGroup;
   public template = {
     id: null,
@@ -31,6 +44,7 @@ export class EmailTemplatesComponent implements OnInit {
   public labelId = '';
   public labelInRouter = '';
   @ViewChild('createTemplate') createTemplate: ElementRef;
+  @ViewChildren(SortableHeader) headers: QueryList<SortableHeader>;
   constructor(
     private templatesService: EmailTemplatesService,
     private modalService: NgbModal,
@@ -64,10 +78,30 @@ export class EmailTemplatesComponent implements OnInit {
     this.getTemplates();
   }
 
+  onSort({ column, direction }: SortEvent) {
+    // resetting other headers
+    this.headers.forEach((header) => {
+      if (header.sortable !== column) {
+        header.direction = '';
+      }
+    });
+
+    // sorting countries
+    if (direction === '' || column === '') {
+      this.sortedTemplates = this.templates;
+    } else {
+      this.sortedTemplates = [...this.templates].sort((a, b) => {
+        const res = compare(`${a[column]}`, `${b[column]}`);
+        return direction === 'asc' ? res : -res;
+      });
+    }
+  }
+
   getTemplates() {
     const labelId = this.labelId;
     this.templatesService.getTemplates(labelId).subscribe((data: any[]) => {
       this.templates = data;
+      this.sortedTemplates = this.templates;
     });
   }
 
@@ -126,7 +160,7 @@ export class EmailTemplatesComponent implements OnInit {
       .open(createTemplate, { ariaLabelledBy: 'modal-basic-title', size: 'xl' })
       .result.then(
         (onfulfilled) => {
-          const labels = this.myForm.value.labels;
+          const labels = this.myForm.value.labels || [];
           this.template.labels = labels.map((label) => ({
             id: label,
           }));

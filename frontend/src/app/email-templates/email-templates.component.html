@@ -13,17 +13,24 @@
       <thead>
         <tr>
           <th scope="col" style="width: 10%;">#</th>
-          <th scope="col" style="width: 35%;">Name</th>
+          <th
+            scope="col"
+            style="width: 35%;"
+            sortable="name"
+            (sort)="onSort($event)"
+          >
+            Name
+          </th>
           <th scope="col" style="width: 25%;">Labels</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let template of templates; index as i">
+        <tr *ngFor="let template of sortedTemplates; index as i">
           <th scope="row">{{ i + 1 }}</th>
           <td
             draggable="true"
             (dragstart)="dragStart($event, template)"
-            (dragend)="dragEnd()"
+            (dragend)="dragEnd($event)"
           >
             {{ template.name }}
           </td>

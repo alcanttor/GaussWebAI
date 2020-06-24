@@ -13,14 +13,21 @@
       <thead>
         <tr>
           <th scope="col" style="width: 10%;">#</th>
-          <th scope="col" style="width: 20%;">Name</th>
+          <th
+            scope="col"
+            style="width: 20%;"
+            sortable="name"
+            (sort)="onSort($event)"
+          >
+            Name
+          </th>
           <th scope="col" style="width: 25%;">Last Updated</th>
           <th scope="col" style="width: 15%;">Enabled</th>
           <th scope="col" style="width: 25%;"></th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let rule of rules; index as i">
+        <tr *ngFor="let rule of sortedRules; index as i">
           <th scope="row">{{ i + 1 }}</th>
           <td>
             {{ rule.name }}
@@ -183,7 +190,7 @@
           <app-search-and-select
             (onSearch)="listenForSearchAndSelect($event)"
             [options]="templates"
-            [selected]="subRule['emailTemplate']"
+            [selected]="subRule['emailTemplate'] || templates[3]"
             [key]="index"
             name="templates-search"
             label="name"

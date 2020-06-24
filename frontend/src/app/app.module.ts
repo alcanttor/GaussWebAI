@@ -15,6 +15,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { AuthService } from './auth.service';
 import { SitesComponent } from './sites/sites.component';
+import { SortableHeader } from './shared/directives/SortableHeader';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListActionsComponent } from './shared/components/list-actions/list-actions.component';
 import { RulesComponent } from './rules/rules.component';
@@ -37,6 +38,7 @@ import { UiSwitchModule } from 'ngx-ui-switch';
     SearchAndSelectComponent,
     EmailLabelsComponent,
     EmailTemplatesComponent,
+    SortableHeader,
   ],
   imports: [
     BrowserModule,
