@@ -16,7 +16,9 @@ import com.mg.userManagement.dto.AuthorizationTokenResponse;
 import com.mg.userManagement.entity.Site;
 import com.mg.userManagement.entity.User;
 import com.mg.userManagement.service.JwtService;
+import com.mg.userManagement.service.OldUserAuthenticator;
 import com.mg.userManagement.service.SiteService;
+import com.mg.userManagement.service.UserService;
 
 /**Authentication controller class*/
 @RestController
@@ -35,15 +37,29 @@ public class JwtTokenController {
 	@Autowired
 	private SiteService siteService;
 	
+	@Autowired
+	private OldUserAuthenticator oldUserAuthenticator;
+	
+	@Autowired
+	private UserService userService;
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@GetMapping(value = "/token/{user}/{pass}")
 	public AuthorizationTokenResponse getJwtToken(@PathVariable String user, @PathVariable String pass) throws Exception {
 		try {
+			boolean isValidUser = oldUserAuthenticator.isOldUser(user,pass);
+			if (isValidUser)
+			{
+				//saveUser;
+				User newUser = new User();
+				newUser.setUsername(user);
+				newUser.setPassword(pass);
+				userService.create(newUser);
+			}
 			//Authenticate the credentials based on user provided username and password
 			authenticationManager.authenticate( new UsernamePasswordAuthenticationToken(user, pass));
-			logger.debug("Authentication success!");
+			logger.info("Authentication success!");
 		}
 		catch (BadCredentialsException e) {
 			logger.error(e.getMessage());

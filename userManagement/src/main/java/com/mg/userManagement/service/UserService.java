@@ -24,7 +24,11 @@ public class UserService {
 	{
 		logger.info("First-time login; registering user: "+user);
 		try{
-		return userRepository.save(user);
+			User alreadyUser = getUserByName(user.getUsername());
+			if (alreadyUser == null)
+				return userRepository.save(user);
+			else
+				return null;
 		}
 		catch (Exception ex) {
 			logger.error("Registration process failed for user: "+user);
