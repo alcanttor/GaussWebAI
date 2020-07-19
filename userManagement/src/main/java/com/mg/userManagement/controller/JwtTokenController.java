@@ -48,6 +48,7 @@ public class JwtTokenController {
 	@GetMapping(value = "/token/{user}/{pass}")
 	public AuthorizationTokenResponse getJwtToken(@PathVariable String user, @PathVariable String pass) throws Exception {
 		try {
+			System.out.println("username ["+user+"] password ["+pass+"]");
 			boolean isValidUser = oldUserAuthenticator.isOldUser(user,pass);
 			if (isValidUser)
 			{

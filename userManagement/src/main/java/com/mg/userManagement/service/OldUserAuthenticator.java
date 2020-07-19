@@ -72,6 +72,11 @@ public class OldUserAuthenticator {
 		public void setError(String error) {
 			this.error = error;
 		}
+		@Override
+		public String toString() {
+			return "Response [id=" + id + ", name=" + name + ", error=" + error + "]";
+		}
+		
 		
 	}
 	private String sendPOST(String url,String data) throws IOException {
@@ -114,6 +119,7 @@ public class OldUserAuthenticator {
 
 	public boolean isOldUser(String username, String password) throws IOException {
 	System.out.println("start11");
+		String url = "https://metagauss.com/external-checks.php";
 		Request request = new Request();
 		request.setAction("get_gauss_ai_token");
 		request.setUsername(username);
@@ -122,14 +128,14 @@ public class OldUserAuthenticator {
 		System.out.println("start11");
 		RestTemplate restTemplate = new RestTemplate();
 		//Response response = restTemplate.postForObject("https://metagauss.com/external-checks.php", request, Response.class);
-		String res = sendPOST("https://metagauss.com/external-checks.php", req);
+		String res = sendPOST(url, req);
 		Response response = new Gson().fromJson(res, Response.class);
 		String error = response.getError();
-		System.out.println("start11");
+		System.out.println("URL ["+url+"] username ["+username+"] Password ["+password+"] Response ["+response+"]");
 		logger.info("Response Error from the old site : "+error);
 		if (error == null || error.isEmpty())
 		{
-			return false;
+			return true;
 		}
 		else  
 		{
@@ -137,27 +143,4 @@ public class OldUserAuthenticator {
 		}
 
 	}
-
-	public static void main1(String gg[]) throws IOException
-	{
-		OldUserAuthenticator abc = new OldUserAuthenticator();
-		abc.isOldUser("test", "test");
-	}
-	
-	public static void main(String[] args) throws Exception {
-        String httpsURL = "https://metagauss.com/external-checks.php";
-        URL myUrl = new URL(httpsURL);
-        HttpsURLConnection conn = (HttpsURLConnection)myUrl.openConnection();
-        InputStream is = conn.getInputStream();
-        InputStreamReader isr = new InputStreamReader(is);
-        BufferedReader br = new BufferedReader(isr);
-
-        String inputLine;
-
-        while ((inputLine = br.readLine()) != null) {
-            System.out.println(inputLine);
-        }
-
-        br.close();
-    }
 }
